@@ -1,0 +1,552 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>pyconnect package &mdash; Care Robot 1.0.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=8d563738"></script>
+      <script src="../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="pyconnect.llm package" href="pyconnect.llm.html" />
+    <link rel="prev" title="pyconnect" href="modules.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            Care Robot
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../contents/intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../contents/get_started.html">Get started</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../app_carerobot/modules.html">app_carerobot</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">pyconnect</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">pyconnect package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#subpackages">Subpackages</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pyconnect.llm.html">pyconnect.llm package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyconnect.models.html">pyconnect.models package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyconnect.ros.html">pyconnect.ros package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyconnect.sns_bot.html">pyconnect.sns_bot package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyconnect.tcp_ip.html">pyconnect.tcp_ip package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyconnect.zmq.html">pyconnect.zmq package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-pyconnect.run_client">pyconnect.run_client module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#pyconnect.run_client.get_client"><code class="docutils literal notranslate"><span class="pre">get_client()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pyconnect.run_client.run_client"><code class="docutils literal notranslate"><span class="pre">run_client()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-pyconnect.utils">pyconnect.utils module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#pyconnect.utils.Timer"><code class="docutils literal notranslate"><span class="pre">Timer</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pyconnect.utils.byte2dict"><code class="docutils literal notranslate"><span class="pre">byte2dict()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pyconnect.utils.byte2str"><code class="docutils literal notranslate"><span class="pre">byte2str()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pyconnect.utils.crop_image"><code class="docutils literal notranslate"><span class="pre">crop_image()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pyconnect.utils.data_info"><code class="docutils literal notranslate"><span class="pre">data_info()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pyconnect.utils.decode_actclient_recmsg"><code class="docutils literal notranslate"><span class="pre">decode_actclient_recmsg()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pyconnect.utils.decode_actserver_revmsg"><code class="docutils literal notranslate"><span class="pre">decode_actserver_revmsg()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pyconnect.utils.decode_caminfomsg"><code class="docutils literal notranslate"><span class="pre">decode_caminfomsg()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pyconnect.utils.decode_imgmsg"><code class="docutils literal notranslate"><span class="pre">decode_imgmsg()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pyconnect.utils.decode_srvclient_revmsg"><code class="docutils literal notranslate"><span class="pre">decode_srvclient_revmsg()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pyconnect.utils.decode_srvserver_revmsg"><code class="docutils literal notranslate"><span class="pre">decode_srvserver_revmsg()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pyconnect.utils.decode_topic_strmsg"><code class="docutils literal notranslate"><span class="pre">decode_topic_strmsg()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pyconnect.utils.demo"><code class="docutils literal notranslate"><span class="pre">demo()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pyconnect.utils.dict2byte"><code class="docutils literal notranslate"><span class="pre">dict2byte()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pyconnect.utils.dict2str"><code class="docutils literal notranslate"><span class="pre">dict2str()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pyconnect.utils.encode_actclient_sendmsg"><code class="docutils literal notranslate"><span class="pre">encode_actclient_sendmsg()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pyconnect.utils.encode_actserver_retmsg"><code class="docutils literal notranslate"><span class="pre">encode_actserver_retmsg()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pyconnect.utils.encode_imgmsg"><code class="docutils literal notranslate"><span class="pre">encode_imgmsg()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pyconnect.utils.encode_srvclient_sendmsg"><code class="docutils literal notranslate"><span class="pre">encode_srvclient_sendmsg()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pyconnect.utils.encode_srvserver_retmsg"><code class="docutils literal notranslate"><span class="pre">encode_srvserver_retmsg()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pyconnect.utils.encode_topic_strmsg"><code class="docutils literal notranslate"><span class="pre">encode_topic_strmsg()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pyconnect.utils.evaluate"><code class="docutils literal notranslate"><span class="pre">evaluate()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pyconnect.utils.findNumdersInString"><code class="docutils literal notranslate"><span class="pre">findNumdersInString()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pyconnect.utils.get_attrs"><code class="docutils literal notranslate"><span class="pre">get_attrs()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pyconnect.utils.parse_keys_values"><code class="docutils literal notranslate"><span class="pre">parse_keys_values()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pyconnect.utils.printif"><code class="docutils literal notranslate"><span class="pre">printif()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pyconnect.utils.read_json"><code class="docutils literal notranslate"><span class="pre">read_json()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pyconnect.utils.recvall"><code class="docutils literal notranslate"><span class="pre">recvall()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pyconnect.utils.resuse_recent_msg"><code class="docutils literal notranslate"><span class="pre">resuse_recent_msg()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pyconnect.utils.set_atrrs"><code class="docutils literal notranslate"><span class="pre">set_atrrs()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pyconnect.utils.str2byte"><code class="docutils literal notranslate"><span class="pre">str2byte()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pyconnect.utils.str2dict"><code class="docutils literal notranslate"><span class="pre">str2dict()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pyconnect.utils.strftime"><code class="docutils literal notranslate"><span class="pre">strftime()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pyconnect.utils.suggest_input"><code class="docutils literal notranslate"><span class="pre">suggest_input()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pyconnect.utils.type_name"><code class="docutils literal notranslate"><span class="pre">type_name()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pyconnect.utils.update_dict"><code class="docutils literal notranslate"><span class="pre">update_dict()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pyconnect.utils.write_json"><code class="docutils literal notranslate"><span class="pre">write_json()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-pyconnect">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Care Robot</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="modules.html">pyconnect</a></li>
+      <li class="breadcrumb-item active">pyconnect package</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/apidoc/pyconnect/pyconnect.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="pyconnect-package">
+<h1>pyconnect package<a class="headerlink" href="#pyconnect-package" title="Link to this heading"></a></h1>
+<section id="subpackages">
+<h2>Subpackages<a class="headerlink" href="#subpackages" title="Link to this heading"></a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="pyconnect.llm.html">pyconnect.llm package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="pyconnect.llm.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyconnect.llm.html#pyconnect-llm-chatgpt-module">pyconnect.llm.chatgpt module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyconnect.llm.html#module-pyconnect.llm.llama">pyconnect.llm.llama module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pyconnect.llm.html#pyconnect.llm.llama.LLamaClient"><code class="docutils literal notranslate"><span class="pre">LLamaClient</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pyconnect.llm.html#pyconnect.llm.llama.LLamaClient.image_contained"><code class="docutils literal notranslate"><span class="pre">LLamaClient.image_contained()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyconnect.llm.html#pyconnect.llm.llama.LLamaClient.init"><code class="docutils literal notranslate"><span class="pre">LLamaClient.init()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyconnect.llm.html#pyconnect.llm.llama.LLamaClient.make_msg"><code class="docutils literal notranslate"><span class="pre">LLamaClient.make_msg()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyconnect.llm.html#pyconnect.llm.llama.LLamaClient.send_msgs"><code class="docutils literal notranslate"><span class="pre">LLamaClient.send_msgs()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="pyconnect.llm.html#module-pyconnect.llm.llm_object">pyconnect.llm.llm_object module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pyconnect.llm.html#pyconnect.llm.llm_object.LLMobj"><code class="docutils literal notranslate"><span class="pre">LLMobj</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pyconnect.llm.html#pyconnect.llm.llm_object.LLMobj.chat"><code class="docutils literal notranslate"><span class="pre">LLMobj.chat()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyconnect.llm.html#pyconnect.llm.llm_object.LLMobj.chat_findobj"><code class="docutils literal notranslate"><span class="pre">LLMobj.chat_findobj()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyconnect.llm.html#pyconnect.llm.llm_object.LLMobj.chat_guide"><code class="docutils literal notranslate"><span class="pre">LLMobj.chat_guide()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyconnect.llm.html#pyconnect.llm.llm_object.LLMobj.demo"><code class="docutils literal notranslate"><span class="pre">LLMobj.demo()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyconnect.llm.html#pyconnect.llm.llm_object.LLMobj.demo_chatloop"><code class="docutils literal notranslate"><span class="pre">LLMobj.demo_chatloop()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyconnect.llm.html#pyconnect.llm.llm_object.LLMobj.encode_b64"><code class="docutils literal notranslate"><span class="pre">LLMobj.encode_b64()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyconnect.llm.html#pyconnect.llm.llm_object.LLMobj.init"><code class="docutils literal notranslate"><span class="pre">LLMobj.init()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyconnect.llm.html#pyconnect.llm.llm_object.LLMobj.make_msg"><code class="docutils literal notranslate"><span class="pre">LLMobj.make_msg()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyconnect.llm.html#pyconnect.llm.llm_object.LLMobj.make_msgs"><code class="docutils literal notranslate"><span class="pre">LLMobj.make_msgs()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyconnect.llm.html#pyconnect.llm.llm_object.LLMobj.read_history"><code class="docutils literal notranslate"><span class="pre">LLMobj.read_history()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyconnect.llm.html#pyconnect.llm.llm_object.LLMobj.reset_history"><code class="docutils literal notranslate"><span class="pre">LLMobj.reset_history()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyconnect.llm.html#pyconnect.llm.llm_object.LLMobj.send_msgs"><code class="docutils literal notranslate"><span class="pre">LLMobj.send_msgs()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyconnect.llm.html#pyconnect.llm.llm_object.LLMobj.write_history"><code class="docutils literal notranslate"><span class="pre">LLMobj.write_history()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="pyconnect.llm.html#pyconnect.llm.llm_object.ename"><code class="docutils literal notranslate"><span class="pre">ename()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyconnect.llm.html#pyconnect.llm.llm_object.fname"><code class="docutils literal notranslate"><span class="pre">fname()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="pyconnect.llm.html#module-pyconnect.llm">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="pyconnect.models.html">pyconnect.models package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="pyconnect.models.html#module-pyconnect.models">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="pyconnect.ros.html">pyconnect.ros package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="pyconnect.ros.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyconnect.ros.html#module-pyconnect.ros.action_client">pyconnect.ros.action_client module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pyconnect.ros.html#pyconnect.ros.action_client.CustomActionClient"><code class="docutils literal notranslate"><span class="pre">CustomActionClient</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pyconnect.ros.html#pyconnect.ros.action_client.CustomActionClient.feedback_callback"><code class="docutils literal notranslate"><span class="pre">CustomActionClient.feedback_callback()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyconnect.ros.html#pyconnect.ros.action_client.CustomActionClient.goal_response_callback"><code class="docutils literal notranslate"><span class="pre">CustomActionClient.goal_response_callback()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyconnect.ros.html#pyconnect.ros.action_client.CustomActionClient.result_callback"><code class="docutils literal notranslate"><span class="pre">CustomActionClient.result_callback()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyconnect.ros.html#pyconnect.ros.action_client.CustomActionClient.send"><code class="docutils literal notranslate"><span class="pre">CustomActionClient.send()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="pyconnect.ros.html#pyconnect.ros.action_client.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="pyconnect.ros.html#pyconnect-ros-action-server-module">pyconnect.ros.action_server module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyconnect.ros.html#pyconnect-ros-custom-node-module">pyconnect.ros.custom_node module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyconnect.ros.html#module-pyconnect.ros.topic">pyconnect.ros.topic module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyconnect.ros.html#module-pyconnect.ros.utils">pyconnect.ros.utils module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pyconnect.ros.html#pyconnect.ros.utils.default_srvstr_resfunc"><code class="docutils literal notranslate"><span class="pre">default_srvstr_resfunc()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyconnect.ros.html#pyconnect.ros.utils.default_srvstr_revfunc"><code class="docutils literal notranslate"><span class="pre">default_srvstr_revfunc()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyconnect.ros.html#pyconnect.ros.utils.default_strmsg_resfunc"><code class="docutils literal notranslate"><span class="pre">default_strmsg_resfunc()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyconnect.ros.html#pyconnect.ros.utils.default_strmsg_revfunc"><code class="docutils literal notranslate"><span class="pre">default_strmsg_revfunc()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyconnect.ros.html#pyconnect.ros.utils.find_last_session_log_dir"><code class="docutils literal notranslate"><span class="pre">find_last_session_log_dir()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="pyconnect.ros.html#module-pyconnect.ros">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="pyconnect.sns_bot.html">pyconnect.sns_bot package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="pyconnect.sns_bot.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyconnect.sns_bot.html#pyconnect-sns-bot-telegram-llama-module">pyconnect.sns_bot.telegram_llama module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyconnect.sns_bot.html#module-pyconnect.sns_bot.utils">pyconnect.sns_bot.utils module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pyconnect.sns_bot.html#pyconnect.sns_bot.utils.handle_msg"><code class="docutils literal notranslate"><span class="pre">handle_msg()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="pyconnect.sns_bot.html#module-pyconnect.sns_bot">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="pyconnect.tcp_ip.html">pyconnect.tcp_ip package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="pyconnect.tcp_ip.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyconnect.tcp_ip.html#module-pyconnect.tcp_ip.client">pyconnect.tcp_ip.client module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pyconnect.tcp_ip.html#pyconnect.tcp_ip.client.TcpIpClient"><code class="docutils literal notranslate"><span class="pre">TcpIpClient</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pyconnect.tcp_ip.html#pyconnect.tcp_ip.client.TcpIpClient.get_return"><code class="docutils literal notranslate"><span class="pre">TcpIpClient.get_return()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyconnect.tcp_ip.html#pyconnect.tcp_ip.client.TcpIpClient.send"><code class="docutils literal notranslate"><span class="pre">TcpIpClient.send()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyconnect.tcp_ip.html#pyconnect.tcp_ip.client.TcpIpClient.send_dict"><code class="docutils literal notranslate"><span class="pre">TcpIpClient.send_dict()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="pyconnect.tcp_ip.html#pyconnect.tcp_ip.client.test_client"><code class="docutils literal notranslate"><span class="pre">test_client()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="pyconnect.tcp_ip.html#module-pyconnect.tcp_ip.server">pyconnect.tcp_ip.server module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pyconnect.tcp_ip.html#pyconnect.tcp_ip.server.TcpIpServer"><code class="docutils literal notranslate"><span class="pre">TcpIpServer</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pyconnect.tcp_ip.html#pyconnect.tcp_ip.server.TcpIpServer.handle_client"><code class="docutils literal notranslate"><span class="pre">TcpIpServer.handle_client()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyconnect.tcp_ip.html#pyconnect.tcp_ip.server.TcpIpServer.listen"><code class="docutils literal notranslate"><span class="pre">TcpIpServer.listen()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyconnect.tcp_ip.html#pyconnect.tcp_ip.server.TcpIpServer.process_data"><code class="docutils literal notranslate"><span class="pre">TcpIpServer.process_data()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyconnect.tcp_ip.html#pyconnect.tcp_ip.server.TcpIpServer.send_data"><code class="docutils literal notranslate"><span class="pre">TcpIpServer.send_data()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyconnect.tcp_ip.html#pyconnect.tcp_ip.server.TcpIpServer.stop"><code class="docutils literal notranslate"><span class="pre">TcpIpServer.stop()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="pyconnect.tcp_ip.html#pyconnect.tcp_ip.server.run_server"><code class="docutils literal notranslate"><span class="pre">run_server()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="pyconnect.tcp_ip.html#module-pyconnect.tcp_ip">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="pyconnect.zmq.html">pyconnect.zmq package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="pyconnect.zmq.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pyconnect.zmq.html#module-pyconnect.zmq.client">pyconnect.zmq.client module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pyconnect.zmq.html#pyconnect.zmq.client.ZmqClient"><code class="docutils literal notranslate"><span class="pre">ZmqClient</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pyconnect.zmq.html#pyconnect.zmq.client.ZmqClient.send"><code class="docutils literal notranslate"><span class="pre">ZmqClient.send()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="pyconnect.zmq.html#pyconnect.zmq.client.test_client"><code class="docutils literal notranslate"><span class="pre">test_client()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="pyconnect.zmq.html#module-pyconnect.zmq.server">pyconnect.zmq.server module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pyconnect.zmq.html#pyconnect.zmq.server.ZmqServer"><code class="docutils literal notranslate"><span class="pre">ZmqServer</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pyconnect.zmq.html#pyconnect.zmq.server.ZmqServer.listen"><code class="docutils literal notranslate"><span class="pre">ZmqServer.listen()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="pyconnect.zmq.html#pyconnect.zmq.server.run_server"><code class="docutils literal notranslate"><span class="pre">run_server()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="pyconnect.zmq.html#module-pyconnect.zmq">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading"></a></h2>
+</section>
+<section id="module-pyconnect.run_client">
+<span id="pyconnect-run-client-module"></span><h2>pyconnect.run_client module<a class="headerlink" href="#module-pyconnect.run_client" title="Link to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="pyconnect.run_client.get_client">
+<span class="sig-prename descclassname"><span class="pre">pyconnect.run_client.</span></span><span class="sig-name descname"><span class="pre">get_client</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">client_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'tcp'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">host</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'localhost'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">port</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">8888</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/pyconnect/run_client.html#get_client"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyconnect.run_client.get_client" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pyconnect.run_client.run_client">
+<span class="sig-prename descclassname"><span class="pre">pyconnect.run_client.</span></span><span class="sig-name descname"><span class="pre">run_client</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">client</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/pyconnect/run_client.html#run_client"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyconnect.run_client.run_client" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</section>
+<section id="module-pyconnect.utils">
+<span id="pyconnect-utils-module"></span><h2>pyconnect.utils module<a class="headerlink" href="#module-pyconnect.utils" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="pyconnect.utils.Timer">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pyconnect.utils.</span></span><span class="sig-name descname"><span class="pre">Timer</span></span><a class="reference internal" href="../../_modules/pyconnect/utils.html#Timer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyconnect.utils.Timer" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="pyconnect.utils.Timer.add_time">
+<span class="sig-name descname"><span class="pre">add_time</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">label</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'NaN'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/pyconnect/utils.html#Timer.add_time"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyconnect.utils.Timer.add_time" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pyconnect.utils.Timer.fps">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">fps</span></span><a class="headerlink" href="#pyconnect.utils.Timer.fps" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyconnect.utils.Timer.pin_time">
+<span class="sig-name descname"><span class="pre">pin_time</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">label</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'NaN'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/pyconnect/utils.html#Timer.pin_time"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyconnect.utils.Timer.pin_time" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pyconnect.utils.Timer.pin_times_str">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">pin_times_str</span></span><a class="headerlink" href="#pyconnect.utils.Timer.pin_times_str" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyconnect.utils.Timer.reset">
+<span class="sig-name descname"><span class="pre">reset</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/pyconnect/utils.html#Timer.reset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyconnect.utils.Timer.reset" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pyconnect.utils.Timer.run_time">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">run_time</span></span><a class="headerlink" href="#pyconnect.utils.Timer.run_time" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="pyconnect.utils.Timer.run_time_str">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">run_time_str</span></span><a class="headerlink" href="#pyconnect.utils.Timer.run_time_str" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pyconnect.utils.byte2dict">
+<span class="sig-prename descclassname"><span class="pre">pyconnect.utils.</span></span><span class="sig-name descname"><span class="pre">byte2dict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">byteData</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/pyconnect/utils.html#byte2dict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyconnect.utils.byte2dict" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pyconnect.utils.byte2str">
+<span class="sig-prename descclassname"><span class="pre">pyconnect.utils.</span></span><span class="sig-name descname"><span class="pre">byte2str</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">byteData</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/pyconnect/utils.html#byte2str"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyconnect.utils.byte2str" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pyconnect.utils.crop_image">
+<span class="sig-prename descclassname"><span class="pre">pyconnect.utils.</span></span><span class="sig-name descname"><span class="pre">crop_image</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">im</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">crop_roi</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">keep_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/pyconnect/utils.html#crop_image"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyconnect.utils.crop_image" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pyconnect.utils.data_info">
+<span class="sig-prename descclassname"><span class="pre">pyconnect.utils.</span></span><span class="sig-name descname"><span class="pre">data_info</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/pyconnect/utils.html#data_info"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyconnect.utils.data_info" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pyconnect.utils.decode_actclient_recmsg">
+<span class="sig-prename descclassname"><span class="pre">pyconnect.utils.</span></span><span class="sig-name descname"><span class="pre">decode_actclient_recmsg</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">res</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyconnect.utils.decode_actclient_recmsg" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pyconnect.utils.decode_actserver_revmsg">
+<span class="sig-prename descclassname"><span class="pre">pyconnect.utils.</span></span><span class="sig-name descname"><span class="pre">decode_actserver_revmsg</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">req</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyconnect.utils.decode_actserver_revmsg" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pyconnect.utils.decode_caminfomsg">
+<span class="sig-prename descclassname"><span class="pre">pyconnect.utils.</span></span><span class="sig-name descname"><span class="pre">decode_caminfomsg</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">msg</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/pyconnect/utils.html#decode_caminfomsg"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyconnect.utils.decode_caminfomsg" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pyconnect.utils.decode_imgmsg">
+<span class="sig-prename descclassname"><span class="pre">pyconnect.utils.</span></span><span class="sig-name descname"><span class="pre">decode_imgmsg</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">msg</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/pyconnect/utils.html#decode_imgmsg"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyconnect.utils.decode_imgmsg" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pyconnect.utils.decode_srvclient_revmsg">
+<span class="sig-prename descclassname"><span class="pre">pyconnect.utils.</span></span><span class="sig-name descname"><span class="pre">decode_srvclient_revmsg</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">res</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyconnect.utils.decode_srvclient_revmsg" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pyconnect.utils.decode_srvserver_revmsg">
+<span class="sig-prename descclassname"><span class="pre">pyconnect.utils.</span></span><span class="sig-name descname"><span class="pre">decode_srvserver_revmsg</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">req</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyconnect.utils.decode_srvserver_revmsg" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pyconnect.utils.decode_topic_strmsg">
+<span class="sig-prename descclassname"><span class="pre">pyconnect.utils.</span></span><span class="sig-name descname"><span class="pre">decode_topic_strmsg</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">msg</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyconnect.utils.decode_topic_strmsg" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pyconnect.utils.demo">
+<span class="sig-prename descclassname"><span class="pre">pyconnect.utils.</span></span><span class="sig-name descname"><span class="pre">demo</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/pyconnect/utils.html#demo"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyconnect.utils.demo" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pyconnect.utils.dict2byte">
+<span class="sig-prename descclassname"><span class="pre">pyconnect.utils.</span></span><span class="sig-name descname"><span class="pre">dict2byte</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">aDict</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/pyconnect/utils.html#dict2byte"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyconnect.utils.dict2byte" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pyconnect.utils.dict2str">
+<span class="sig-prename descclassname"><span class="pre">pyconnect.utils.</span></span><span class="sig-name descname"><span class="pre">dict2str</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">aDict</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyconnect.utils.dict2str" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pyconnect.utils.encode_actclient_sendmsg">
+<span class="sig-prename descclassname"><span class="pre">pyconnect.utils.</span></span><span class="sig-name descname"><span class="pre">encode_actclient_sendmsg</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">req</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/pyconnect/utils.html#encode_actclient_sendmsg"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyconnect.utils.encode_actclient_sendmsg" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pyconnect.utils.encode_actserver_retmsg">
+<span class="sig-prename descclassname"><span class="pre">pyconnect.utils.</span></span><span class="sig-name descname"><span class="pre">encode_actserver_retmsg</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">res</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/pyconnect/utils.html#encode_actserver_retmsg"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyconnect.utils.encode_actserver_retmsg" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pyconnect.utils.encode_imgmsg">
+<span class="sig-prename descclassname"><span class="pre">pyconnect.utils.</span></span><span class="sig-name descname"><span class="pre">encode_imgmsg</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">img</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">msg</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/pyconnect/utils.html#encode_imgmsg"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyconnect.utils.encode_imgmsg" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pyconnect.utils.encode_srvclient_sendmsg">
+<span class="sig-prename descclassname"><span class="pre">pyconnect.utils.</span></span><span class="sig-name descname"><span class="pre">encode_srvclient_sendmsg</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">req</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/pyconnect/utils.html#encode_srvclient_sendmsg"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyconnect.utils.encode_srvclient_sendmsg" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pyconnect.utils.encode_srvserver_retmsg">
+<span class="sig-prename descclassname"><span class="pre">pyconnect.utils.</span></span><span class="sig-name descname"><span class="pre">encode_srvserver_retmsg</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">res</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/pyconnect/utils.html#encode_srvserver_retmsg"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyconnect.utils.encode_srvserver_retmsg" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pyconnect.utils.encode_topic_strmsg">
+<span class="sig-prename descclassname"><span class="pre">pyconnect.utils.</span></span><span class="sig-name descname"><span class="pre">encode_topic_strmsg</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">msg</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/pyconnect/utils.html#encode_topic_strmsg"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyconnect.utils.encode_topic_strmsg" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pyconnect.utils.evaluate">
+<span class="sig-prename descclassname"><span class="pre">pyconnect.utils.</span></span><span class="sig-name descname"><span class="pre">evaluate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">v</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/pyconnect/utils.html#evaluate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyconnect.utils.evaluate" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pyconnect.utils.findNumdersInString">
+<span class="sig-prename descclassname"><span class="pre">pyconnect.utils.</span></span><span class="sig-name descname"><span class="pre">findNumdersInString</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sentence</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/pyconnect/utils.html#findNumdersInString"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyconnect.utils.findNumdersInString" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pyconnect.utils.get_attrs">
+<span class="sig-prename descclassname"><span class="pre">pyconnect.utils.</span></span><span class="sig-name descname"><span class="pre">get_attrs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">atrs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyconnect.utils.get_attrs" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pyconnect.utils.parse_keys_values">
+<span class="sig-prename descclassname"><span class="pre">pyconnect.utils.</span></span><span class="sig-name descname"><span class="pre">parse_keys_values</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">optional_args</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">{}</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/pyconnect/utils.html#parse_keys_values"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyconnect.utils.parse_keys_values" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pyconnect.utils.printif">
+<span class="sig-prename descclassname"><span class="pre">pyconnect.utils.</span></span><span class="sig-name descname"><span class="pre">printif</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">msg</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">do_print</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/pyconnect/utils.html#printif"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyconnect.utils.printif" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pyconnect.utils.read_json">
+<span class="sig-prename descclassname"><span class="pre">pyconnect.utils.</span></span><span class="sig-name descname"><span class="pre">read_json</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filepath</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/pyconnect/utils.html#read_json"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyconnect.utils.read_json" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pyconnect.utils.recvall">
+<span class="sig-prename descclassname"><span class="pre">pyconnect.utils.</span></span><span class="sig-name descname"><span class="pre">recvall</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sock</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">count</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/pyconnect/utils.html#recvall"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyconnect.utils.recvall" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pyconnect.utils.resuse_recent_msg">
+<span class="sig-prename descclassname"><span class="pre">pyconnect.utils.</span></span><span class="sig-name descname"><span class="pre">resuse_recent_msg</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">msg</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recent_msg_file</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'recent_msg'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/pyconnect/utils.html#resuse_recent_msg"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyconnect.utils.resuse_recent_msg" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pyconnect.utils.set_atrrs">
+<span class="sig-prename descclassname"><span class="pre">pyconnect.utils.</span></span><span class="sig-name descname"><span class="pre">set_atrrs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">adict</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyconnect.utils.set_atrrs" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pyconnect.utils.str2byte">
+<span class="sig-prename descclassname"><span class="pre">pyconnect.utils.</span></span><span class="sig-name descname"><span class="pre">str2byte</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">astr</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/pyconnect/utils.html#str2byte"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyconnect.utils.str2byte" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pyconnect.utils.str2dict">
+<span class="sig-prename descclassname"><span class="pre">pyconnect.utils.</span></span><span class="sig-name descname"><span class="pre">str2dict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">astr</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyconnect.utils.str2dict" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pyconnect.utils.strftime">
+<span class="sig-prename descclassname"><span class="pre">pyconnect.utils.</span></span><span class="sig-name descname"><span class="pre">strftime</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyconnect.utils.strftime" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pyconnect.utils.suggest_input">
+<span class="sig-prename descclassname"><span class="pre">pyconnect.utils.</span></span><span class="sig-name descname"><span class="pre">suggest_input</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">guide</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Input:</span> <span class="pre">'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recent_msg_file</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'recent_msg'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/pyconnect/utils.html#suggest_input"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyconnect.utils.suggest_input" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pyconnect.utils.type_name">
+<span class="sig-prename descclassname"><span class="pre">pyconnect.utils.</span></span><span class="sig-name descname"><span class="pre">type_name</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">v</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyconnect.utils.type_name" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pyconnect.utils.update_dict">
+<span class="sig-prename descclassname"><span class="pre">pyconnect.utils.</span></span><span class="sig-name descname"><span class="pre">update_dict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">adict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyconnect.utils.update_dict" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pyconnect.utils.write_json">
+<span class="sig-prename descclassname"><span class="pre">pyconnect.utils.</span></span><span class="sig-name descname"><span class="pre">write_json</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filepath</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">adict</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/pyconnect/utils.html#write_json"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyconnect.utils.write_json" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</section>
+<section id="module-pyconnect">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-pyconnect" title="Link to this heading"></a></h2>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="modules.html" class="btn btn-neutral float-left" title="pyconnect" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="pyconnect.llm.html" class="btn btn-neutral float-right" title="pyconnect.llm package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Trung Bui.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,363 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>configs.device_clients &mdash; Care Robot 1.0.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=8d563738"></script>
+      <script src="../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            Care Robot
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../contents/intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../contents/get_started.html">Get started</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../apidoc/app_carerobot/modules.html">app_carerobot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../apidoc/pyconnect/modules.html">pyconnect</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Care Robot</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">configs.device_clients</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for configs.device_clients</h1><div class="highlight"><pre>
+<span></span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sensor_msgs.msg</span><span class="w"> </span><span class="kn">import</span> <span class="n">Image</span><span class="p">,</span> <span class="n">CompressedImage</span><span class="p">,</span> <span class="n">CameraInfo</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pyconnect.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">decode_caminfomsg</span><span class="p">,</span> <span class="n">decode_imgmsg</span><span class="p">,</span><span class="n">evaluate</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">math</span><span class="o">,</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_attrs</span><span class="p">,</span> <span class="n">set_atrrs</span><span class="p">,</span> <span class="n">update_dict</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">kcare_robot_ros2_controller.src.master.kcare_utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">RobotState</span><span class="p">,</span> <span class="n">RobotParam</span>
+<span class="k">try</span><span class="p">:</span> 
+    <span class="kn">from</span><span class="w"> </span><span class="nn">xarm_msgs.msg</span><span class="w"> </span><span class="kn">import</span> <span class="n">RobotMsg</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">xarm_msgs.srv</span><span class="w"> </span><span class="kn">import</span> <span class="n">MoveJoint</span><span class="p">,</span> <span class="n">MoveCartesian</span><span class="p">,</span> <span class="n">SetInt16</span><span class="p">,</span> <span class="n">SetInt16ById</span><span class="p">,</span> <span class="n">Call</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">kcare_robot_ros2_controller_msgs.msg</span><span class="w"> </span><span class="kn">import</span> <span class="n">HeadCommand</span><span class="p">,</span> <span class="n">HeadState</span><span class="p">,</span> <span class="n">LMCommand</span><span class="p">,</span> <span class="n">LMState</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">kcare_robot_ros2_controller_msgs.srv</span><span class="w"> </span><span class="kn">import</span> <span class="n">ElevationCommand</span><span class="p">,</span> <span class="n">GripperCommand</span><span class="p">,</span> <span class="n">HeadPoseCommand</span>
+<span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;import device error: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+
+
+<span class="n">GRIP_WIDTH_RANGE</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1000</span><span class="p">]</span>
+<span class="n">LIFT_RANGE</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">800</span><span class="p">]</span>
+<span class="n">HEAD_RY_RANGE</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mi">50</span><span class="p">,</span> <span class="mi">10</span><span class="p">]</span>
+<span class="n">DMOVE_RANGE</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mf">200.</span><span class="p">,</span> <span class="mf">200.</span><span class="p">]</span>
+<span class="n">ARM_ENPOINT</span> <span class="o">=</span> <span class="p">[</span><span class="mi">300</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">268</span><span class="p">]</span> <span class="c1"># mm</span>
+<span class="n">WRIST_DIAMETER</span> <span class="o">=</span> <span class="mi">160</span> <span class="c1">#mm</span>
+
+
+<div class="viewcode-block" id="task2dict">
+<a class="viewcode-back" href="../../apidoc/app_carerobot/configs.html#configs.device_clients.task2dict">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">task2dict</span><span class="p">(</span><span class="n">task</span><span class="p">):</span>
+    <span class="n">inp</span> <span class="o">=</span> <span class="n">task</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;::&#39;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">inp</span> <span class="o">=</span> <span class="p">[</span><span class="n">el</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;=&#39;</span><span class="p">)</span> <span class="k">for</span> <span class="n">el</span> <span class="ow">in</span> <span class="n">inp</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">)]</span> <span class="k">if</span> <span class="s1">&#39;,&#39;</span> <span class="ow">in</span> <span class="n">inp</span> <span class="k">else</span> <span class="p">[</span><span class="n">inp</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;=&#39;</span><span class="p">)]</span>
+    <span class="k">return</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="n">evaluate</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">inp</span><span class="p">}</span></div>
+
+
+<div class="viewcode-block" id="grip_encodefunc">
+<a class="viewcode-back" href="../../apidoc/app_carerobot/configs.html#configs.device_clients.grip_encodefunc">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">grip_encodefunc</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">req</span><span class="p">):</span>
+    <span class="n">inp</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;task&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;::&#39;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">grip_width</span> <span class="o">=</span> <span class="n">RobotParam</span><span class="o">.</span><span class="n">grip_open</span> <span class="k">if</span> <span class="n">inp</span><span class="o">==</span><span class="s1">&#39;open&#39;</span> <span class="k">else</span> <span class="n">RobotParam</span><span class="o">.</span><span class="n">grip_close</span> <span class="k">if</span> <span class="n">inp</span><span class="o">==</span><span class="s1">&#39;close&#39;</span> <span class="k">else</span> <span class="nb">int</span><span class="p">(</span><span class="n">inp</span><span class="p">)</span>
+    <span class="n">grip_width</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="n">grip_width</span><span class="p">,</span> <span class="n">GRIP_WIDTH_RANGE</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">GRIP_WIDTH_RANGE</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;grip width: </span><span class="si">{</span><span class="n">grip_width</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="n">set_atrrs</span><span class="p">(</span><span class="n">req</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;pose&#39;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">grip_width</span><span class="p">),</span> <span class="s1">&#39;force&#39;</span><span class="p">:</span> <span class="n">RobotParam</span><span class="o">.</span><span class="n">grip_min_force</span><span class="p">})</span>
+    <span class="k">return</span> <span class="n">req</span></div>
+
+
+
+<div class="viewcode-block" id="lift_encode">
+<a class="viewcode-back" href="../../apidoc/app_carerobot/configs.html#configs.device_clients.lift_encode">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">lift_encode</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">req</span><span class="p">):</span>
+    <span class="n">inp</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;task&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;::&#39;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">mm</span> <span class="o">=</span> <span class="n">RobotParam</span><span class="o">.</span><span class="n">elev_home</span> <span class="k">if</span> <span class="n">inp</span><span class="o">==</span><span class="s1">&#39;home&#39;</span> <span class="k">else</span> <span class="nb">float</span><span class="p">(</span><span class="n">inp</span><span class="p">)</span>
+    <span class="n">mm</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="n">mm</span><span class="p">,</span> <span class="n">LIFT_RANGE</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">LIFT_RANGE</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;lifting to </span><span class="si">{</span><span class="n">mm</span><span class="o">/</span><span class="mi">1000</span><span class="si">:</span><span class="s1">.3f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="n">set_atrrs</span><span class="p">(</span><span class="n">req</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;move&#39;</span><span class="p">:</span> <span class="n">mm</span><span class="o">/</span><span class="mi">1000</span><span class="p">,</span> <span class="s1">&#39;until_complete&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">})</span>
+    <span class="k">return</span> <span class="n">req</span></div>
+
+
+
+<div class="viewcode-block" id="armdmove_encodefunc">
+<a class="viewcode-back" href="../../apidoc/app_carerobot/configs.html#configs.device_clients.armdmove_encodefunc">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">armdmove_encodefunc</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">req</span><span class="p">):</span>
+    <span class="n">inputs</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;speed&#39;</span><span class="p">:</span> <span class="n">RobotParam</span><span class="o">.</span><span class="n">l_arm_speed</span><span class="p">,</span> <span class="s1">&#39;acc&#39;</span><span class="p">:</span> <span class="n">RobotParam</span><span class="o">.</span><span class="n">l_arm_accel</span><span class="p">,</span> 
+              <span class="s1">&#39;mvtime&#39;</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">,</span> <span class="s1">&#39;wait&#39;</span><span class="p">:</span><span class="kc">True</span><span class="p">,</span> <span class="s1">&#39;relative&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span> <span class="s1">&#39;motion_type&#39;</span><span class="p">:</span><span class="mi">0</span><span class="p">}</span>
+    <span class="n">dmoves</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.</span><span class="p">,</span><span class="mf">0.</span><span class="p">,</span><span class="mf">0.</span><span class="p">,</span><span class="mf">0.</span><span class="p">,</span><span class="mf">0.</span><span class="p">,</span><span class="mf">0.</span><span class="p">]</span>
+    <span class="n">dmove_labels</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;dx&#39;</span><span class="p">,</span> <span class="s1">&#39;dy&#39;</span><span class="p">,</span> <span class="s1">&#39;dz&#39;</span><span class="p">,</span> <span class="s1">&#39;drx&#39;</span><span class="p">,</span> <span class="s1">&#39;dry&#39;</span><span class="p">,</span> <span class="s1">&#39;drz&#39;</span><span class="p">]</span>
+
+    <span class="n">inp</span> <span class="o">=</span> <span class="n">task2dict</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;task&#39;</span><span class="p">])</span>
+    <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">inp</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="n">i</span> <span class="o">=</span> <span class="n">dmove_labels</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">k</span><span class="p">)</span>
+        <span class="n">dmoves</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="k">if</span> <span class="n">i</span><span class="o">&lt;=</span><span class="mi">2</span> <span class="k">else</span> <span class="n">v</span><span class="o">/</span><span class="mf">180.</span><span class="o">*</span><span class="n">math</span><span class="o">.</span><span class="n">pi</span>
+
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>
+        <span class="n">dmoves</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="n">dmoves</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">DMOVE_RANGE</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">DMOVE_RANGE</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Arm different moves: </span><span class="si">{</span><span class="n">dmoves</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+
+    <span class="n">set_atrrs</span><span class="p">(</span><span class="n">req</span><span class="p">,</span> <span class="n">update_dict</span><span class="p">(</span><span class="n">inputs</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;pose&#39;</span><span class="p">:</span> <span class="n">dmoves</span><span class="p">}))</span>
+    <span class="k">return</span> <span class="n">req</span></div>
+
+
+<span class="n">str2joinangle</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">join_angle_str</span><span class="p">:[</span><span class="n">math</span><span class="o">.</span><span class="n">radians</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">el</span><span class="o">.</span><span class="n">strip</span><span class="p">()))</span> <span class="k">for</span> <span class="n">el</span> <span class="ow">in</span> <span class="n">join_angle_str</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">)]</span>
+<div class="viewcode-block" id="move_angles_encodefunc">
+<a class="viewcode-back" href="../../apidoc/app_carerobot/configs.html#configs.device_clients.move_angles_encodefunc">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">move_angles_encodefunc</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">req</span><span class="p">):</span>
+    <span class="n">inputs</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;speed&#39;</span><span class="p">:</span> <span class="n">RobotParam</span><span class="o">.</span><span class="n">j_arm_speed</span><span class="p">,</span> <span class="s1">&#39;acc&#39;</span><span class="p">:</span> <span class="n">RobotParam</span><span class="o">.</span><span class="n">j_arm_accel</span><span class="p">}</span>
+
+    <span class="n">inp</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;task&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;::&#39;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">joint_angles</span> <span class="o">=</span> <span class="n">RobotParam</span><span class="o">.</span><span class="n">arm_home</span> <span class="k">if</span> <span class="n">inp</span><span class="o">==</span><span class="s1">&#39;home&#39;</span> <span class="k">else</span> <span class="n">RobotParam</span><span class="o">.</span><span class="n">arm_ready</span> <span class="k">if</span> <span class="n">inp</span><span class="o">==</span><span class="s1">&#39;ready&#39;</span> <span class="k">else</span> <span class="n">str2joinangle</span><span class="p">(</span><span class="n">inp</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Join angles: </span><span class="si">{</span><span class="n">joint_angles</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+
+    <span class="n">set_atrrs</span><span class="p">(</span><span class="n">req</span><span class="p">,</span> <span class="n">update_dict</span><span class="p">(</span><span class="n">inputs</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;angles&#39;</span><span class="p">:</span> <span class="n">joint_angles</span><span class="p">,}))</span>
+    <span class="k">return</span> <span class="n">req</span></div>
+
+
+
+<div class="viewcode-block" id="movehead_encodefunc">
+<a class="viewcode-back" href="../../apidoc/app_carerobot/configs.html#configs.device_clients.movehead_encodefunc">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">movehead_encodefunc</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">req</span><span class="p">):</span>
+    <span class="n">inputs</span> <span class="o">=</span> <span class="n">update_dict</span><span class="p">({</span><span class="s1">&#39;rz&#39;</span><span class="p">:</span> <span class="mf">0.</span><span class="p">,</span> <span class="s1">&#39;ry&#39;</span><span class="p">:</span><span class="mf">0.</span><span class="p">,</span> <span class="s1">&#39;wait&#39;</span><span class="p">:</span><span class="kc">True</span><span class="p">},</span> <span class="n">task2dict</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;task&#39;</span><span class="p">]))</span>
+    <span class="n">inputs</span><span class="p">[</span><span class="s1">&#39;ry&#39;</span><span class="p">],</span> <span class="n">inputs</span><span class="p">[</span><span class="s1">&#39;rz&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="n">inputs</span><span class="p">[</span><span class="s1">&#39;ry&#39;</span><span class="p">],</span> <span class="n">HEAD_RY_RANGE</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">HEAD_RY_RANGE</span><span class="p">[</span><span class="mi">1</span><span class="p">])),</span> <span class="nb">float</span><span class="p">(</span><span class="n">inputs</span><span class="p">[</span><span class="s1">&#39;rz&#39;</span><span class="p">])</span>
+
+    <span class="n">set_atrrs</span><span class="p">(</span><span class="n">req</span><span class="p">,</span> <span class="n">inputs</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">req</span></div>
+
+
+<div class="viewcode-block" id="enablemotion_encodefunc">
+<a class="viewcode-back" href="../../apidoc/app_carerobot/configs.html#configs.device_clients.enablemotion_encodefunc">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">enablemotion_encodefunc</span><span class="p">(</span><span class="n">data</span><span class="p">,</span><span class="n">req</span><span class="p">):</span>
+    <span class="n">inputs</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;id&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;data&#39;</span><span class="p">:</span><span class="mi">1</span><span class="p">}</span>
+    
+    <span class="n">set_atrrs</span><span class="p">(</span><span class="n">req</span><span class="p">,</span> <span class="n">update_dict</span><span class="p">(</span><span class="n">inputs</span><span class="p">,</span> <span class="n">task2dict</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;task&#39;</span><span class="p">])))</span>
+    <span class="k">return</span> <span class="n">req</span></div>
+
+
+<div class="viewcode-block" id="dabai_decodefunc">
+<a class="viewcode-back" href="../../apidoc/app_carerobot/configs.html#configs.device_clients.dabai_decodefunc">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">dabai_decodefunc</span><span class="p">(</span><span class="n">msg</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">decode_imgmsg</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span></div>
+
+
+
+<span class="c1"># device control functions</span>
+<span class="n">DEVICE_CLIENT_CONFIGS</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;femto_rgb&#39;</span><span class="p">:{</span>
+        <span class="s1">&#39;agent_name&#39;</span><span class="p">:</span> <span class="s1">&#39;/femto/color/image_raw/compressed&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;agent_type&#39;</span><span class="p">:</span> <span class="s1">&#39;sub&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;data_interface&#39;</span><span class="p">:</span> <span class="n">CompressedImage</span><span class="p">,</span>
+        <span class="s1">&#39;decode_func&#39;</span><span class="p">:</span> <span class="n">decode_imgmsg</span><span class="p">,</span>
+        <span class="s1">&#39;do_log_msg&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="p">},</span>
+    <span class="s1">&#39;femto_depth&#39;</span><span class="p">:{</span>
+        <span class="s1">&#39;agent_name&#39;</span><span class="p">:</span> <span class="s1">&#39;/femto/depth/image_raw/compressedDepth&#39;</span><span class="p">,</span><span class="c1">#&#39;/femto/depth/image_raw&#39;,</span>
+        <span class="s1">&#39;agent_type&#39;</span><span class="p">:</span> <span class="s1">&#39;sub&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;data_interface&#39;</span><span class="p">:</span> <span class="n">CompressedImage</span><span class="p">,</span>
+        <span class="s1">&#39;decode_func&#39;</span><span class="p">:</span> <span class="n">decode_imgmsg</span><span class="p">,</span>
+        <span class="s1">&#39;do_log_msg&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="p">},</span>
+    <span class="s1">&#39;femto_caminfo&#39;</span><span class="p">:{</span>
+        <span class="s1">&#39;agent_name&#39;</span><span class="p">:</span> <span class="s1">&#39;/femto/color/camera_info&#39;</span><span class="p">,</span><span class="c1">#&#39;/femto/color/camera_info&#39;,</span>
+        <span class="s1">&#39;agent_type&#39;</span><span class="p">:</span> <span class="s1">&#39;sub&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;data_interface&#39;</span><span class="p">:</span> <span class="n">CameraInfo</span><span class="p">,</span>
+        <span class="s1">&#39;decode_func&#39;</span><span class="p">:</span> <span class="n">decode_caminfomsg</span><span class="p">,</span>
+        <span class="s1">&#39;do_log_msg&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="p">},</span>
+    <span class="s1">&#39;dabai_rgb&#39;</span><span class="p">:{</span>
+        <span class="s1">&#39;agent_name&#39;</span><span class="p">:</span> <span class="s1">&#39;/hand/color/image_raw&#39;</span><span class="p">,</span><span class="c1">#/compressed&#39;,</span>
+        <span class="s1">&#39;agent_type&#39;</span><span class="p">:</span> <span class="s1">&#39;sub&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;data_interface&#39;</span><span class="p">:</span> <span class="n">Image</span><span class="p">,</span>
+        <span class="s1">&#39;decode_func&#39;</span><span class="p">:</span> <span class="n">dabai_decodefunc</span><span class="p">,</span>
+        <span class="s1">&#39;do_log_msg&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="p">},</span>
+    <span class="s1">&#39;dabai_depth&#39;</span><span class="p">:{</span>
+        <span class="s1">&#39;agent_name&#39;</span><span class="p">:</span> <span class="s1">&#39;/hand/depth/image_raw&#39;</span><span class="p">,</span><span class="c1">#/compressedDepth&#39;,</span>
+        <span class="s1">&#39;agent_type&#39;</span><span class="p">:</span> <span class="s1">&#39;sub&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;data_interface&#39;</span><span class="p">:</span> <span class="n">Image</span><span class="p">,</span>
+        <span class="s1">&#39;decode_func&#39;</span><span class="p">:</span> <span class="n">decode_imgmsg</span><span class="p">,</span>
+        <span class="s1">&#39;do_log_msg&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="p">},</span>
+    <span class="s1">&#39;dabai_caminfo&#39;</span><span class="p">:{</span>
+        <span class="s1">&#39;agent_name&#39;</span><span class="p">:</span> <span class="s1">&#39;/hand/color/camera_info&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;agent_type&#39;</span><span class="p">:</span> <span class="s1">&#39;sub&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;data_interface&#39;</span><span class="p">:</span> <span class="n">CameraInfo</span><span class="p">,</span>
+        <span class="s1">&#39;decode_func&#39;</span><span class="p">:</span> <span class="n">decode_caminfomsg</span><span class="p">,</span>
+        <span class="s1">&#39;do_log_msg&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="p">},</span>
+    <span class="s1">&#39;move_angles&#39;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s1">&#39;agent_name&#39;</span><span class="p">:</span> <span class="s1">&#39;/xarm/set_servo_angle&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;data_interface&#39;</span><span class="p">:</span> <span class="n">MoveJoint</span><span class="p">,</span>
+        <span class="s1">&#39;agent_type&#39;</span><span class="p">:</span> <span class="s1">&#39;service_client&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;encode_func&#39;</span><span class="p">:</span> <span class="n">move_angles_encodefunc</span><span class="p">,</span>
+        <span class="s1">&#39;decode_func&#39;</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">res</span><span class="p">:</span> <span class="n">update_dict</span><span class="p">({</span><span class="s1">&#39;isdone&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">},</span> <span class="n">get_attrs</span><span class="p">(</span><span class="n">res</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;ret&#39;</span><span class="p">,</span> <span class="s1">&#39;message&#39;</span><span class="p">])),</span>
+        <span class="s1">&#39;do_log_msg&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="p">},</span>
+    <span class="s1">&#39;arm_dmove&#39;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s1">&#39;agent_name&#39;</span><span class="p">:</span> <span class="s1">&#39;/xarm/set_position&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;data_interface&#39;</span><span class="p">:</span> <span class="n">MoveCartesian</span><span class="p">,</span>
+        <span class="s1">&#39;agent_type&#39;</span><span class="p">:</span> <span class="s1">&#39;service_client&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;encode_func&#39;</span><span class="p">:</span> <span class="n">armdmove_encodefunc</span><span class="p">,</span>
+        <span class="s1">&#39;decode_func&#39;</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">res</span><span class="p">:</span> <span class="n">update_dict</span><span class="p">({</span><span class="s1">&#39;isdone&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">},</span> <span class="n">get_attrs</span><span class="p">(</span><span class="n">res</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;ret&#39;</span><span class="p">,</span> <span class="s1">&#39;message&#39;</span><span class="p">])),</span>
+        <span class="s1">&#39;do_log_msg&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="p">},</span>
+    <span class="s1">&#39;enable_motion&#39;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s1">&#39;agent_name&#39;</span><span class="p">:</span> <span class="s1">&#39;/xarm/motion_enable&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;data_interface&#39;</span><span class="p">:</span> <span class="n">SetInt16ById</span><span class="p">,</span>
+        <span class="s1">&#39;agent_type&#39;</span><span class="p">:</span> <span class="s1">&#39;service_client&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;encode_func&#39;</span><span class="p">:</span> <span class="n">enablemotion_encodefunc</span><span class="p">,</span>
+        <span class="s1">&#39;decode_func&#39;</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">res</span><span class="p">:</span> <span class="n">update_dict</span><span class="p">({</span><span class="s1">&#39;isdone&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">},</span> <span class="n">get_attrs</span><span class="p">(</span><span class="n">res</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;ret&#39;</span><span class="p">,</span> <span class="s1">&#39;message&#39;</span><span class="p">])),</span>
+        <span class="s1">&#39;do_log_msg&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="p">},</span>
+    <span class="s1">&#39;set_mode&#39;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s1">&#39;agent_name&#39;</span><span class="p">:</span> <span class="s1">&#39;/xarm/set_mode&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;data_interface&#39;</span><span class="p">:</span> <span class="n">SetInt16</span><span class="p">,</span>
+        <span class="s1">&#39;agent_type&#39;</span><span class="p">:</span> <span class="s1">&#39;service_client&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;encode_func&#39;</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">data</span><span class="p">,</span> <span class="n">req</span><span class="p">:</span> <span class="n">set_atrrs</span><span class="p">(</span><span class="n">req</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;data&#39;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;task&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;::&#39;</span><span class="p">)[</span><span class="mi">1</span><span class="p">])}),</span>
+        <span class="s1">&#39;decode_func&#39;</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">res</span><span class="p">:</span> <span class="n">update_dict</span><span class="p">({</span><span class="s1">&#39;isdone&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">},</span> <span class="n">get_attrs</span><span class="p">(</span><span class="n">res</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;ret&#39;</span><span class="p">,</span> <span class="s1">&#39;message&#39;</span><span class="p">])),</span>
+    <span class="p">},</span>
+    <span class="s1">&#39;set_state&#39;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s1">&#39;agent_name&#39;</span><span class="p">:</span> <span class="s1">&#39;/xarm/set_state&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;data_interface&#39;</span><span class="p">:</span> <span class="n">SetInt16</span><span class="p">,</span>
+        <span class="s1">&#39;agent_type&#39;</span><span class="p">:</span> <span class="s1">&#39;service_client&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;encode_func&#39;</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">data</span><span class="p">,</span> <span class="n">req</span><span class="p">:</span> <span class="n">set_atrrs</span><span class="p">(</span><span class="n">req</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;data&#39;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;task&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;::&#39;</span><span class="p">)[</span><span class="mi">1</span><span class="p">])}),</span>
+        <span class="s1">&#39;decode_func&#39;</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">res</span><span class="p">:</span> <span class="n">update_dict</span><span class="p">({</span><span class="s1">&#39;isdone&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">},</span> <span class="n">get_attrs</span><span class="p">(</span><span class="n">res</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;ret&#39;</span><span class="p">,</span> <span class="s1">&#39;message&#39;</span><span class="p">])),</span>
+    <span class="p">},</span>
+    <span class="s1">&#39;clean_error&#39;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s1">&#39;agent_name&#39;</span><span class="p">:</span> <span class="s1">&#39;/xarm/clean_error&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;data_interface&#39;</span><span class="p">:</span> <span class="n">Call</span><span class="p">,</span>
+        <span class="s1">&#39;agent_type&#39;</span><span class="p">:</span> <span class="s1">&#39;service_client&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;encode_func&#39;</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">data</span><span class="p">,</span> <span class="n">req</span><span class="p">:</span> <span class="n">req</span><span class="p">,</span>
+        <span class="s1">&#39;decode_func&#39;</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">res</span><span class="p">:</span> <span class="n">update_dict</span><span class="p">({</span><span class="s1">&#39;isdone&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">},</span> <span class="n">get_attrs</span><span class="p">(</span><span class="n">res</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;ret&#39;</span><span class="p">,</span> <span class="s1">&#39;message&#39;</span><span class="p">])),</span>
+        <span class="s1">&#39;do_log_msg&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="p">},</span>
+    <span class="s1">&#39;lift&#39;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s1">&#39;agent_name&#39;</span><span class="p">:</span> <span class="s1">&#39;/elevation/set_position&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;data_interface&#39;</span><span class="p">:</span> <span class="n">ElevationCommand</span><span class="p">,</span>
+        <span class="s1">&#39;agent_type&#39;</span><span class="p">:</span> <span class="s1">&#39;service_client&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;encode_func&#39;</span><span class="p">:</span> <span class="n">lift_encode</span><span class="p">,</span>
+        <span class="s1">&#39;decode_func&#39;</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">res</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;isdone&#39;</span><span class="p">:</span> <span class="n">res</span><span class="o">.</span><span class="n">successed</span><span class="p">},</span>
+        <span class="s1">&#39;do_log_msg&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="p">},</span>
+    <span class="s1">&#39;grip&#39;</span><span class="p">:</span> <span class="p">{</span> <span class="c1">#gripper_command</span>
+        <span class="s1">&#39;agent_name&#39;</span><span class="p">:</span> <span class="s1">&#39;/gripper/command&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;data_interface&#39;</span><span class="p">:</span> <span class="n">GripperCommand</span><span class="p">,</span>
+        <span class="s1">&#39;agent_type&#39;</span><span class="p">:</span> <span class="s1">&#39;service_client&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;encode_func&#39;</span><span class="p">:</span> <span class="n">grip_encodefunc</span><span class="p">,</span>
+        <span class="s1">&#39;decode_func&#39;</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">res</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;isdone&#39;</span><span class="p">:</span> <span class="n">res</span><span class="o">.</span><span class="n">successed</span><span class="p">},</span>
+        <span class="s1">&#39;do_log_msg&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="p">},</span>
+    <span class="s1">&#39;robot_pose&#39;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s1">&#39;agent_name&#39;</span><span class="p">:</span> <span class="s1">&#39;/xarm/robot_states&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;data_interface&#39;</span><span class="p">:</span> <span class="n">RobotMsg</span><span class="p">,</span>
+        <span class="s1">&#39;agent_type&#39;</span><span class="p">:</span> <span class="s1">&#39;sub&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;decode_func&#39;</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">msg</span><span class="p">:</span> <span class="n">get_attrs</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;angle&#39;</span><span class="p">,</span> <span class="s1">&#39;pose&#39;</span><span class="p">,</span> <span class="s1">&#39;mode&#39;</span><span class="p">,</span> <span class="s1">&#39;err&#39;</span><span class="p">,</span> <span class="s1">&#39;state&#39;</span><span class="p">]),</span>
+        <span class="s1">&#39;do_log_msg&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="p">},</span>
+    <span class="s1">&#39;lm_state&#39;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s1">&#39;agent_name&#39;</span><span class="p">:</span> <span class="s1">&#39;/elevation/state&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;data_interface&#39;</span><span class="p">:</span> <span class="n">LMState</span><span class="p">,</span>
+        <span class="s1">&#39;agent_type&#39;</span><span class="p">:</span> <span class="s1">&#39;sub&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;decode_func&#39;</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">msg</span><span class="p">:</span> <span class="n">get_attrs</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;current_position&#39;</span><span class="p">]),</span>
+        <span class="s1">&#39;do_log_msg&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="p">},</span>
+    <span class="s1">&#39;head_state&#39;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s1">&#39;agent_name&#39;</span><span class="p">:</span> <span class="s1">&#39;/head/state&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;data_interface&#39;</span><span class="p">:</span> <span class="n">HeadState</span><span class="p">,</span>
+        <span class="s1">&#39;agent_type&#39;</span><span class="p">:</span> <span class="s1">&#39;sub&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;decode_func&#39;</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">msg</span><span class="p">:</span> <span class="n">get_attrs</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;current_rz&#39;</span><span class="p">,</span> <span class="s1">&#39;current_ry&#39;</span><span class="p">]),</span>
+        <span class="s1">&#39;do_log_msg&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="p">},</span>
+    <span class="s1">&#39;move_head&#39;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s1">&#39;agent_name&#39;</span><span class="p">:</span> <span class="s1">&#39;/head/pose_command&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;data_interface&#39;</span><span class="p">:</span> <span class="n">HeadPoseCommand</span><span class="p">,</span>
+        <span class="s1">&#39;agent_type&#39;</span><span class="p">:</span> <span class="s1">&#39;service_client&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;encode_func&#39;</span><span class="p">:</span> <span class="n">movehead_encodefunc</span><span class="p">,</span>   
+        <span class="s1">&#39;decode_func&#39;</span><span class="p">:</span> <span class="k">lambda</span> <span class="n">res</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;isdone&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">},</span><span class="c1">#{&#39;isdone&#39;: res.successed},</span>
+        <span class="s1">&#39;do_log_msg&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="p">},</span>
+<span class="p">}</span>
+
+
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Trung Bui.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

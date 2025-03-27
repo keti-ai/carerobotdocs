@@ -1,0 +1,357 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>utils module &mdash; Care Robot 1.0.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=8d563738"></script>
+      <script src="../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="pyconnect" href="../pyconnect/modules.html" />
+    <link rel="prev" title="skills package" href="skills.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            Care Robot
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../contents/intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../contents/get_started.html">Get started</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">app_carerobot</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="modules.html#how-to-run">How to run</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="modules.html#api">API</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="calibrattion.html">calibrattion module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="configs.html">configs package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="node_prompt.html">node_prompt module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="node_skill_servers.html">node_skill_servers module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="node_taskmanager.html">node_taskmanager module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skills.html">skills package</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">utils module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#utils.Ixy2xyz"><code class="docutils literal notranslate"><span class="pre">Ixy2xyz()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#utils.agent_log_data"><code class="docutils literal notranslate"><span class="pre">agent_log_data()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#utils.align_pointclouds"><code class="docutils literal notranslate"><span class="pre">align_pointclouds()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#utils.calc_normalvector"><code class="docutils literal notranslate"><span class="pre">calc_normalvector()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#utils.construct_plane"><code class="docutils literal notranslate"><span class="pre">construct_plane()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#utils.create_parabolic"><code class="docutils literal notranslate"><span class="pre">create_parabolic()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#utils.create_plane"><code class="docutils literal notranslate"><span class="pre">create_plane()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#utils.demo_plane"><code class="docutils literal notranslate"><span class="pre">demo_plane()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#utils.demo_pointcloud"><code class="docutils literal notranslate"><span class="pre">demo_pointcloud()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#utils.get_attrs"><code class="docutils literal notranslate"><span class="pre">get_attrs()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#utils.get_masked_depthplane"><code class="docutils literal notranslate"><span class="pre">get_masked_depthplane()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#utils.get_masked_depthvalue"><code class="docutils literal notranslate"><span class="pre">get_masked_depthvalue()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#utils.get_masked_normalvector"><code class="docutils literal notranslate"><span class="pre">get_masked_normalvector()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#utils.init_detect_client"><code class="docutils literal notranslate"><span class="pre">init_detect_client()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#utils.init_llm_client"><code class="docutils literal notranslate"><span class="pre">init_llm_client()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#utils.n2colormap"><code class="docutils literal notranslate"><span class="pre">n2colormap()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#utils.node_add_agent_from_config"><code class="docutils literal notranslate"><span class="pre">node_add_agent_from_config()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#utils.node_add_agents_from_configs"><code class="docutils literal notranslate"><span class="pre">node_add_agents_from_configs()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#utils.set_atrrs"><code class="docutils literal notranslate"><span class="pre">set_atrrs()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#utils.show_masks_on_rgb"><code class="docutils literal notranslate"><span class="pre">show_masks_on_rgb()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#utils.task2act"><code class="docutils literal notranslate"><span class="pre">task2act()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#utils.task2agent"><code class="docutils literal notranslate"><span class="pre">task2agent()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#utils.test"><code class="docutils literal notranslate"><span class="pre">test()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#utils.test_normal_vector"><code class="docutils literal notranslate"><span class="pre">test_normal_vector()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#utils.test_server"><code class="docutils literal notranslate"><span class="pre">test_server()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#utils.transformatrix2xyztheta"><code class="docutils literal notranslate"><span class="pre">transformatrix2xyztheta()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#utils.update_dict"><code class="docutils literal notranslate"><span class="pre">update_dict()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#utils.url2hostport"><code class="docutils literal notranslate"><span class="pre">url2hostport()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#utils.visualize_normalvector"><code class="docutils literal notranslate"><span class="pre">visualize_normalvector()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#utils.visualize_plane"><code class="docutils literal notranslate"><span class="pre">visualize_plane()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#utils.visualize_pointclouds"><code class="docutils literal notranslate"><span class="pre">visualize_pointclouds()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#utils.visualize_rgbd_pointcloud"><code class="docutils literal notranslate"><span class="pre">visualize_rgbd_pointcloud()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#utils.xyz2Ixy"><code class="docutils literal notranslate"><span class="pre">xyz2Ixy()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../pyconnect/modules.html">pyconnect</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Care Robot</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="modules.html">app_carerobot</a></li>
+      <li class="breadcrumb-item active">utils module</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/apidoc/app_carerobot/utils.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-utils">
+<span id="utils-module"></span><h1>utils module<a class="headerlink" href="#module-utils" title="Link to this heading"></a></h1>
+<dl class="py function">
+<dt class="sig sig-object py" id="utils.Ixy2xyz">
+<span class="sig-prename descclassname"><span class="pre">utils.</span></span><span class="sig-name descname"><span class="pre">Ixy2xyz</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">Ix</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Iy</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Z</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cam_params</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/utils.html#Ixy2xyz"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#utils.Ixy2xyz" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="utils.agent_log_data">
+<span class="sig-prename descclassname"><span class="pre">utils.</span></span><span class="sig-name descname"><span class="pre">agent_log_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">agent</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">msg_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'sent'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/utils.html#agent_log_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#utils.agent_log_data" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="utils.align_pointclouds">
+<span class="sig-prename descclassname"><span class="pre">utils.</span></span><span class="sig-name descname"><span class="pre">align_pointclouds</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">source_points</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target_points</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">threshold</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.02</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_iterations</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">50</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/utils.html#align_pointclouds"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#utils.align_pointclouds" title="Link to this definition"></a></dt>
+<dd><p>Aligns two point clouds using the Iterative Closest Point (ICP) algorithm.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>source_points</strong> (<em>numpy.ndarray</em>) – Nx3 array representing the source point cloud.</p></li>
+<li><p><strong>target_points</strong> (<em>numpy.ndarray</em>) – Nx3 array representing the target point cloud.</p></li>
+<li><p><strong>threshold</strong> (<em>float</em>) – Distance threshold for ICP.</p></li>
+<li><p><strong>max_iterations</strong> (<em>int</em>) – Maximum number of ICP iterations.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>(transformation matrix (4x4 numpy array), fitness score, RMSE error)</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tuple</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="utils.calc_normalvector">
+<span class="sig-prename descclassname"><span class="pre">utils.</span></span><span class="sig-name descname"><span class="pre">calc_normalvector</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">points</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/utils.html#calc_normalvector"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#utils.calc_normalvector" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="utils.construct_plane">
+<span class="sig-prename descclassname"><span class="pre">utils.</span></span><span class="sig-name descname"><span class="pre">construct_plane</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">z</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/utils.html#construct_plane"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#utils.construct_plane" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="utils.create_parabolic">
+<span class="sig-prename descclassname"><span class="pre">utils.</span></span><span class="sig-name descname"><span class="pre">create_parabolic</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">step</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">noise_level</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/utils.html#create_parabolic"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#utils.create_parabolic" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="utils.create_plane">
+<span class="sig-prename descclassname"><span class="pre">utils.</span></span><span class="sig-name descname"><span class="pre">create_plane</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">step</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">noise_level</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/utils.html#create_plane"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#utils.create_plane" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="utils.demo_plane">
+<span class="sig-prename descclassname"><span class="pre">utils.</span></span><span class="sig-name descname"><span class="pre">demo_plane</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/utils.html#demo_plane"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#utils.demo_plane" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="utils.demo_pointcloud">
+<span class="sig-prename descclassname"><span class="pre">utils.</span></span><span class="sig-name descname"><span class="pre">demo_pointcloud</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/utils.html#demo_pointcloud"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#utils.demo_pointcloud" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="utils.get_attrs">
+<span class="sig-prename descclassname"><span class="pre">utils.</span></span><span class="sig-name descname"><span class="pre">get_attrs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">atrs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#utils.get_attrs" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="utils.get_masked_depthplane">
+<span class="sig-prename descclassname"><span class="pre">utils.</span></span><span class="sig-name descname"><span class="pre">get_masked_depthplane</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">depth</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mask</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/utils.html#get_masked_depthplane"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#utils.get_masked_depthplane" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="utils.get_masked_depthvalue">
+<span class="sig-prename descclassname"><span class="pre">utils.</span></span><span class="sig-name descname"><span class="pre">get_masked_depthvalue</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">depth</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mask</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/utils.html#get_masked_depthvalue"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#utils.get_masked_depthvalue" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="utils.get_masked_normalvector">
+<span class="sig-prename descclassname"><span class="pre">utils.</span></span><span class="sig-name descname"><span class="pre">get_masked_normalvector</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">depth</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mask</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cam_params</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/utils.html#get_masked_normalvector"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#utils.get_masked_normalvector" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="utils.init_detect_client">
+<span class="sig-prename descclassname"><span class="pre">utils.</span></span><span class="sig-name descname"><span class="pre">init_detect_client</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">detect_url</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/utils.html#init_detect_client"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#utils.init_detect_client" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="utils.init_llm_client">
+<span class="sig-prename descclassname"><span class="pre">utils.</span></span><span class="sig-name descname"><span class="pre">init_llm_client</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cfg</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/utils.html#init_llm_client"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#utils.init_llm_client" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="utils.n2colormap">
+<span class="sig-prename descclassname"><span class="pre">utils.</span></span><span class="sig-name descname"><span class="pre">n2colormap</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#utils.n2colormap" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="utils.node_add_agent_from_config">
+<span class="sig-prename descclassname"><span class="pre">utils.</span></span><span class="sig-name descname"><span class="pre">node_add_agent_from_config</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">agent_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/utils.html#node_add_agent_from_config"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#utils.node_add_agent_from_config" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="utils.node_add_agents_from_configs">
+<span class="sig-prename descclassname"><span class="pre">utils.</span></span><span class="sig-name descname"><span class="pre">node_add_agents_from_configs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">configs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">agents_select</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/utils.html#node_add_agents_from_configs"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#utils.node_add_agents_from_configs" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="utils.set_atrrs">
+<span class="sig-prename descclassname"><span class="pre">utils.</span></span><span class="sig-name descname"><span class="pre">set_atrrs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">adict</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#utils.set_atrrs" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="utils.show_masks_on_rgb">
+<span class="sig-prename descclassname"><span class="pre">utils.</span></span><span class="sig-name descname"><span class="pre">show_masks_on_rgb</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rgb</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">masks</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">colors</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/utils.html#show_masks_on_rgb"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#utils.show_masks_on_rgb" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="utils.task2act">
+<span class="sig-prename descclassname"><span class="pre">utils.</span></span><span class="sig-name descname"><span class="pre">task2act</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">task</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#utils.task2act" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="utils.task2agent">
+<span class="sig-prename descclassname"><span class="pre">utils.</span></span><span class="sig-name descname"><span class="pre">task2agent</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">task</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#utils.task2agent" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="utils.test">
+<span class="sig-prename descclassname"><span class="pre">utils.</span></span><span class="sig-name descname"><span class="pre">test</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/utils.html#test"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#utils.test" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="utils.test_normal_vector">
+<span class="sig-prename descclassname"><span class="pre">utils.</span></span><span class="sig-name descname"><span class="pre">test_normal_vector</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/utils.html#test_normal_vector"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#utils.test_normal_vector" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="utils.test_server">
+<span class="sig-prename descclassname"><span class="pre">utils.</span></span><span class="sig-name descname"><span class="pre">test_server</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/utils.html#test_server"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#utils.test_server" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="utils.transformatrix2xyztheta">
+<span class="sig-prename descclassname"><span class="pre">utils.</span></span><span class="sig-name descname"><span class="pre">transformatrix2xyztheta</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">transformation</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/utils.html#transformatrix2xyztheta"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#utils.transformatrix2xyztheta" title="Link to this definition"></a></dt>
+<dd><p>Converts a 4x4 transformation matrix to a translation vector and rotation angles.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>transformation</strong> (<em>numpy.ndarray</em>) – 4x4 transformation matrix.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>(translation vector (3,), rotation angles (3,) in degrees)</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tuple</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="utils.update_dict">
+<span class="sig-prename descclassname"><span class="pre">utils.</span></span><span class="sig-name descname"><span class="pre">update_dict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">adict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#utils.update_dict" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="utils.url2hostport">
+<span class="sig-prename descclassname"><span class="pre">utils.</span></span><span class="sig-name descname"><span class="pre">url2hostport</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">url</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/utils.html#url2hostport"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#utils.url2hostport" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="utils.visualize_normalvector">
+<span class="sig-prename descclassname"><span class="pre">utils.</span></span><span class="sig-name descname"><span class="pre">visualize_normalvector</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">points</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">normal_vector</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/utils.html#visualize_normalvector"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#utils.visualize_normalvector" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="utils.visualize_plane">
+<span class="sig-prename descclassname"><span class="pre">utils.</span></span><span class="sig-name descname"><span class="pre">visualize_plane</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">z</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">coeffs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/utils.html#visualize_plane"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#utils.visualize_plane" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="utils.visualize_pointclouds">
+<span class="sig-prename descclassname"><span class="pre">utils.</span></span><span class="sig-name descname"><span class="pre">visualize_pointclouds</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pointclouds</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">colors</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/utils.html#visualize_pointclouds"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#utils.visualize_pointclouds" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="utils.visualize_rgbd_pointcloud">
+<span class="sig-prename descclassname"><span class="pre">utils.</span></span><span class="sig-name descname"><span class="pre">visualize_rgbd_pointcloud</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">depth</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cam_params</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rgb</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">normal_point</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">normal_vector</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/utils.html#visualize_rgbd_pointcloud"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#utils.visualize_rgbd_pointcloud" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="utils.xyz2Ixy">
+<span class="sig-prename descclassname"><span class="pre">utils.</span></span><span class="sig-name descname"><span class="pre">xyz2Ixy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">z</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cam_params</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">eps</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1e-10</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/utils.html#xyz2Ixy"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#utils.xyz2Ixy" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="skills.html" class="btn btn-neutral float-left" title="skills package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../pyconnect/modules.html" class="btn btn-neutral float-right" title="pyconnect" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Trung Bui.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

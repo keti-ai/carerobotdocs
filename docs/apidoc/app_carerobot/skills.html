@@ -1,0 +1,594 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>skills package &mdash; Care Robot 1.0.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=8d563738"></script>
+      <script src="../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="utils module" href="utils.html" />
+    <link rel="prev" title="node_taskmanager module" href="node_taskmanager.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            Care Robot
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../contents/intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../contents/get_started.html">Get started</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">app_carerobot</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="modules.html#how-to-run">How to run</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="modules.html#api">API</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="calibrattion.html">calibrattion module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="configs.html">configs package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="node_prompt.html">node_prompt module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="node_skill_servers.html">node_skill_servers module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="node_taskmanager.html">node_taskmanager module</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">skills package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-skills.arm">skills.arm module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-skills.goto_ready">skills.goto_ready module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-skills.pick">skills.pick module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-skills.place">skills.place module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-skills.recognition">skills.recognition module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-skills">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="utils.html">utils module</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../pyconnect/modules.html">pyconnect</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Care Robot</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="modules.html">app_carerobot</a></li>
+      <li class="breadcrumb-item active">skills package</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/apidoc/app_carerobot/skills.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="skills-package">
+<h1>skills package<a class="headerlink" href="#skills-package" title="Link to this heading"></a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading"></a></h2>
+</section>
+<section id="module-skills.arm">
+<span id="skills-arm-module"></span><h2>skills.arm module<a class="headerlink" href="#module-skills.arm" title="Link to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="skills.arm.arm_approach">
+<span class="sig-prename descclassname"><span class="pre">skills.arm.</span></span><span class="sig-name descname"><span class="pre">arm_approach</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">device_mode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/skills/arm.html#arm_approach"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#skills.arm.arm_approach" title="Link to this definition"></a></dt>
+<dd><p>Move the robot arm to approach an object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>node</strong> (<em>-</em>) – The ROS node with movement-related agents.</p></li>
+<li><p><strong>data</strong> (<em>-</em>) – Task data with ‘task’ (format ‘approach::obj_name’) and ‘ins’ (object info).</p></li>
+<li><p><strong>mode</strong> (<em>-</em>) – Mode suffix for skill agents. Defaults to ‘’.</p></li>
+<li><p><strong>device_mode</strong> (<em>-</em>) – Mode suffix for device agents. Defaults to ‘’.</p></li>
+<li><p><strong>**kwargs</strong> (<em>-</em>) – <p>Additional keyword arguments (unused).</p>
+</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Updated <cite>data</cite> with ‘isdone’ (bool) set to True on success, or error result on failure.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><ul class="simple">
+<li><p>dict</p></li>
+</ul>
+</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>- KeyError</strong> – If required keys (e.g., ‘ins’, ‘pose’) are missing in <cite>data</cite>.</p></li>
+<li><p><strong>- AttributeError</strong> – If agent data (e.g., <cite>rev_data</cite>) is unavailable.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="skills.arm.dlift">
+<span class="sig-prename descclassname"><span class="pre">skills.arm.</span></span><span class="sig-name descname"><span class="pre">dlift</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">device_mode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/skills/arm.html#dlift"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#skills.arm.dlift" title="Link to this definition"></a></dt>
+<dd><p>Lift the robot arm by a specified distance.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>node</strong> (<em>-</em>) – The ROS node with lift-related agents.</p></li>
+<li><p><strong>data</strong> (<em>-</em>) – Task data, including ‘task’ key with format ‘lift::distance’.</p></li>
+<li><p><strong>device_mode</strong> (<em>-</em>) – Mode suffix for agent names. Defaults to ‘’.</p></li>
+<li><p><strong>**kwargs</strong> (<em>-</em>) – <p>Additional keyword arguments (unused).</p>
+</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Result with ‘isdone’ (bool) indicating success or failure.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><ul class="simple">
+<li><p>dict</p></li>
+</ul>
+</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>- KeyError</strong> – If ‘task’ or agent data is missing.</p></li>
+<li><p><strong>- ValueError</strong> – If task format is invalid.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-skills.goto_ready">
+<span id="skills-goto-ready-module"></span><h2>skills.goto_ready module<a class="headerlink" href="#module-skills.goto_ready" title="Link to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="skills.goto_ready.arm_back">
+<span class="sig-prename descclassname"><span class="pre">skills.goto_ready.</span></span><span class="sig-name descname"><span class="pre">arm_back</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">device_mode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/skills/goto_ready.html#arm_back"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#skills.goto_ready.arm_back" title="Link to this definition"></a></dt>
+<dd><p>Move the robot arm back to a predefined endpoint.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>node</strong> (<em>-</em>) – The ROS node with arm movement agents.</p></li>
+<li><p><strong>device_mode</strong> (<em>-</em>) – Mode suffix for agent names. Defaults to ‘’.</p></li>
+<li><p><strong>**kwargs</strong> (<em>-</em>) – <p>Additional keyword arguments (unused).</p>
+</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Result with ‘isdone’ (bool) indicating success or failure.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><ul class="simple">
+<li><p>dict</p></li>
+</ul>
+</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>- KeyError</strong> – If ‘pose’ data or agent config is missing.</p></li>
+<li><p><strong>- AttributeError</strong> – If agent data (e.g., <cite>rev_data</cite>) is unavailable.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="skills.goto_ready.init_pick">
+<span class="sig-prename descclassname"><span class="pre">skills.goto_ready.</span></span><span class="sig-name descname"><span class="pre">init_pick</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">device_mode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/skills/goto_ready.html#init_pick"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#skills.goto_ready.init_pick" title="Link to this definition"></a></dt>
+<dd><p>Prepare the robot for picking by setting initial pose and gripper state.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>node</strong> (<em>-</em>) – The ROS node with pick-related agents.</p></li>
+<li><p><strong>device_mode</strong> (<em>-</em>) – Mode suffix for agent names. Defaults to ‘’.</p></li>
+<li><p><strong>**kwargs</strong> (<em>-</em>) – <p>Additional keyword arguments passed to <cite>arm_back</cite>.</p>
+</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Result with ‘isdone’ (bool) indicating success or failure.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><ul class="simple">
+<li><p>dict</p></li>
+</ul>
+</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>- KeyError</strong> – If agent configuration or data is missing.</p></li>
+<li><p><strong>- AttributeError</strong> – If agent methods (e.g., <cite>send</cite>) are unavailable.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="skills.goto_ready.init_robot">
+<span class="sig-prename descclassname"><span class="pre">skills.goto_ready.</span></span><span class="sig-name descname"><span class="pre">init_robot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">device_mode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/skills/goto_ready.html#init_robot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#skills.goto_ready.init_robot" title="Link to this definition"></a></dt>
+<dd><p>Initialize the robot to a ready state.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>node</strong> (<em>-</em>) – The ROS node with device agents.</p></li>
+<li><p><strong>device_mode</strong> (<em>-</em>) – Mode suffix for agent names. Defaults to ‘’.</p></li>
+<li><p><strong>**kwargs</strong> (<em>-</em>) – <p>Additional keyword arguments (unused).</p>
+</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Result with ‘isdone’ (bool) indicating success or failure.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><ul class="simple">
+<li><p>dict</p></li>
+</ul>
+</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>- KeyError</strong> – If agent configuration or data is missing.</p></li>
+<li><p><strong>- AttributeError</strong> – If agent methods (e.g., <cite>send</cite>) are unavailable.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-skills.pick">
+<span id="skills-pick-module"></span><h2>skills.pick module<a class="headerlink" href="#module-skills.pick" title="Link to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="skills.pick.pick">
+<span class="sig-prename descclassname"><span class="pre">skills.pick.</span></span><span class="sig-name descname"><span class="pre">pick</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">device_mode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/skills/pick.html#pick"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#skills.pick.pick" title="Link to this definition"></a></dt>
+<dd><p>Pick an object using the robot arm and gripper.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>node</strong> (<em>-</em>) – The ROS node with movement and grip agents.</p></li>
+<li><p><strong>data</strong> (<em>-</em>) – Task data with ‘task’ (format ‘pick::obj_name’) and ‘ins’ (object info).</p></li>
+<li><p><strong>mode</strong> (<em>-</em>) – Mode suffix for skill agents. Defaults to ‘’.</p></li>
+<li><p><strong>device_mode</strong> (<em>-</em>) – Mode suffix for device agents. Defaults to ‘’.</p></li>
+<li><p><strong>**kwargs</strong> (<em>-</em>) – <p>Additional keyword arguments passed to <cite>arm_approach</cite> and <cite>arm_back</cite>.</p>
+</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Updated <cite>data</cite> with ‘isdone’ (bool) set to True on success, or error result on failure.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><ul class="simple">
+<li><p>dict</p></li>
+</ul>
+</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>- KeyError</strong> – If ‘ins’, ‘pose’, or agent data is missing.</p></li>
+<li><p><strong>- AttributeError</strong> – If agent data (e.g., <cite>rev_data</cite>) is unavailable.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-skills.place">
+<span id="skills-place-module"></span><h2>skills.place module<a class="headerlink" href="#module-skills.place" title="Link to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="skills.place.place">
+<span class="sig-prename descclassname"><span class="pre">skills.place.</span></span><span class="sig-name descname"><span class="pre">place</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">device_mode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/skills/place.html#place"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#skills.place.place" title="Link to this definition"></a></dt>
+<dd><p>Place an object using the robot arm and gripper.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>node</strong> (<em>-</em>) – The ROS node with movement and grip agents.</p></li>
+<li><p><strong>data</strong> (<em>-</em>) – Task data with ‘task’ (format ‘place::obj_name’) and ‘ins’ (object info).</p></li>
+<li><p><strong>mode</strong> (<em>-</em>) – Mode suffix for skill agents. Defaults to ‘’.</p></li>
+<li><p><strong>device_mode</strong> (<em>-</em>) – Mode suffix for device agents. Defaults to ‘’.</p></li>
+<li><p><strong>**kwargs</strong> (<em>-</em>) – <p>Additional keyword arguments passed to <cite>arm_approach</cite> and <cite>arm_back</cite>.</p>
+</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Updated <cite>data</cite> with ‘isdone’ (bool) set to True on success, or error result on failure.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><ul class="simple">
+<li><p>dict</p></li>
+</ul>
+</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>- KeyError</strong> – If ‘ins’, ‘pose’, or agent data is missing.</p></li>
+<li><p><strong>- AttributeError</strong> – If agent data (e.g., <cite>rev_data</cite>) is unavailable.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-skills.recognition">
+<span id="skills-recognition-module"></span><h2>skills.recognition module<a class="headerlink" href="#module-skills.recognition" title="Link to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="skills.recognition.detect">
+<span class="sig-prename descclassname"><span class="pre">skills.recognition.</span></span><span class="sig-name descname"><span class="pre">detect</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show_mode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">device_mode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">camera</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'femto'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/skills/recognition.html#detect"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#skills.recognition.detect" title="Link to this definition"></a></dt>
+<dd><p>Detect objects using camera data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>node</strong> (<em>-</em>) – The ROS node with camera and result agents.</p></li>
+<li><p><strong>data</strong> (<em>-</em>) – Task data with ‘task’ (format ‘detect::obj_name’).</p></li>
+<li><p><strong>show_mode</strong> (<em>-</em>) – Mode suffix for show agents. Defaults to ‘’.</p></li>
+<li><p><strong>device_mode</strong> (<em>-</em>) – Mode suffix for device agents. Defaults to ‘’.</p></li>
+<li><p><strong>camera</strong> (<em>-</em>) – Camera type from CONFIGS. Defaults to CONFIGS[‘camera’].</p></li>
+<li><p><strong>**kwargs</strong> (<em>-</em>) – <p>Additional keyword arguments (unused).</p>
+</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Result with ‘isdone’ (bool), ‘ins’ (dict of object info), and ‘head_state’.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><ul class="simple">
+<li><p>dict</p></li>
+</ul>
+</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>- KeyError</strong> – If agent data or ‘task’ format is invalid.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="skills.recognition.detect_grasp">
+<span class="sig-prename descclassname"><span class="pre">skills.recognition.</span></span><span class="sig-name descname"><span class="pre">detect_grasp</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show_mode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">device_mode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">camera</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'femto'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/skills/recognition.html#detect_grasp"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#skills.recognition.detect_grasp" title="Link to this definition"></a></dt>
+<dd><p>Detect grasp poses for objects.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>node</strong> (<em>-</em>) – The ROS node with camera and result agents.</p></li>
+<li><p><strong>data</strong> (<em>-</em>) – Task data with ‘task’ (format ‘detect_grasp::obj_name’).</p></li>
+<li><p><strong>show_mode</strong> (<em>-</em>) – Mode suffix for show agents. Defaults to ‘’.</p></li>
+<li><p><strong>device_mode</strong> (<em>-</em>) – Mode suffix for device agents. Defaults to ‘’.</p></li>
+<li><p><strong>camera</strong> (<em>-</em>) – Camera type from config. Defaults to detectgrasp_cfg[‘camera’].</p></li>
+<li><p><strong>**kwargs</strong> (<em>-</em>) – <p>Additional keyword arguments (unused).</p>
+</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Result with ‘isdone’ (bool), ‘ins’ (dict of grasp info), and ‘head_state’.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><ul class="simple">
+<li><p>dict</p></li>
+</ul>
+</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>- KeyError</strong> – If agent data or ‘task’ format is invalid.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="skills.recognition.detect_tooltip">
+<span class="sig-prename descclassname"><span class="pre">skills.recognition.</span></span><span class="sig-name descname"><span class="pre">detect_tooltip</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show_mode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">device_mode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">camera</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'dabai'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/skills/recognition.html#detect_tooltip"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#skills.recognition.detect_tooltip" title="Link to this definition"></a></dt>
+<dd><p>Detect tooltips in camera images.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>node</strong> (<em>-</em>) – The ROS node with camera and result agents.</p></li>
+<li><p><strong>data</strong> (<em>-</em>) – Task data (unused here).</p></li>
+<li><p><strong>show_mode</strong> (<em>-</em>) – Mode suffix for show agents. Defaults to ‘’.</p></li>
+<li><p><strong>device_mode</strong> (<em>-</em>) – Mode suffix for device agents. Defaults to ‘’.</p></li>
+<li><p><strong>camera</strong> (<em>-</em>) – Camera type from config. Defaults to findtooltip_cfgs[‘camera’].</p></li>
+<li><p><strong>**kwargs</strong> (<em>-</em>) – <p>Additional keyword arguments (unused).</p>
+</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Result with ‘isdone’ (bool), ‘ins’ (detection info), and ‘rgb_out’ (np.ndarray).</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><ul class="simple">
+<li><p>dict</p></li>
+</ul>
+</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>- KeyError</strong> – If agent data is missing.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="skills.recognition.find">
+<span class="sig-prename descclassname"><span class="pre">skills.recognition.</span></span><span class="sig-name descname"><span class="pre">find</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show_mode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">device_mode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/skills/recognition.html#find"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#skills.recognition.find" title="Link to this definition"></a></dt>
+<dd><p>Find objects by scanning with head movement.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>node</strong> (<em>-</em>) – The ROS node with movement and detection agents.</p></li>
+<li><p><strong>data</strong> (<em>-</em>) – Task data with ‘task’ (format ‘find::obj_name’).</p></li>
+<li><p><strong>show_mode</strong> (<em>-</em>) – Mode suffix for show agents. Defaults to ‘’.</p></li>
+<li><p><strong>device_mode</strong> (<em>-</em>) – Mode suffix for device agents. Defaults to ‘’.</p></li>
+<li><p><strong>**kwargs</strong> (<em>-</em>) – <p>Additional keyword arguments passed to <cite>detect</cite>.</p>
+</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Result with ‘isdone’ (bool) and ‘ins’ (dict of object info).</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><ul class="simple">
+<li><p>dict</p></li>
+</ul>
+</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>- KeyError</strong> – If agent data or ‘task’ format is invalid.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="skills.recognition.find_surface">
+<span class="sig-prename descclassname"><span class="pre">skills.recognition.</span></span><span class="sig-name descname"><span class="pre">find_surface</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rgb</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">depth</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">obj_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'top</span> <span class="pre">surface'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/skills/recognition.html#find_surface"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#skills.recognition.find_surface" title="Link to this definition"></a></dt>
+<dd><p>Detect a surface in RGB and depth images.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>rgb</strong> (<em>-</em>) – RGB image array.</p></li>
+<li><p><strong>depth</strong> (<em>-</em>) – Depth image array.</p></li>
+<li><p><strong>obj_name</strong> (<em>-</em>) – Name of the object to detect. Defaults to ‘top surface’.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Result with ‘isdone’ (bool), ‘plane_coeffs’ (list), and ‘im’ (np.ndarray) if successful.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><ul class="simple">
+<li><p>dict</p></li>
+</ul>
+</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>- AttributeError</strong> – If <cite>detect_client</cite> or <cite>llm_client</cite> methods fail.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="skills.recognition.find_tooltip">
+<span class="sig-prename descclassname"><span class="pre">skills.recognition.</span></span><span class="sig-name descname"><span class="pre">find_tooltip</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show_mode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">device_mode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">camera</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'dabai'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/skills/recognition.html#find_tooltip"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#skills.recognition.find_tooltip" title="Link to this definition"></a></dt>
+<dd><p>Locate tooltips by moving and detecting.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>node</strong> (<em>-</em>) – The ROS node with movement and camera agents.</p></li>
+<li><p><strong>data</strong> (<em>-</em>) – Task data (unused here).</p></li>
+<li><p><strong>show_mode</strong> (<em>-</em>) – Mode suffix for show agents. Defaults to ‘’.</p></li>
+<li><p><strong>device_mode</strong> (<em>-</em>) – Mode suffix for device agents. Defaults to ‘’.</p></li>
+<li><p><strong>camera</strong> (<em>-</em>) – Camera type from config. Defaults to findtooltip_cfgs[‘camera’].</p></li>
+<li><p><strong>**kwargs</strong> (<em>-</em>) – <p>Additional keyword arguments (unused).</p>
+</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Result with ‘isdone’ (bool) and ‘tooltip_mask’ (np.ndarray).</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><ul class="simple">
+<li><p>dict</p></li>
+</ul>
+</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>- KeyError</strong> – If agent data is missing.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="skills.recognition.track">
+<span class="sig-prename descclassname"><span class="pre">skills.recognition.</span></span><span class="sig-name descname"><span class="pre">track</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show_mode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">device_mode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">camera</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'dabai'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/skills/recognition.html#track"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#skills.recognition.track" title="Link to this definition"></a></dt>
+<dd><p>Track an object and align tooltip with its center.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>node</strong> (<em>-</em>) – The ROS node with movement and camera agents.</p></li>
+<li><p><strong>data</strong> (<em>-</em>) – Task data with ‘task’ (format ‘track::obj_name’).</p></li>
+<li><p><strong>show_mode</strong> (<em>-</em>) – Mode suffix for show agents. Defaults to ‘’.</p></li>
+<li><p><strong>device_mode</strong> (<em>-</em>) – Mode suffix for device agents. Defaults to ‘’.</p></li>
+<li><p><strong>camera</strong> (<em>-</em>) – Camera type from config. Defaults to track_cfgs[‘camera’].</p></li>
+<li><p><strong>**kwargs</strong> (<em>-</em>) – <p>Additional keyword arguments (unused).</p>
+</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Result with ‘isdone’ (bool) indicating success or failure.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><ul class="simple">
+<li><p>dict</p></li>
+</ul>
+</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>- KeyError</strong> – If agent data or ‘task’ format is invalid.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-skills">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-skills" title="Link to this heading"></a></h2>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="node_taskmanager.html" class="btn btn-neutral float-left" title="node_taskmanager module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="utils.html" class="btn btn-neutral float-right" title="utils module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Trung Bui.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

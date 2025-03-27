@@ -1,0 +1,256 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>pyconnect.llm package &mdash; Care Robot 1.0.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=8d563738"></script>
+      <script src="../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="pyconnect.models package" href="pyconnect.models.html" />
+    <link rel="prev" title="pyconnect package" href="pyconnect.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            Care Robot
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../contents/intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../contents/get_started.html">Get started</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../app_carerobot/modules.html">app_carerobot</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">pyconnect</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="pyconnect.html">pyconnect package</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="pyconnect.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l4 current"><a class="current reference internal" href="#">pyconnect.llm package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyconnect.models.html">pyconnect.models package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyconnect.ros.html">pyconnect.ros package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyconnect.sns_bot.html">pyconnect.sns_bot package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyconnect.tcp_ip.html">pyconnect.tcp_ip package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyconnect.zmq.html">pyconnect.zmq package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="pyconnect.html#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyconnect.html#module-pyconnect.run_client">pyconnect.run_client module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyconnect.html#module-pyconnect.utils">pyconnect.utils module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyconnect.html#module-pyconnect">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Care Robot</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="modules.html">pyconnect</a></li>
+          <li class="breadcrumb-item"><a href="pyconnect.html">pyconnect package</a></li>
+      <li class="breadcrumb-item active">pyconnect.llm package</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/apidoc/pyconnect/pyconnect.llm.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="pyconnect-llm-package">
+<h1>pyconnect.llm package<a class="headerlink" href="#pyconnect-llm-package" title="Link to this heading"></a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading"></a></h2>
+</section>
+<section id="pyconnect-llm-chatgpt-module">
+<h2>pyconnect.llm.chatgpt module<a class="headerlink" href="#pyconnect-llm-chatgpt-module" title="Link to this heading"></a></h2>
+</section>
+<section id="module-pyconnect.llm.llama">
+<span id="pyconnect-llm-llama-module"></span><h2>pyconnect.llm.llama module<a class="headerlink" href="#module-pyconnect.llm.llama" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="pyconnect.llm.llama.LLamaClient">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pyconnect.llm.llama.</span></span><span class="sig-name descname"><span class="pre">LLamaClient</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/pyconnect/llm/llama.html#LLamaClient"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyconnect.llm.llama.LLamaClient" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#pyconnect.llm.llm_object.LLMobj" title="pyconnect.llm.llm_object.LLMobj"><code class="xref py py-class docutils literal notranslate"><span class="pre">LLMobj</span></code></a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="pyconnect.llm.llama.LLamaClient.image_contained">
+<span class="sig-name descname"><span class="pre">image_contained</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">msgs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/pyconnect/llm/llama.html#LLamaClient.image_contained"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyconnect.llm.llama.LLamaClient.image_contained" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyconnect.llm.llama.LLamaClient.init">
+<span class="sig-name descname"><span class="pre">init</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">url</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'http://10.252.216.250:11434'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">text_model</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'llama3.2'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vision_model</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'llama3.2-vision'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/pyconnect/llm/llama.html#LLamaClient.init"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyconnect.llm.llama.LLamaClient.init" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyconnect.llm.llama.LLamaClient.make_msg">
+<span class="sig-name descname"><span class="pre">make_msg</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">prompt</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rgb</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rgb_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">crop_roi</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/pyconnect/llm/llama.html#LLamaClient.make_msg"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyconnect.llm.llama.LLamaClient.make_msg" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyconnect.llm.llama.LLamaClient.send_msgs">
+<span class="sig-name descname"><span class="pre">send_msgs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">msgs</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/pyconnect/llm/llama.html#LLamaClient.send_msgs"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyconnect.llm.llama.LLamaClient.send_msgs" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-pyconnect.llm.llm_object">
+<span id="pyconnect-llm-llm-object-module"></span><h2>pyconnect.llm.llm_object module<a class="headerlink" href="#module-pyconnect.llm.llm_object" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="pyconnect.llm.llm_object.LLMobj">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pyconnect.llm.llm_object.</span></span><span class="sig-name descname"><span class="pre">LLMobj</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/pyconnect/llm/llm_object.html#LLMobj"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyconnect.llm.llm_object.LLMobj" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">ABC</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="pyconnect.llm.llm_object.LLMobj.chat">
+<span class="sig-name descname"><span class="pre">chat</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/pyconnect/llm/llm_object.html#LLMobj.chat"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyconnect.llm.llm_object.LLMobj.chat" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyconnect.llm.llm_object.LLMobj.chat_findobj">
+<span class="sig-name descname"><span class="pre">chat_findobj</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/pyconnect/llm/llm_object.html#LLMobj.chat_findobj"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyconnect.llm.llm_object.LLMobj.chat_findobj" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyconnect.llm.llm_object.LLMobj.chat_guide">
+<span class="sig-name descname"><span class="pre">chat_guide</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">prompt</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">guide</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'\nThe</span> <span class="pre">configuration</span> <span class="pre">of</span> <span class="pre">the</span> <span class="pre">robot</span> <span class="pre">is</span> <span class="pre">a</span> <span class="pre">mobile</span> <span class="pre">manipulator.</span> <span class="pre">One</span> <span class="pre">6-degree-of-freedom</span> <span class="pre">collaborative</span> <span class="pre">robot</span> <span class="pre">arm</span> <span class="pre">is</span> <span class="pre">mounted</span> <span class="pre">on</span> <span class="pre">top</span> <span class="pre">of</span> <span class="pre">the</span> <span class="pre">2-wheel</span> <span class="pre">mobile</span> <span class="pre">base,</span> <span class="pre">and</span> <span class="pre">the</span> <span class="pre">robot</span> <span class="pre">arm</span> <span class="pre">is</span> <span class="pre">equipped</span> <span class="pre">with</span> <span class="pre">a</span> <span class="pre">wrist</span> <span class="pre">camera,</span> <span class="pre">two</span> <span class="pre">fingers,</span> <span class="pre">and</span> <span class="pre">a</span> <span class="pre">gripper</span> <span class="pre">with</span> <span class="pre">a</span> <span class="pre">suction</span> <span class="pre">function.</span> <span class="pre">It</span> <span class="pre">is</span> <span class="pre">also</span> <span class="pre">equipped</span> <span class="pre">with</span> <span class="pre">an</span> <span class="pre">additional</span> <span class="pre">robotic</span> <span class="pre">arm</span> <span class="pre">and</span> <span class="pre">one</span> <span class="pre">camera</span> <span class="pre">that</span> <span class="pre">observes</span> <span class="pre">a</span> <span class="pre">large</span> <span class="pre">area.\n\nThe</span> <span class="pre">skills</span> <span class="pre">that</span> <span class="pre">the</span> <span class="pre">robot</span> <span class="pre">can</span> <span class="pre">perform</span> <span class="pre">are</span> <span class="pre">as</span> <span class="pre">follows.\n1.</span> <span class="pre">pick:</span> <span class="pre">Grab</span> <span class="pre">an</span> <span class="pre">object</span> <span class="pre">using</span> <span class="pre">a</span> <span class="pre">robot</span> <span class="pre">arm</span> <span class="pre">and</span> <span class="pre">gripper\n2.</span> <span class="pre">place:</span> <span class="pre">Holding</span> <span class="pre">an</span> <span class="pre">object</span> <span class="pre">and</span> <span class="pre">putting</span> <span class="pre">it</span> <span class="pre">down</span> <span class="pre">at</span> <span class="pre">the</span> <span class="pre">target</span> <span class="pre">location\n3.</span> <span class="pre">move:</span> <span class="pre">Drive</span> <span class="pre">the</span> <span class="pre">mobile</span> <span class="pre">base</span> <span class="pre">to</span> <span class="pre">move</span> <span class="pre">to</span> <span class="pre">the</span> <span class="pre">location</span> <span class="pre">where</span> <span class="pre">the</span> <span class="pre">object</span> <span class="pre">exists</span> <span class="pre">or</span> <span class="pre">to</span> <span class="pre">the</span> <span class="pre">target</span> <span class="pre">location.\n4.</span> <span class="pre">Push:</span> <span class="pre">Tasks</span> <span class="pre">such</span> <span class="pre">as</span> <span class="pre">pressing</span> <span class="pre">a</span> <span class="pre">button</span> <span class="pre">or</span> <span class="pre">closing</span> <span class="pre">a</span> <span class="pre">drawer</span> <span class="pre">using</span> <span class="pre">a</span> <span class="pre">robot</span> <span class="pre">arm</span> <span class="pre">and</span> <span class="pre">gripper.\n5.</span> <span class="pre">pull:</span> <span class="pre">Pulling</span> <span class="pre">an</span> <span class="pre">object</span> <span class="pre">using</span> <span class="pre">a</span> <span class="pre">robot</span> <span class="pre">arm</span> <span class="pre">and</span> <span class="pre">gripper.</span> <span class="pre">Drawer</span> <span class="pre">can</span> <span class="pre">be</span> <span class="pre">opened</span> <span class="pre">by</span> <span class="pre">pulling</span> <span class="pre">the</span> <span class="pre">handle\n6.</span> <span class="pre">Sweep:</span> <span class="pre">Rub</span> <span class="pre">the</span> <span class="pre">surface</span> <span class="pre">while</span> <span class="pre">holding</span> <span class="pre">an</span> <span class="pre">object</span> <span class="pre">using</span> <span class="pre">a</span> <span class="pre">robot</span> <span class="pre">arm</span> <span class="pre">and</span> <span class="pre">gripper.</span> <span class="pre">Can</span> <span class="pre">be</span> <span class="pre">wiped\n7.</span> <span class="pre">find:</span> <span class="pre">Use</span> <span class="pre">the</span> <span class="pre">camera</span> <span class="pre">to</span> <span class="pre">find</span> <span class="pre">an</span> <span class="pre">object</span> <span class="pre">on/in</span> <span class="pre">place.</span> <span class="pre">Return</span> <span class="pre">location</span> <span class="pre">if</span> <span class="pre">found</span> <span class="pre">or</span> <span class="pre">None</span> <span class="pre">is</span> <span class="pre">not</span> <span class="pre">found\n\nWith</span> <span class="pre">the</span> <span class="pre">7</span> <span class="pre">skills</span> <span class="pre">given</span> <span class="pre">above</span> <span class="pre">and</span> <span class="pre">given</span> <span class="pre">image,</span> <span class="pre">you</span> <span class="pre">need</span> <span class="pre">to</span> <span class="pre">create</span> <span class="pre">a</span> <span class="pre">task</span> <span class="pre">plan</span> <span class="pre">to</span> <span class="pre">carry</span> <span class="pre">out</span> <span class="pre">the</span> <span class="pre">command</span> <span class="pre">when</span> <span class="pre">given.\n\nFor</span> <span class="pre">example:\n\nCommand:</span> <span class="pre">Put</span> <span class="pre">cup</span> <span class="pre">on</span> <span class="pre">table</span> <span class="pre">into</span> <span class="pre">sink</span> <span class="pre">in</span> <span class="pre">kitchen.</span> <span class="pre">\nProgram:\nmove::table::\nfind::cup::pose\nfind_grasppose::cup::pose\npick::pose::\nmove::kitchen::\nfind::sink::pose\nfind_placepose::into,sink::pose\nplace::pose::\n\nCommand:</span> <span class="pre">Put</span> <span class="pre">orange</span> <span class="pre">table</span> <span class="pre">into</span> <span class="pre">tray</span> <span class="pre">on</span> <span class="pre">bed.</span> <span class="pre">\nProgram:\nmove::table::\nfind::orange::pose\nfind_grasppose::orange::pose\npick::pose::\nmove::bed::\nfind::tray::pose\nfind_placepose::into,tray::pose\nplace::pose::\n\nCommand:</span> <span class="pre">Put</span> <span class="pre">orange</span> <span class="pre">into</span> <span class="pre">tray.</span> <span class="pre">\nProgram:\nfind::orange::pose\nfind_grasppose::orange::pose\npick::pose::\nfind::tray::pose\nfind_placepose::into,tray::pose\nplace::pose::\n\nCommand:</span> <span class="pre">Place</span> <span class="pre">remote</span> <span class="pre">control</span> <span class="pre">beside</span> <span class="pre">phone.</span> <span class="pre">\nProgram:\nfind::remote_control::pose\nfind_grasppose::remote_control::pose\npick::pose::\nfind::phone::pose\nfind_placepose::beside,phone::pose\nplace::pose::\n\nCommand:</span> <span class="pre">move</span> <span class="pre">remote</span> <span class="pre">control</span> <span class="pre">on</span> <span class="pre">table</span> <span class="pre">in</span> <span class="pre">living</span> <span class="pre">room</span> <span class="pre">to</span> <span class="pre">bed</span> <span class="pre">in</span> <span class="pre">bedroom.\nProgram:\nmove::living_room_table::\nfind::remote_control::pose\nfind_grasppose::remote_control::pose\npick::pose::\nmove::bedroom::\nfind::bed::pose\nfind_placepose::to,bed::pose\nplace::pose::\n\nCommand:</span> <span class="pre">give</span> <span class="pre">me</span> <span class="pre">bottle</span> <span class="pre">on</span> <span class="pre">the</span> <span class="pre">table.</span> <span class="pre">\nProgram:\nmove::table::\nfind::bottle::pose\nfind_grasppose::bottle::pose\npick::pose::\nmove::me::\nfind::me::pose\nfind_placepose::me::pose\nplace::pose::\n\nCommand:</span> <span class="pre">give</span> <span class="pre">me</span> <span class="pre">orange</span> <span class="pre">on</span> <span class="pre">the</span> <span class="pre">table.</span> <span class="pre">\nProgram:\nmove::table::\nfind::orange::pose\nfind_grasppose::orange::pose\npick::pose::\nmove::me::\nfind::me::pose\nfind_placepose::me::pose\nplace::pose::\n\nCommand:</span> <span class="pre">give</span> <span class="pre">me</span> <span class="pre">remote</span> <span class="pre">control</span> <span class="pre">on</span> <span class="pre">bed</span> <span class="pre">and</span> <span class="pre">apple</span> <span class="pre">on</span> <span class="pre">dining</span> <span class="pre">table.\nProgram:\nmove::bed::\nfind::remote_control::pose\nfind_grasppose::remote_control::pose\npick::pose::\nmove::me::\nfind::me::pose\nfind_placepose::me::pose\nplace::pose::\nmove::dining_table::\nfind::apple::pose\nfind_grasppose::apple::pose\npick::pose::\nmove::me::\nfind::me::pose\nfind_placepose::me::pose\nplace::pose::\n\nCommand:</span> <span class="pre">place</span> <span class="pre">remote</span> <span class="pre">control</span> <span class="pre">on</span> <span class="pre">table</span> <span class="pre">beside</span> <span class="pre">bowl</span> <span class="pre">on</span> <span class="pre">table\nProgram:\nmove::table::\nfind::remote_control::pose\nfind_grasppose::remote_control::pose\npick::pose::\nmove::table::\nfind::bowl::pose\nfind_placepose::beside,bowl::pose\nplace::pose::\n\nCommand:</span> <span class="pre">Bring</span> <span class="pre">the</span> <span class="pre">water</span> <span class="pre">bottle</span> <span class="pre">and</span> <span class="pre">energy</span> <span class="pre">bar</span> <span class="pre">from</span> <span class="pre">the</span> <span class="pre">dining</span> <span class="pre">table.\nProgram:\nmove::dining_table::\nfind::water_bottle::pose\nfind_grasppose::water_bottle::pose\npick::pose::\nmove::me::\nfind::me::pose\nfind_placepose::me::pose\nplace::pose::\nmove::dining_table::\nfind::energy_bar::pose\nfind_grasppose::energy_bar::pose\npick::pose::\nmove::me::\nfind::me::pose\nfind_placepose::me::pose\nplace::pose::\n\nCommand:</span> <span class="pre">i</span> <span class="pre">am</span> <span class="pre">thirsty\nProgram:\nmove::table::\nfind::water::pose\nfind_grasppose::water::pose\npick::pose::\nmove::me::\nfind::me::pose\nfind_placepose::me::pose\nplace::pose::\n\nCommand:</span> <span class="pre">i</span> <span class="pre">am</span> <span class="pre">hungry\nProgram:\nmove::table::\nfind::food::pose\nfind_grasppose::food::pose\npick::pose::\nmove::me::\nfind::me::pose\nfind_placepose::me::pose\nplace::pose::\n\nComplete</span> <span class="pre">the</span> <span class="pre">following</span> <span class="pre">without</span> <span class="pre">any</span> <span class="pre">explanation</span> <span class="pre">and</span> <span class="pre">note:\n\nCommand:</span> <span class="pre">COMMAND_HERE.\nProgram:\n\n'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reuse</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/pyconnect/llm/llm_object.html#LLMobj.chat_guide"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyconnect.llm.llm_object.LLMobj.chat_guide" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyconnect.llm.llm_object.LLMobj.demo">
+<span class="sig-name descname"><span class="pre">demo</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rgb_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/pyconnect/llm/llm_object.html#LLMobj.demo"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyconnect.llm.llm_object.LLMobj.demo" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyconnect.llm.llm_object.LLMobj.demo_chatloop">
+<span class="sig-name descname"><span class="pre">demo_chatloop</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tag</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'chatloop'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/pyconnect/llm/llm_object.html#LLMobj.demo_chatloop"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyconnect.llm.llm_object.LLMobj.demo_chatloop" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyconnect.llm.llm_object.LLMobj.encode_b64">
+<span class="sig-name descname"><span class="pre">encode_b64</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rgb</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/pyconnect/llm/llm_object.html#LLMobj.encode_b64"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyconnect.llm.llm_object.LLMobj.encode_b64" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyconnect.llm.llm_object.LLMobj.init">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">init</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/pyconnect/llm/llm_object.html#LLMobj.init"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyconnect.llm.llm_object.LLMobj.init" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyconnect.llm.llm_object.LLMobj.make_msg">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">make_msg</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/pyconnect/llm/llm_object.html#LLMobj.make_msg"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyconnect.llm.llm_object.LLMobj.make_msg" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyconnect.llm.llm_object.LLMobj.make_msgs">
+<span class="sig-name descname"><span class="pre">make_msgs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/pyconnect/llm/llm_object.html#LLMobj.make_msgs"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyconnect.llm.llm_object.LLMobj.make_msgs" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyconnect.llm.llm_object.LLMobj.read_history">
+<span class="sig-name descname"><span class="pre">read_history</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/pyconnect/llm/llm_object.html#LLMobj.read_history"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyconnect.llm.llm_object.LLMobj.read_history" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyconnect.llm.llm_object.LLMobj.reset_history">
+<span class="sig-name descname"><span class="pre">reset_history</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tag</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'untagged'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/pyconnect/llm/llm_object.html#LLMobj.reset_history"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyconnect.llm.llm_object.LLMobj.reset_history" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyconnect.llm.llm_object.LLMobj.send_msgs">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">send_msgs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/pyconnect/llm/llm_object.html#LLMobj.send_msgs"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyconnect.llm.llm_object.LLMobj.send_msgs" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pyconnect.llm.llm_object.LLMobj.write_history">
+<span class="sig-name descname"><span class="pre">write_history</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tag</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/pyconnect/llm/llm_object.html#LLMobj.write_history"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyconnect.llm.llm_object.LLMobj.write_history" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pyconnect.llm.llm_object.ename">
+<span class="sig-prename descclassname"><span class="pre">pyconnect.llm.llm_object.</span></span><span class="sig-name descname"><span class="pre">ename</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">p</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyconnect.llm.llm_object.ename" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pyconnect.llm.llm_object.fname">
+<span class="sig-prename descclassname"><span class="pre">pyconnect.llm.llm_object.</span></span><span class="sig-name descname"><span class="pre">fname</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">p</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyconnect.llm.llm_object.fname" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</section>
+<section id="module-pyconnect.llm">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-pyconnect.llm" title="Link to this heading"></a></h2>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="pyconnect.html" class="btn btn-neutral float-left" title="pyconnect package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="pyconnect.models.html" class="btn btn-neutral float-right" title="pyconnect.models package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Trung Bui.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

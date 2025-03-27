@@ -1,0 +1,174 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>node_prompt module &mdash; Care Robot 1.0.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=8d563738"></script>
+      <script src="../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="node_skill_servers module" href="node_skill_servers.html" />
+    <link rel="prev" title="configs package" href="configs.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            Care Robot
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../contents/intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../contents/get_started.html">Get started</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">app_carerobot</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="modules.html#how-to-run">How to run</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="modules.html#api">API</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="calibrattion.html">calibrattion module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="configs.html">configs package</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">node_prompt module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#node_prompt.run_node"><code class="docutils literal notranslate"><span class="pre">run_node()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="node_skill_servers.html">node_skill_servers module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="node_taskmanager.html">node_taskmanager module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="skills.html">skills package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="utils.html">utils module</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../pyconnect/modules.html">pyconnect</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Care Robot</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="modules.html">app_carerobot</a></li>
+      <li class="breadcrumb-item active">node_prompt module</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/apidoc/app_carerobot/node_prompt.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-node_prompt">
+<span id="node-prompt-module"></span><h1>node_prompt module<a class="headerlink" href="#module-node_prompt" title="Link to this heading"></a></h1>
+<dl class="py function">
+<dt class="sig sig-object py" id="node_prompt.run_node">
+<span class="sig-prename descclassname"><span class="pre">node_prompt.</span></span><span class="sig-name descname"><span class="pre">run_node</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/node_prompt.html#run_node"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#node_prompt.run_node" title="Link to this definition"></a></dt>
+<dd><p>Run a ROS node for task planning and sensor interaction.</p>
+<p>This function initializes a ROS node (<cite>task_plansender</cite>) using the <cite>CustomNode</cite> class,
+integrates a language model (LLM) client for generating plans based on user input,
+and optionally connects to an RGB sensor. It publishes plans or prompts to the node’s
+agents based on user input and configuration settings. The node spins in a separate
+thread, and the function runs until the user inputs ‘exit’.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>None</strong> – This function does not take explicit arguments. It relies on configurations from
+<cite>configs.tasks</cite> (e.g., <cite>PROMPT_CONFIGS</cite>, <cite>MODE</cite>, <cite>LLM_SERVES</cite>, <cite>DEVICE_MODE</cite>)
+and <cite>configs.device_clients</cite> (e.g., <cite>DEVICE_CLIENT_CONFIGS</cite>), parsed via
+<cite>parse_keys_values</cite>.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>This function does not return a value. It runs the node and handles I/O</dt><dd><p>operations as a side effect.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>ImportError</strong> – If required modules (e.g., <cite>pyconnect</cite>, <cite>std_msgs.msg</cite>) are not installed.</p></li>
+<li><p><strong>KeyError</strong> – If expected keys are missing from configuration dictionaries.</p></li>
+<li><p><strong>AttributeError</strong> – If sensor data or agent attributes are accessed before initialization.</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<ul class="simple">
+<li><p>The function uses <cite>parse_keys_values</cite> to extract runtime arguments from configuration.</p></li>
+<li><p>If <cite>isplanned</cite> is False, it initializes an LLM client for dynamic plan generation.</p></li>
+<li><p>The RGB sensor is optional; if provided, the function waits for sensor data before proceeding.</p></li>
+<li><p>User input is collected via <cite>suggest_input</cite>, and the loop exits on ‘exit’.</p></li>
+</ul>
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="configs.html" class="btn btn-neutral float-left" title="configs package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="node_skill_servers.html" class="btn btn-neutral float-right" title="node_skill_servers module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Trung Bui.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,209 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>skills.arm &mdash; Care Robot 1.0.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=8d563738"></script>
+      <script src="../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            Care Robot
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../contents/intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../contents/get_started.html">Get started</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../apidoc/app_carerobot/modules.html">app_carerobot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../apidoc/pyconnect/modules.html">pyconnect</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Care Robot</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">skills.arm</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for skills.arm</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span><span class="w"> </span><span class="nn">configs.device_clients</span><span class="w"> </span><span class="kn">import</span> <span class="n">DEVICE_CLIENT_CONFIGS</span><span class="p">,</span> <span class="n">RobotParam</span><span class="p">,</span> <span class="n">RobotState</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">time</span><span class="o">,</span><span class="w"> </span><span class="nn">copy</span><span class="o">,</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span><span class="o">,</span><span class="w"> </span><span class="nn">math</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">calibrattion</span><span class="w"> </span><span class="kn">import</span> <span class="n">Head2BaseCalibration</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pyconnect.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">evaluate</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">configs.tasks</span><span class="w"> </span><span class="kn">import</span> <span class="n">CALIB_OFFSET</span><span class="p">,</span> <span class="n">LIFTUP_Z</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">configs.device_clients</span><span class="w"> </span><span class="kn">import</span> <span class="n">WRIST_DIAMETER</span>
+
+<span class="n">calib</span> <span class="o">=</span> <span class="n">Head2BaseCalibration</span><span class="p">()</span>
+
+<div class="viewcode-block" id="dlift">
+<a class="viewcode-back" href="../../apidoc/app_carerobot/skills.html#skills.arm.dlift">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">dlift</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">device_mode</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Lift the robot arm by a specified distance.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        - node (CustomNode): The ROS node with lift-related agents.</span>
+<span class="sd">        - data (dict): Task data, including &#39;task&#39; key with format &#39;lift::distance&#39;.</span>
+<span class="sd">        - device_mode (str, optional): Mode suffix for agent names. Defaults to &#39;&#39;.</span>
+<span class="sd">        - **kwargs: Additional keyword arguments (unused).</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        - dict: Result with &#39;isdone&#39; (bool) indicating success or failure.</span>
+
+<span class="sd">    Raises:</span>
+<span class="sd">        - KeyError: If &#39;task&#39; or agent data is missing.</span>
+<span class="sd">        - ValueError: If task format is invalid.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">liftstate_agent</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">agents</span><span class="p">[</span><span class="n">DEVICE_CLIENT_CONFIGS</span><span class="p">[</span><span class="s1">&#39;lm_state&#39;</span><span class="p">][</span><span class="s1">&#39;agent_name&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="n">device_mode</span><span class="p">]</span>
+    <span class="n">lift_agent</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">agents</span><span class="p">[</span><span class="n">DEVICE_CLIENT_CONFIGS</span><span class="p">[</span><span class="s1">&#39;lift&#39;</span><span class="p">][</span><span class="s1">&#39;agent_name&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="n">device_mode</span><span class="p">]</span>
+    
+    <span class="n">inp</span> <span class="o">=</span> <span class="nb">eval</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;task&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;::&#39;</span><span class="p">)[</span><span class="mi">1</span><span class="p">])</span>
+    <span class="n">lift_to</span> <span class="o">=</span> <span class="n">liftstate_agent</span><span class="o">.</span><span class="n">rev_data</span><span class="p">[</span><span class="s1">&#39;current_position&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="mi">1000</span> <span class="o">+</span> <span class="n">inp</span>
+    <span class="n">ret</span> <span class="o">=</span> <span class="n">lift_agent</span><span class="o">.</span><span class="n">send</span><span class="p">({</span><span class="s1">&#39;task&#39;</span><span class="p">:</span> <span class="sa">f</span><span class="s1">&#39;lift::</span><span class="si">{</span><span class="n">lift_to</span><span class="si">}</span><span class="s1">::&#39;</span><span class="p">})</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">ret</span><span class="p">[</span><span class="s1">&#39;isdone&#39;</span><span class="p">]:</span>
+        <span class="k">return</span> <span class="n">ret</span>
+    
+    <span class="k">return</span> <span class="p">{</span><span class="s1">&#39;isdone&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">}</span></div>
+
+
+<div class="viewcode-block" id="arm_approach">
+<a class="viewcode-back" href="../../apidoc/app_carerobot/skills.html#skills.arm.arm_approach">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">arm_approach</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">device_mode</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Move the robot arm to approach an object.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        - node (CustomNode): The ROS node with movement-related agents.</span>
+<span class="sd">        - data (dict): Task data with &#39;task&#39; (format &#39;approach::obj_name&#39;) and &#39;ins&#39; (object info).</span>
+<span class="sd">        - mode (str, optional): Mode suffix for skill agents. Defaults to &#39;&#39;.</span>
+<span class="sd">        - device_mode (str, optional): Mode suffix for device agents. Defaults to &#39;&#39;.</span>
+<span class="sd">        - **kwargs: Additional keyword arguments (unused).</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        - dict: Updated `data` with &#39;isdone&#39; (bool) set to True on success, or error result on failure.</span>
+
+<span class="sd">    Raises:</span>
+<span class="sd">        - KeyError: If required keys (e.g., &#39;ins&#39;, &#39;pose&#39;) are missing in `data`.</span>
+<span class="sd">        - AttributeError: If agent data (e.g., `rev_data`) is unavailable.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">liftstate_agent</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">agents</span><span class="p">[</span><span class="n">DEVICE_CLIENT_CONFIGS</span><span class="p">[</span><span class="s1">&#39;lm_state&#39;</span><span class="p">][</span><span class="s1">&#39;agent_name&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="n">device_mode</span><span class="p">]</span>
+    <span class="n">robotpose_agent</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">agents</span><span class="p">[</span><span class="n">DEVICE_CLIENT_CONFIGS</span><span class="p">[</span><span class="s1">&#39;robot_pose&#39;</span><span class="p">][</span><span class="s1">&#39;agent_name&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="n">device_mode</span><span class="p">]</span>
+    <span class="n">lift_agent</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">agents</span><span class="p">[</span><span class="n">DEVICE_CLIENT_CONFIGS</span><span class="p">[</span><span class="s1">&#39;lift&#39;</span><span class="p">][</span><span class="s1">&#39;agent_name&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="n">device_mode</span><span class="p">]</span>
+    <span class="n">dmove_agent</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">agents</span><span class="p">[</span><span class="n">DEVICE_CLIENT_CONFIGS</span><span class="p">[</span><span class="s1">&#39;dmove&#39;</span><span class="p">][</span><span class="s1">&#39;agent_name&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="n">device_mode</span><span class="p">]</span>
+    
+    <span class="n">obj_name</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;task&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;::&#39;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+
+    <span class="k">if</span> <span class="s1">&#39;approach_pose&#39;</span> <span class="ow">in</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;ins&#39;</span><span class="p">][</span><span class="n">obj_name</span><span class="p">]:</span>
+        <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;ins&#39;</span><span class="p">][</span><span class="n">obj_name</span><span class="p">][</span><span class="s1">&#39;approach_pose&#39;</span><span class="p">]</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">head_state</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;ins&#39;</span><span class="p">][</span><span class="n">obj_name</span><span class="p">][</span><span class="s1">&#39;head_state&#39;</span><span class="p">]</span>
+        <span class="n">x0</span><span class="p">,</span> <span class="n">y0</span><span class="p">,</span> <span class="n">x1</span><span class="p">,</span> <span class="n">y1</span><span class="p">,</span> <span class="n">obj_depth</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;ins&#39;</span><span class="p">][</span><span class="n">obj_name</span><span class="p">][</span><span class="s1">&#39;pose&#39;</span><span class="p">]</span>
+        <span class="n">xc</span><span class="p">,</span> <span class="n">yc</span> <span class="o">=</span> <span class="p">(</span><span class="n">x0</span> <span class="o">+</span> <span class="n">x1</span><span class="p">)</span> <span class="o">//</span> <span class="mi">2</span><span class="p">,</span> <span class="p">(</span><span class="n">y0</span> <span class="o">+</span> <span class="n">y1</span><span class="p">)</span> <span class="o">//</span> <span class="mi">2</span>
+        <span class="n">z</span><span class="p">,</span> <span class="n">trans_armrobot_XYZ</span> <span class="o">=</span> <span class="n">calib</span><span class="o">.</span><span class="n">convert_femto_to_arm</span><span class="p">(</span>
+            <span class="n">xc</span><span class="p">,</span> <span class="n">yc</span><span class="p">,</span> <span class="n">obj_depth</span><span class="p">,</span>
+            <span class="n">liftstate_agent</span><span class="o">.</span><span class="n">rev_data</span><span class="p">[</span><span class="s1">&#39;current_position&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="mi">1000</span><span class="p">,</span>
+            <span class="n">robotpose_agent</span><span class="o">.</span><span class="n">rev_data</span><span class="p">[</span><span class="s1">&#39;pose&#39;</span><span class="p">],</span>
+            <span class="n">head_state</span><span class="p">[</span><span class="s1">&#39;current_ry&#39;</span><span class="p">],</span>
+            <span class="n">head_state</span><span class="p">[</span><span class="s1">&#39;current_rz&#39;</span><span class="p">]</span>
+        <span class="p">)</span>
+        <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">trans_armrobot_XYZ</span><span class="p">[:</span><span class="mi">2</span><span class="p">]</span>
+        <span class="n">z1</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">calib</span><span class="o">.</span><span class="n">convert_femto_to_arm</span><span class="p">(</span>
+            <span class="n">x1</span><span class="p">,</span> <span class="n">y1</span><span class="p">,</span> <span class="n">obj_depth</span><span class="p">,</span>
+            <span class="n">liftstate_agent</span><span class="o">.</span><span class="n">rev_data</span><span class="p">[</span><span class="s1">&#39;current_position&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="mi">1000</span><span class="p">,</span>
+            <span class="n">robotpose_agent</span><span class="o">.</span><span class="n">rev_data</span><span class="p">[</span><span class="s1">&#39;pose&#39;</span><span class="p">],</span>
+            <span class="n">head_state</span><span class="p">[</span><span class="s1">&#39;current_ry&#39;</span><span class="p">],</span>
+            <span class="n">head_state</span><span class="p">[</span><span class="s1">&#39;current_rz&#39;</span><span class="p">]</span>
+        <span class="p">)</span>
+        <span class="n">z</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">z</span><span class="p">,</span> <span class="n">z1</span> <span class="o">+</span> <span class="n">WRIST_DIAMETER</span> <span class="o">//</span> <span class="mi">2</span><span class="p">)</span>
+
+    <span class="n">ret</span> <span class="o">=</span> <span class="n">lift_agent</span><span class="o">.</span><span class="n">send</span><span class="p">({</span><span class="s1">&#39;task&#39;</span><span class="p">:</span> <span class="sa">f</span><span class="s1">&#39;lift::</span><span class="si">{</span><span class="n">z</span><span class="si">}</span><span class="s1">::&#39;</span><span class="p">})</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">ret</span><span class="p">[</span><span class="s1">&#39;isdone&#39;</span><span class="p">]:</span>
+        <span class="k">return</span> <span class="n">ret</span>
+    
+    <span class="n">ret</span> <span class="o">=</span> <span class="n">dmove_agent</span><span class="o">.</span><span class="n">send</span><span class="p">({</span><span class="s1">&#39;task&#39;</span><span class="p">:</span> <span class="sa">f</span><span class="s1">&#39;dmove::dy=</span><span class="si">{</span><span class="n">y</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">CALIB_OFFSET</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s1">::&#39;</span><span class="p">})</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">ret</span><span class="p">[</span><span class="s1">&#39;isdone&#39;</span><span class="p">]:</span>
+        <span class="k">return</span> <span class="n">ret</span>
+    
+    <span class="n">ret</span> <span class="o">=</span> <span class="n">dmove_agent</span><span class="o">.</span><span class="n">send</span><span class="p">({</span><span class="s1">&#39;task&#39;</span><span class="p">:</span> <span class="sa">f</span><span class="s1">&#39;dmove::dx=</span><span class="si">{</span><span class="n">x</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">RobotParam</span><span class="o">.</span><span class="n">tool_length</span><span class="si">}</span><span class="s1">::&#39;</span><span class="p">})</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">ret</span><span class="p">[</span><span class="s1">&#39;isdone&#39;</span><span class="p">]:</span>
+        <span class="k">return</span> <span class="n">ret</span>
+
+    <span class="n">data</span><span class="p">[</span><span class="s1">&#39;isdone&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="k">return</span> <span class="n">data</span></div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Trung Bui.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
