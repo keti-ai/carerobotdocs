@@ -45,30 +45,50 @@
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../contents/intro.html">Introduction</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../contents/get_started.html">Get started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../contents/get_started.html">Getting Started</a></li>
 </ul>
 <ul class="current">
 <li class="toctree-l1 current"><a class="reference internal" href="modules.html">app_carerobot</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="modules.html#how-to-run">How to run</a></li>
-<li class="toctree-l2 current"><a class="reference internal" href="modules.html#api">API</a><ul class="current">
-<li class="toctree-l3"><a class="reference internal" href="calibrattion.html">calibrattion module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="configs.html">configs package</a></li>
-<li class="toctree-l3"><a class="reference internal" href="node_prompt.html">node_prompt module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="node_skill_servers.html">node_skill_servers module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="node_taskmanager.html">node_taskmanager module</a></li>
-<li class="toctree-l3 current"><a class="current reference internal" href="#">skills package</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#submodules">Submodules</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#module-skills.arm">skills.arm module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#module-skills.goto_ready">skills.goto_ready module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#module-skills.pick">skills.pick module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#module-skills.place">skills.place module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#module-skills.recognition">skills.recognition module</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#module-skills">Module contents</a></li>
+<li class="toctree-l2"><a class="reference internal" href="calibrattion.html">calibrattion module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="configs.html">configs package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="node_prompt.html">node_prompt module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="node_skill_servers.html">node_skill_servers module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="node_taskmanager.html">node_taskmanager module</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">skills package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-skills.arm">skills.arm module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#skills.arm.arm_approach"><code class="docutils literal notranslate"><span class="pre">arm_approach()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#skills.arm.dlift"><code class="docutils literal notranslate"><span class="pre">dlift()</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="utils.html">utils module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-skills.goto_ready">skills.goto_ready module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#skills.goto_ready.arm_back"><code class="docutils literal notranslate"><span class="pre">arm_back()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#skills.goto_ready.init_pick"><code class="docutils literal notranslate"><span class="pre">init_pick()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#skills.goto_ready.init_robot"><code class="docutils literal notranslate"><span class="pre">init_robot()</span></code></a></li>
 </ul>
 </li>
+<li class="toctree-l3"><a class="reference internal" href="#module-skills.pick">skills.pick module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#skills.pick.pick"><code class="docutils literal notranslate"><span class="pre">pick()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-skills.place">skills.place module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#skills.place.place"><code class="docutils literal notranslate"><span class="pre">place()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-skills.recognition">skills.recognition module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#skills.recognition.detect"><code class="docutils literal notranslate"><span class="pre">detect()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#skills.recognition.detect_grasp"><code class="docutils literal notranslate"><span class="pre">detect_grasp()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#skills.recognition.detect_tooltip"><code class="docutils literal notranslate"><span class="pre">detect_tooltip()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#skills.recognition.find"><code class="docutils literal notranslate"><span class="pre">find()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#skills.recognition.find_surface"><code class="docutils literal notranslate"><span class="pre">find_surface()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#skills.recognition.find_tooltip"><code class="docutils literal notranslate"><span class="pre">find_tooltip()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#skills.recognition.track"><code class="docutils literal notranslate"><span class="pre">track()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-skills">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="utils.html">utils module</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../pyconnect/modules.html">pyconnect</a></li>

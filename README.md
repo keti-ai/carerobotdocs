@@ -1,50 +1,68 @@
-# doc_carerobot
+# Doc CareRobot
 
+This repository contains documentation for the CareRobot project. Below are the steps to set up, generate, and deploy the documentation using Sphinx.
 
-Install:
+## Installation
+To install the necessary dependencies, run:
 ```bash
-pip install sphinx
-pip install sphinx-rtd-theme
+pip install sphinx sphinx-rtd-theme
 ```
 
-Edit source/conf.py:
-```
+## Configuration
+Edit the `source/conf.py` file and update the necessary paths:
+```python
 CODE_PATH_HERE
 ```
 
-Generate Docs from Code
-```
+## Generating Documentation from Code
+Run the following command to generate API documentation from your source code:
+```bash
 sphinx-apidoc -f -o source/apidoc $CORE_DIR  
 ```
-Note: __init__.py should be in subdirs
+**Note:** Ensure that `__init__.py` is present in subdirectories for correct module recognition.
 
-Build
-```
+## Building the Documentation
+```bash
 mkdir build
 make clean
 make html
 ```
 
-Deloy
-```
+## Deployment
+To deploy the generated documentation:
+```bash
 rm -rf docs
 cp -r build/html docs
+
+git push $REPOSITORY
+```
+Then, update GitHub Pages settings:
+- Go to **Settings** → **Pages** → **Build and deployment**
+- Set **Source** to **Deploy from branch**
+- Choose the `docs` branch
+
+Your documentation will be available at:
+```
+https://keti-ai.github.io/$REPOSITORY_NAME
 ```
 
+---
 
-Edit skils:
+# Editing .rst Guide
 
-Heading level
+## Heading Levels
+Use the following syntax for different heading levels:
 ```
-Level 1: = (e.g., document title)
-Level 2: - (e.g., sections)
-Level 3: * (e.g., subsections)
-Level 4: + (e.g., subsubsections)
-Level 5: ^ (e.g., paragraphs)
+Level 1: = (e.g., Document Title)
+Level 2: - (e.g., Sections)
+Level 3: * (e.g., Subsections)
+Level 4: + (e.g., Subsubsections)
+Level 5: ^ (e.g., Paragraphs)
 ```
 
-Adding image
-```
+## Adding Images
+To insert an image:
+```rst
 .. figure:: path/to/image.png
    :alt: Alternative text
    :width: 300px
@@ -53,8 +71,9 @@ Adding image
    Caption for the image.
 ```
 
-Adding tables
-```
+## Adding Tables
+To create a table:
+```rst
 .. list-table:: Robot Skills
    :header-rows: 1
    :widths: 20 40
@@ -67,24 +86,23 @@ Adding tables
      - Release object
 ```
 
-Adding math
-```
+## Adding Math Equations
+To include mathematical expressions:
+```rst
 .. math::
 
    equation1\\
    equation2
 ```
 
-Adding code
-```
+## Adding Code Blocks
+To display code:
+```rst
 .. code-block:: language
 
    Code goes here
 ```
 
+---
 
-
-
-
-
-
+This `README.md` provides an overview of setting up and managing the documentation for the CareRobot project. If you have any questions, refer to the Sphinx documentation or reach out to the maintainers.
