@@ -25,9 +25,10 @@ make clean
 make html
 ```
 
-Run
+Deloy
 ```
-build/index.html
+rm -rf docs
+cp -r build/html docs
 ```
 
 
