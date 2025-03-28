@@ -33,6 +33,7 @@ To deploy the generated documentation:
 ```bash
 rm -rf docs
 cp -r build/html docs
+touch docs/.nojekyll
 
 git push $REPOSITORY
 ```
