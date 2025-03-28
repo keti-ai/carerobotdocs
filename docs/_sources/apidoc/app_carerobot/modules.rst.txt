@@ -1,16 +1,6 @@
 app_carerobot
 =============
-
-How to run
-----------
-Download repository
-*******************
-.. code-block:: bash
-   git clone https://github.com/keti-ai/app_carerobot.git
-
    
-API
--------
 .. toctree::
    :maxdepth: 2
 

@@ -42,7 +42,7 @@
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../contents/intro.html">Introduction</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../contents/get_started.html">Get started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../contents/get_started.html">Getting Started</a></li>
 </ul>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../apidoc/app_carerobot/modules.html">app_carerobot</a></li>
@@ -154,7 +154,9 @@
             <span class="c1">#     print(f&#39;No image to show&#39;)</span>
             <span class="nb">print</span><span class="p">(</span><span class="n">data_info</span><span class="p">(</span><span class="n">pred</span><span class="p">))</span>
             <span class="n">rgb_out</span> <span class="o">=</span> <span class="n">visualize_pred</span><span class="p">(</span><span class="n">rgb</span><span class="o">=</span><span class="n">inputs</span><span class="p">[</span><span class="s1">&#39;rgb&#39;</span><span class="p">],</span> <span class="n">pred</span><span class="o">=</span><span class="n">pred</span><span class="p">)</span>
-            <span class="n">cv2</span><span class="o">.</span><span class="n">imwrite</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">out_dir</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">im_name</span><span class="si">}</span><span class="s1">_out.png&#39;</span><span class="p">),</span> <span class="n">rgb_out</span><span class="p">)</span>
+            <span class="n">out_path</span>  <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">out_dir</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">im_name</span><span class="si">}</span><span class="s1">_out.png&#39;</span><span class="p">)</span>
+            <span class="n">cv2</span><span class="o">.</span><span class="n">imwrite</span><span class="p">(</span><span class="n">out_path</span><span class="p">,</span> <span class="n">rgb_out</span><span class="p">[</span><span class="o">...</span><span class="p">,::</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;rgb_out saved to </span><span class="si">{</span><span class="n">out_path</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
             <span class="n">cv2</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="s1">&#39;rgb_out&#39;</span><span class="p">,</span> <span class="n">rgb_out</span><span class="p">[</span><span class="o">...</span><span class="p">,::</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
             <span class="k">if</span> <span class="n">cv2</span><span class="o">.</span><span class="n">waitKey</span><span class="p">()</span><span class="o">==</span><span class="mi">27</span><span class="p">:</span>
                 <span class="n">exit</span><span class="p">()</span>

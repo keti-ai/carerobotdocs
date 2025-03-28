@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Get started &mdash; Care Robot 1.0.0 documentation</title>
+  <title>Getting Started &mdash; Care Robot 1.0.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
 
@@ -45,8 +45,23 @@
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="intro.html">Introduction</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Get started</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#environment-installation">Environment Installation</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Getting Started</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#cuda-installation-host-pc">Cuda Installation (Host PC)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#docker-installation">Docker Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#dependencies-installation">Dependencies Installation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#download-required-repositories">Download Required Repositories</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#install-python-packages">Install Python Packages</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#install-ros-interfaces">Install ROS Interfaces</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#system-execution">System Execution</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#robot-and-device-server-execution-in-edge-pc">Robot and Device Server Execution in Edge PC</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#ollama-server-execution-in-server-pc">Ollama Server Execution in Server PC</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#vlm-server-execution-in-server-pc">VLM Server Execution in Server PC</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#ros-node-execution-in-control-pc">ROS Node Execution in Control PC</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#configuration-files">Configuration Files</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -69,7 +84,7 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
-      <li class="breadcrumb-item active">Get started</li>
+      <li class="breadcrumb-item active">Getting Started</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../_sources/contents/get_started.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -79,10 +94,142 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="get-started">
-<h1>Get started<a class="headerlink" href="#get-started" title="Link to this heading"></a></h1>
-<section id="environment-installation">
-<h2>Environment Installation<a class="headerlink" href="#environment-installation" title="Link to this heading"></a></h2>
+  <section id="getting-started">
+<h1>Getting Started<a class="headerlink" href="#getting-started" title="Link to this heading"></a></h1>
+<p>This guide provides step-by-step instructions to set up the necessary environment for your project, including CUDA, Docker, dependencies, and system execution.</p>
+<p>—</p>
+<section id="cuda-installation-host-pc">
+<h2>Cuda Installation (Host PC)<a class="headerlink" href="#cuda-installation-host-pc" title="Link to this heading"></a></h2>
+<p><strong>Prerequisites:</strong>
+- Ubuntu version <strong>20.04 or later</strong> (22.04 recommended)</p>
+<p>Steps to Install CUDA Drivers:</p>
+<ol class="arabic">
+<li><p>Add the official graphics drivers repository:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo<span class="w"> </span>add-apt-repository<span class="w"> </span>ppa:graphics-drivers/ppa
+sudo<span class="w"> </span>apt<span class="w"> </span>update
+reboot
+</pre></div>
+</div>
+</li>
+<li><p>After rebooting, open <strong>Software &amp; Updates</strong> → <strong>Additional Drivers</strong> and select the appropriate driver for your GPU.</p></li>
+<li><p>Apply the changes and reboot the system:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>reboot
+</pre></div>
+</div>
+</li>
+</ol>
+</section>
+<section id="docker-installation">
+<h2>Docker Installation<a class="headerlink" href="#docker-installation" title="Link to this heading"></a></h2>
+<p>To set up a Docker containerized environment for your project, follow these steps:</p>
+<ol class="arabic">
+<li><p>Clone the Docker configuration repository:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/keti-ai/dockers.git
+<span class="nb">cd</span><span class="w"> </span>dockers
+</pre></div>
+</div>
+</li>
+<li><p>Build the Docker image with the required specifications:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./build_image.sh<span class="w"> </span>&lt;UBUNTU_VERSION&gt;<span class="w"> </span>&lt;CUDA_VERSION&gt;<span class="w"> </span>&lt;ROS_DISTRO&gt;
+</pre></div>
+</div>
+<p>Replace <cite>&lt;UBUNTU_VERSION&gt;</cite>, <cite>&lt;CUDA_VERSION&gt;</cite>, and <cite>&lt;ROS_DISTRO&gt;</cite> with your specific environment settings.</p>
+</li>
+<li><p>Create and run a Docker container:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./build_container.sh<span class="w"> </span>&lt;UBUNTU_VERSION&gt;<span class="w"> </span>&lt;CUDA_VERSION&gt;<span class="w"> </span>&lt;ROS_DISTRO&gt;<span class="w"> </span>&lt;CONTAINER_NAME&gt;<span class="w"> </span>&lt;SHARE_DIR&gt;<span class="w"> </span>&lt;SSH_PORT&gt;<span class="w"> </span>&lt;PORT_MAP&gt;
+</pre></div>
+</div>
+<ul class="simple">
+<li><p><cite>&lt;CONTAINER_NAME&gt;</cite>: Name of the container</p></li>
+<li><p><cite>&lt;SHARE_DIR&gt;</cite>: Shared directory path</p></li>
+<li><p><cite>&lt;SSH_PORT&gt;</cite>: SSH port number</p></li>
+<li><p><cite>&lt;PORT_MAP&gt;</cite>: Additional port mappings</p></li>
+</ul>
+</li>
+</ol>
+<p>—</p>
+</section>
+<section id="dependencies-installation">
+<h2>Dependencies Installation<a class="headerlink" href="#dependencies-installation" title="Link to this heading"></a></h2>
+<section id="download-required-repositories">
+<h3>Download Required Repositories<a class="headerlink" href="#download-required-repositories" title="Link to this heading"></a></h3>
+<p>Clone the following repositories to set up the necessary dependencies:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/CASIA-IVA-Lab/FastSAM.git
+git<span class="w"> </span>clone<span class="w"> </span>https://github.com/IDEA-Research/GroundingDINO.git
+git<span class="w"> </span>clone<span class="w"> </span>https://github.com/keti-ai/pyrecognition.git
+git<span class="w"> </span>clone<span class="w"> </span>https://github.com/keti-ai/pyconnect.git
+git<span class="w"> </span>clone<span class="w"> </span>https://github.com/keti-ai/pyinterfaces.git
+git<span class="w"> </span>clone<span class="w"> </span>https://github.com/keti-ai/rosinterfaces.git
+</pre></div>
+</div>
+</section>
+<section id="install-python-packages">
+<h3>Install Python Packages<a class="headerlink" href="#install-python-packages" title="Link to this heading"></a></h3>
+<p>Install the repositories as editable Python packages:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span>FastSAM
+pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span>GroundingDINO
+pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span>pyrecognition
+pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span>pyconnect
+pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span>pyinterfaces
+</pre></div>
+</div>
+</section>
+<section id="install-ros-interfaces">
+<h3>Install ROS Interfaces<a class="headerlink" href="#install-ros-interfaces" title="Link to this heading"></a></h3>
+<ol class="arabic">
+<li><p>Create a symbolic link to <cite>rosinterfaces</cite> inside the ROS2 workspace:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ln<span class="w"> </span>-s<span class="w"> </span>rosinterfaces<span class="w"> </span>~/ros2_ws/src
+</pre></div>
+</div>
+</li>
+<li><p>Build the ROS package:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>~/ros2_ws
+colcon<span class="w"> </span>build<span class="w"> </span>--packages-select<span class="w"> </span>rosinterfaces
+</pre></div>
+</div>
+</li>
+</ol>
+</section>
+</section>
+<section id="system-execution">
+<h2>System Execution<a class="headerlink" href="#system-execution" title="Link to this heading"></a></h2>
+<section id="robot-and-device-server-execution-in-edge-pc">
+<h3>Robot and Device Server Execution in Edge PC<a class="headerlink" href="#robot-and-device-server-execution-in-edge-pc" title="Link to this heading"></a></h3>
+<p>Start the various components required for the robot and sensors:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>robot<span class="w">   </span><span class="c1"># Initializes robot arm, elevator, head, etc.</span>
+femto<span class="w">   </span><span class="c1"># Runs the Femto camera</span>
+hand<span class="w">    </span><span class="c1"># Runs the wrist camera</span>
+</pre></div>
+</div>
+</section>
+<section id="ollama-server-execution-in-server-pc">
+<h3>Ollama Server Execution in Server PC<a class="headerlink" href="#ollama-server-execution-in-server-pc" title="Link to this heading"></a></h3>
+<p>To enter the running Ollama server’s container:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo<span class="w"> </span>docker<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-it<span class="w"> </span>ollama<span class="w"> </span>/bin/bash
+</pre></div>
+</div>
+</section>
+<section id="vlm-server-execution-in-server-pc">
+<h3>VLM Server Execution in Server PC<a class="headerlink" href="#vlm-server-execution-in-server-pc" title="Link to this heading"></a></h3>
+<p>Start the Vision-Language Model (VLM) server:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python3<span class="w"> </span>-m<span class="w"> </span>pyrecognition.run_server<span class="w"> </span><span class="nv">server_type</span><span class="o">=</span>tcp<span class="w"> </span><span class="nv">port</span><span class="o">=</span><span class="m">8801</span><span class="w"> </span><span class="nv">detector</span><span class="o">=</span>groundedsam
+</pre></div>
+</div>
+</section>
+<section id="ros-node-execution-in-control-pc">
+<h3>ROS Node Execution in Control PC<a class="headerlink" href="#ros-node-execution-in-control-pc" title="Link to this heading"></a></h3>
+<p>Navigate to the ROS application directory and run the necessary nodes:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>app_carerobot
+python3<span class="w"> </span>node_prompt.py
+python3<span class="w"> </span>node_taskmanager.py
+python3<span class="w"> </span>node_skill_servers.py
+</pre></div>
+</div>
+</section>
+<section id="configuration-files">
+<h3>Configuration Files<a class="headerlink" href="#configuration-files" title="Link to this heading"></a></h3>
+<p>For further configurations, refer to the <cite>app_carerobot.configs</cite> directory.</p>
+</section>
 </section>
 </section>
 
