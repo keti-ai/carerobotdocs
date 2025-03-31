@@ -54,7 +54,7 @@ To set up a Docker containerized environment for your project, follow these step
    
    - Ubuntu20.04, 22.04 (recommeded)
 
-   - CUDA 11.1.1, 11.7.1(recommeded), 12.1.0, 12.6.3
+   - CUDA 11.1.1, 11.7.1(recommeded), 12.1.0, 12.4.1, 12.6.3
 
    - ROS2: foxy, humble (recommeded)
    
