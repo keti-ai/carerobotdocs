@@ -50,6 +50,15 @@ To set up a Docker containerized environment for your project, follow these step
 
    Replace `<UBUNTU_VERSION>`, `<CUDA_VERSION>`, and `<ROS_DISTRO>` with your specific environment settings.
 
+   Support versions:
+   
+   - Ubuntu20.04, 22.04 (recommeded)
+
+   - CUDA 11.1.1, 11.7.1(recommeded), 12.1.0, 12.6.3
+
+   - ROS2: foxy, humble (recommeded)
+   
+
 3. Create and run a Docker container:
 
    .. code-block:: bash
