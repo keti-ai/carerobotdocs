@@ -46,14 +46,8 @@
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="intro.html">Introduction</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Getting Started</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#cuda-installation-host-pc">Cuda Installation (Host PC)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#gpu-driver-installation-host-pc">GPU Driver Installation (Host PC)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#docker-installation">Docker Installation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#dependencies-installation">Dependencies Installation</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#download-required-repositories">Download Required Repositories</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#install-python-packages">Install Python Packages</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#install-ros-interfaces">Install ROS Interfaces</a></li>
-</ul>
-</li>
 <li class="toctree-l2"><a class="reference internal" href="#system-execution">System Execution</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#robot-and-device-server-execution-in-edge-pc">Robot and Device Server Execution in Edge PC</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#ollama-server-execution-in-server-pc">Ollama Server Execution in Server PC</a></li>
@@ -99,8 +93,8 @@
 <h1>Getting Started<a class="headerlink" href="#getting-started" title="Link to this heading"></a></h1>
 <p>This guide provides step-by-step instructions to set up the necessary environment for your project, including CUDA, Docker, dependencies, and system execution.</p>
 <p>—</p>
-<section id="cuda-installation-host-pc">
-<h2>Cuda Installation (Host PC)<a class="headerlink" href="#cuda-installation-host-pc" title="Link to this heading"></a></h2>
+<section id="gpu-driver-installation-host-pc">
+<h2>GPU Driver Installation (Host PC)<a class="headerlink" href="#gpu-driver-installation-host-pc" title="Link to this heading"></a></h2>
 <p><strong>Prerequisites:</strong>
 - Ubuntu version <strong>20.04 or later</strong> (22.04 recommended)</p>
 <p>Steps to Install CUDA Drivers:</p>
@@ -118,85 +112,210 @@ reboot
 </pre></div>
 </div>
 </li>
-</ol>
-</section>
-<section id="docker-installation">
-<h2>Docker Installation<a class="headerlink" href="#docker-installation" title="Link to this heading"></a></h2>
-<p>To set up a Docker containerized environment for your project, follow these steps:</p>
-<ol class="arabic">
-<li><p>Clone the Docker configuration repository:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/keti-ai/dockers.git
-<span class="nb">cd</span><span class="w"> </span>dockers
+<li><p>Install dependencies:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo<span class="w"> </span>update
+sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>terminator<span class="w"> </span>htop<span class="w"> </span>openssh-server<span class="w"> </span>vsftpd<span class="w">  </span>-y
+sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>python3-dev<span class="w">  </span>python3-venv<span class="w"> </span>python-pip<span class="w"> </span>-y
 </pre></div>
 </div>
 </li>
+<li><p>Install docker</p></li>
+</ol>
+<p><a class="reference external" href="https://docs.docker.com/engine/install/ubuntu/">https://docs.docker.com/engine/install/ubuntu/</a></p>
+<ol class="arabic simple" start="6">
+<li><p>Install nvidia docker toolkit</p></li>
+</ol>
+<p><a class="reference external" href="https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/latest/install-guide.html">https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/latest/install-guide.html</a></p>
+<ol class="arabic simple" start="7">
+<li><p>Add some custom useful alias (Optional)</p></li>
+</ol>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># utils</span>
+<span class="nb">alias</span><span class="w"> </span><span class="nv">chown_keti</span><span class="o">=</span><span class="s1">&#39;sudo chown -R keti .&#39;</span>
+<span class="nb">alias</span><span class="w"> </span><span class="nv">sb</span><span class="o">=</span><span class="s1">&#39;source ~/.bashrc&#39;</span>
+<span class="nb">alias</span><span class="w"> </span><span class="nv">eb</span><span class="o">=</span><span class="s1">&#39;sudo gedit ~/.bashrc&#39;</span>
+<span class="nb">alias</span><span class="w"> </span><span class="nv">nb</span><span class="o">=</span><span class="s1">&#39;nano ~/.bashrc&#39;</span>
+<span class="nb">alias</span><span class="w"> </span><span class="nv">about_pc</span><span class="o">=</span><span class="s1">&#39;lsb_release -a&#39;</span>
+<span class="nb">alias</span><span class="w"> </span><span class="nv">create_py_simple_pkg</span><span class="o">=</span><span class="s1">&#39;cookiecutter https://github.com/mtbui2010/python_pkg_simple_template.git&#39;</span>
+<span class="nb">alias</span><span class="w"> </span><span class="nv">vscode</span><span class="o">=</span><span class="s1">&#39;sudo code --no-sandbox --user-data-dir ~/.vscode_cache&#39;</span>
+<span class="nb">alias</span><span class="w"> </span><span class="nv">run_pyvir</span><span class="o">=</span><span class="s1">&#39;source ~/.pyvir/bin/activate&#39;</span>
+
+<span class="c1">#docker</span>
+<span class="nb">alias</span><span class="w"> </span><span class="nv">docker_start</span><span class="o">=</span><span class="s1">&#39;sudo docker start&#39;</span>
+<span class="nb">alias</span><span class="w"> </span><span class="nv">docker_stop</span><span class="o">=</span><span class="s1">&#39;sudo docker stop&#39;</span>
+<span class="nb">alias</span><span class="w"> </span><span class="nv">docker_run</span><span class="o">=</span><span class="s1">&#39;sudo docker run -it&#39;</span>
+<span class="nb">alias</span><span class="w"> </span><span class="nv">docker_watch</span><span class="o">=</span><span class="s1">&#39;sudo watch docker ps -a&#39;</span>
+<span class="nb">alias</span><span class="w"> </span><span class="nv">image_watch</span><span class="o">=</span><span class="s1">&#39;sudo watch docker image ls -a&#39;</span>
+<span class="nb">alias</span><span class="w"> </span><span class="nv">image_rm</span><span class="o">=</span><span class="s1">&#39;sudo docker image rm&#39;</span>
+
+
+<span class="c1">#functions</span>
+dockerexec<span class="o">()</span><span class="w"> </span><span class="o">{</span>
+xhost<span class="w"> </span>local:<span class="w"> </span><span class="p">&amp;</span><span class="w"> </span>sudo<span class="w"> </span>docker<span class="w"> </span>start<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$@</span><span class="s2">&quot;</span><span class="w"> </span><span class="p">&amp;</span><span class="w"> </span>sudo<span class="w"> </span>docker<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-it<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$@</span><span class="s2">&quot;</span><span class="w"> </span>/bin/bash
+<span class="o">}</span>
+dockerrm<span class="o">()</span><span class="w"> </span><span class="o">{</span>
+sudo<span class="w"> </span>docker<span class="w"> </span>stop<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$@</span><span class="s2">&quot;</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>sudo<span class="w"> </span>docker<span class="w"> </span>rm<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$@</span><span class="s2">&quot;</span>
+<span class="o">}</span>
+gitpush<span class="o">()</span><span class="w"> </span><span class="o">{</span>
+git<span class="w"> </span>add<span class="w"> </span>.<span class="w"> </span>.gitignore<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$@</span><span class="s2">&quot;</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>git<span class="w"> </span>push
+<span class="o">}</span>
+runa<span class="o">()</span><span class="w"> </span><span class="o">{</span>
+<span class="nv">container_name</span><span class="o">=</span><span class="s2">&quot;</span><span class="nv">$1</span><span class="s2">&quot;</span><span class="w">  </span><span class="c1"># First argument is the container name</span>
+<span class="nb">shift</span><span class="w"> </span><span class="m">1</span><span class="w">              </span><span class="c1"># Remove the first two arguments, leaving only additional script arguments</span>
+
+xhost<span class="w"> </span>+
+sudo<span class="w"> </span>docker<span class="w"> </span>start<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$container_name</span><span class="s2">&quot;</span>
+sudo<span class="w"> </span>docker<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-it<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$container_name</span><span class="s2">&quot;</span><span class="w"> </span>/bin/bash<span class="w"> </span>-c<span class="w"> </span><span class="se">\</span>
+<span class="s2">&quot;source ~/.bashrc &amp;&amp; source /opt/ros/humble/setup.bash &amp;&amp; source ~/ros2_ws/install/setup.bash &amp;&amp; </span><span class="nv">$@</span><span class="s2">&quot;</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+<ol class="arabic simple" start="8">
+<li><p>Install and configure SSH and FTP server (Optional)</p></li>
+</ol>
+<p>Configure FTP</p>
+<blockquote>
+<div><div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/bin/bash</span>
+<span class="nb">set</span><span class="w"> </span>-e
+
+<span class="nv">FTP_DIR</span><span class="o">=</span><span class="s2">&quot;/media/keti/workdir&quot;</span>
+<span class="nv">FTP_USER</span><span class="o">=</span><span class="s2">&quot;keti&quot;</span>
+
+<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;🛠 Backing up original config...&quot;</span>
+sudo<span class="w"> </span>cp<span class="w"> </span>/etc/vsftpd.conf<span class="w"> </span>/etc/vsftpd.conf.bak
+
+<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;📝 Writing new vsftpd config...&quot;</span>
+sudo<span class="w"> </span>tee<span class="w"> </span>/etc/vsftpd.conf<span class="w"> </span>&gt;<span class="w"> </span>/dev/null<span class="w"> </span><span class="s">&lt;&lt;EOL</span>
+<span class="s">listen=YES</span>
+<span class="s">listen_ipv6=NO</span>
+<span class="s">anonymous_enable=NO</span>
+<span class="s">local_enable=YES</span>
+<span class="s">write_enable=YES</span>
+<span class="s">local_umask=022</span>
+<span class="s">chroot_local_user=YES</span>
+<span class="s">allow_writeable_chroot=YES</span>
+<span class="s">user_sub_token=\$USER</span>
+<span class="s">local_root=${FTP_DIR}</span>
+<span class="s">pasv_enable=YES</span>
+<span class="s">pasv_min_port=10000</span>
+<span class="s">pasv_max_port=10100</span>
+<span class="s">EOL</span>
+
+<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;📁 Setting permissions for </span><span class="nv">$FTP_DIR</span><span class="s2">...&quot;</span>
+sudo<span class="w"> </span>chown<span class="w"> </span>-R<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$FTP_USER</span><span class="s2">&quot;</span>:<span class="s2">&quot;</span><span class="nv">$FTP_USER</span><span class="s2">&quot;</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$FTP_DIR</span><span class="s2">&quot;</span>
+sudo<span class="w"> </span>chmod<span class="w"> </span>-R<span class="w"> </span><span class="m">755</span><span class="w"> </span><span class="s2">&quot;</span><span class="nv">$FTP_DIR</span><span class="s2">&quot;</span>
+
+<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;🔁 Restarting vsftpd...&quot;</span>
+sudo<span class="w"> </span>systemctl<span class="w"> </span>restart<span class="w"> </span>vsftpd
+sudo<span class="w"> </span>systemctl<span class="w"> </span><span class="nb">enable</span><span class="w"> </span>vsftpd
+
+<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;✅ FTP setup complete. You can now FTP into this machine with your user account.&quot;</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>Test SSH and FTP servers</p>
+<blockquote>
+<div><div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ssh<span class="w"> </span>keti@0.0.0.0
+ftp<span class="w"> </span><span class="m">0</span>.0.0.0
+</pre></div>
+</div>
+</div></blockquote>
+</section>
+<section id="docker-installation">
+<h2>Docker Installation<a class="headerlink" href="#docker-installation" title="Link to this heading"></a></h2>
+<ol class="arabic" start="0">
+<li><p>Git credential:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>config<span class="w"> </span>--global<span class="w"> </span>credential.helper<span class="w"> </span>store
+</pre></div>
+</div>
+</li>
+</ol>
+<p>To set up a Docker containerized environment for your project, follow these steps:</p>
+<ol class="arabic simple">
+<li><p>Build containers on Edge and Control PCs</p></li>
+</ol>
+<ul>
+<li><p>Clone the Docker configuration repository:</p>
+<blockquote>
+<div><div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/keti-ai/dockers.git
+<span class="nb">cd</span><span class="w"> </span>dockers
+</pre></div>
+</div>
+</div></blockquote>
+</li>
 <li><p>Build the Docker image with the required specifications:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./build_image.sh<span class="w"> </span>&lt;UBUNTU_VERSION&gt;<span class="w"> </span>&lt;CUDA_VERSION&gt;<span class="w"> </span>&lt;ROS_DISTRO&gt;
+<blockquote>
+<div><div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./build_image.sh<span class="w"> </span>&lt;UBUNTU_VERSION&gt;<span class="w"> </span>&lt;CUDA_VERSION&gt;<span class="w"> </span>&lt;ROS_DISTRO&gt;
 </pre></div>
 </div>
 <p>Replace <cite>&lt;UBUNTU_VERSION&gt;</cite>, <cite>&lt;CUDA_VERSION&gt;</cite>, and <cite>&lt;ROS_DISTRO&gt;</cite> with your specific environment settings.</p>
 <p>Support versions:</p>
 <ul class="simple">
-<li><p>Ubuntu20.04, 22.04 (recommeded)</p></li>
-<li><p>CUDA 11.1.1, 11.7.1(recommeded), 12.1.0, 12.4.1, 12.6.3</p></li>
-<li><p>ROS2: foxy, humble (recommeded)</p></li>
+<li><p>Ubuntu20.04, 22.04 (default)</p></li>
+<li><p>CUDA 11.1.1, 11.7.1(default), 12.1.0, 12.4.1, 12.6.3</p></li>
+<li><p>ROS2: foxy, humble (default)</p></li>
 </ul>
+</div></blockquote>
 </li>
 <li><p>Create and run a Docker container:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./build_container.sh<span class="w"> </span>&lt;UBUNTU_VERSION&gt;<span class="w"> </span>&lt;CUDA_VERSION&gt;<span class="w"> </span>&lt;ROS_DISTRO&gt;<span class="w"> </span>&lt;CONTAINER_NAME&gt;<span class="w"> </span>&lt;SHARE_DIR&gt;<span class="w"> </span>&lt;SSH_PORT&gt;<span class="w"> </span>&lt;PORT_MAP&gt;
+<blockquote>
+<div><div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./build_container.sh<span class="w"> </span>&lt;UBUNTU_VERSION&gt;<span class="w"> </span>&lt;CUDA_VERSION&gt;<span class="w"> </span>&lt;ROS_DISTRO&gt;<span class="w"> </span>&lt;CONTAINER_NAME&gt;<span class="w"> </span>&lt;SHARE_DIR&gt;<span class="w"> </span>&lt;SSH_PORT&gt;<span class="w"> </span>&lt;PORT_MAP&gt;
 </pre></div>
 </div>
 <ul class="simple">
-<li><p><cite>&lt;CONTAINER_NAME&gt;</cite>: Name of the container</p></li>
-<li><p><cite>&lt;SHARE_DIR&gt;</cite>: Shared directory path</p></li>
-<li><p><cite>&lt;SSH_PORT&gt;</cite>: SSH port number</p></li>
-<li><p><cite>&lt;PORT_MAP&gt;</cite>: Additional port mappings</p></li>
+<li><p><cite>&lt;CONTAINER_NAME&gt;</cite>: Name of the container [default: kcare]</p></li>
+<li><p><cite>&lt;SHARE_DIR&gt;</cite>: Shared directory path [default: /media/keti/workdir/projects]</p></li>
+<li><p><cite>&lt;SSH_PORT&gt;</cite>: SSH port number        [default: 2222]</p></li>
+<li><p><cite>&lt;PORT_MAP&gt;</cite>: Additional port mappings [default: 8000-8099:8000-8099]</p></li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+<ol class="arabic" start="2">
+<li><p>Build recognition container (On Server PC)</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>dockers
+./build_recognition_container.sh<span class="w"> </span>&lt;SSH_PORT&gt;<span class="w"> </span>&lt;PORT_MAP&gt;<span class="w"> </span>&lt;SHARE_DIR&gt;<span class="w"> </span>&lt;IMAGE_NAME&gt;<span class="w"> </span>&lt;CONTAINER_NAME&gt;
+</pre></div>
+</div>
+<ul class="simple">
+<li><p><cite>&lt;IMAGE_NAME_NAME&gt;</cite>: Name of the image [default: mtbui2010/ubuntu22:cuda11.7-recognition]</p></li>
+<li><p><cite>&lt;CONTAINER_NAME&gt;</cite>: Name of the container [default: reg_u22cu11]</p></li>
+<li><p><cite>&lt;SHARE_DIR&gt;</cite>: Shared directory path [default: /media/keti/workdir/projects]</p></li>
+<li><p><cite>&lt;SSH_PORT&gt;</cite>: SSH port number        [default: 2202]</p></li>
+<li><p><cite>&lt;PORT_MAP&gt;</cite>: Additional port mappings [default: 8000-8099:8000-8099]</p></li>
 </ul>
 </li>
 </ol>
-<p>—</p>
-</section>
-<section id="dependencies-installation">
-<h2>Dependencies Installation<a class="headerlink" href="#dependencies-installation" title="Link to this heading"></a></h2>
-<section id="download-required-repositories">
-<h3>Download Required Repositories<a class="headerlink" href="#download-required-repositories" title="Link to this heading"></a></h3>
 <p>Clone the following repositories to set up the necessary dependencies:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/CASIA-IVA-Lab/FastSAM.git
-git<span class="w"> </span>clone<span class="w"> </span>https://github.com/IDEA-Research/GroundingDINO.git
-git<span class="w"> </span>clone<span class="w"> </span>https://github.com/keti-ai/pyrecognition.git
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/keti-ai/pyrecognition.git
 git<span class="w"> </span>clone<span class="w"> </span>https://github.com/keti-ai/pyconnect.git
 git<span class="w"> </span>clone<span class="w"> </span>https://github.com/keti-ai/pyinterfaces.git
 git<span class="w"> </span>clone<span class="w"> </span>https://github.com/keti-ai/rosinterfaces.git
 </pre></div>
 </div>
-</section>
-<section id="install-python-packages">
-<h3>Install Python Packages<a class="headerlink" href="#install-python-packages" title="Link to this heading"></a></h3>
 <p>Install the repositories as editable Python packages:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span>FastSAM
-pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span>GroundingDINO
-pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span>pyrecognition
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span>pyrecognition
 pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span>pyconnect
 pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span>pyinterfaces
 </pre></div>
 </div>
-</section>
-<section id="install-ros-interfaces">
-<h3>Install ROS Interfaces<a class="headerlink" href="#install-ros-interfaces" title="Link to this heading"></a></h3>
-<ol class="arabic">
+<p>Install ROS Interfaces</p>
+<ul>
 <li><p>Create a symbolic link to <cite>rosinterfaces</cite> inside the ROS2 workspace:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ln<span class="w"> </span>-s<span class="w"> </span>rosinterfaces<span class="w"> </span>~/ros2_ws/src
+<blockquote>
+<div><div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ln<span class="w"> </span>-s<span class="w"> </span>rosinterfaces<span class="w"> </span>~/ros2_ws/src
 </pre></div>
 </div>
+</div></blockquote>
 </li>
 <li><p>Build the ROS package:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>~/ros2_ws
+<blockquote>
+<div><div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>~/ros2_ws
 colcon<span class="w"> </span>build<span class="w"> </span>--packages-select<span class="w"> </span>rosinterfaces
 </pre></div>
 </div>
+</div></blockquote>
 </li>
-</ol>
-</section>
+</ul>
 </section>
 <section id="system-execution">
 <h2>System Execution<a class="headerlink" href="#system-execution" title="Link to this heading"></a></h2>
@@ -212,7 +331,8 @@ hand<span class="w">    </span><span class="c1"># Runs the wrist camera</span>
 <section id="ollama-server-execution-in-server-pc">
 <h3>Ollama Server Execution in Server PC<a class="headerlink" href="#ollama-server-execution-in-server-pc" title="Link to this heading"></a></h3>
 <p>To enter the running Ollama server’s container:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo<span class="w"> </span>docker<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-it<span class="w"> </span>ollama<span class="w"> </span>/bin/bash
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo<span class="w"> </span>docker<span class="w"> </span>run<span class="w"> </span>-d<span class="w"> </span>--gpus<span class="o">=</span>all<span class="w"> </span>-v<span class="w"> </span>ollama:/root/.ollama<span class="w"> </span>-p<span class="w"> </span><span class="m">11434</span>:11434<span class="w"> </span>--name<span class="w"> </span>ollama<span class="w"> </span>ollama/ollama
+sudo<span class="w"> </span>docker<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-it<span class="w"> </span>ollama<span class="w"> </span>/bin/bash
 </pre></div>
 </div>
 </section>

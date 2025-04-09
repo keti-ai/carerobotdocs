@@ -81,9 +81,11 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">pyconnect.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">evaluate</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">skills.arm</span><span class="w"> </span><span class="kn">import</span> <span class="n">arm_approach</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">skills.goto_ready</span><span class="w"> </span><span class="kn">import</span> <span class="n">arm_back</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">configs.tasks</span><span class="w"> </span><span class="kn">import</span> <span class="n">LIFTUP_Z</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">configs.tasks</span><span class="w"> </span><span class="kn">import</span> <span class="n">LIFTUP_Z</span><span class="p">,</span> <span class="n">USE_LIFT</span><span class="p">,</span> <span class="n">OBJECT_LYING</span><span class="p">,</span> <span class="n">CALIB_OFFSET</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">normavector2islying</span>
 
 <span class="n">calib</span> <span class="o">=</span> <span class="n">Head2BaseCalibration</span><span class="p">()</span>
+
 
 <div class="viewcode-block" id="pick">
 <a class="viewcode-back" href="../../apidoc/app_carerobot/skills.html#skills.pick.pick">[docs]</a>
@@ -104,26 +106,27 @@
 <span class="sd">        - KeyError: If &#39;ins&#39;, &#39;pose&#39;, or agent data is missing.</span>
 <span class="sd">        - AttributeError: If agent data (e.g., `rev_data`) is unavailable.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">dmove_agent</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">agents</span><span class="p">[</span><span class="n">DEVICE_CLIENT_CONFIGS</span><span class="p">[</span><span class="s1">&#39;dmove&#39;</span><span class="p">][</span><span class="s1">&#39;agent_name&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="n">device_mode</span><span class="p">]</span>
+    <span class="n">armdmove_agent</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">agents</span><span class="p">[</span><span class="n">DEVICE_CLIENT_CONFIGS</span><span class="p">[</span><span class="s1">&#39;arm_dmove&#39;</span><span class="p">][</span><span class="s1">&#39;agent_name&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="n">device_mode</span><span class="p">]</span>
     <span class="n">grip_agent</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">agents</span><span class="p">[</span><span class="n">DEVICE_CLIENT_CONFIGS</span><span class="p">[</span><span class="s1">&#39;grip&#39;</span><span class="p">][</span><span class="s1">&#39;agent_name&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="n">device_mode</span><span class="p">]</span>
-    <span class="n">movenangles_agent</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">agents</span><span class="p">[</span><span class="n">DEVICE_CLIENT_CONFIGS</span><span class="p">[</span><span class="s1">&#39;move_angles&#39;</span><span class="p">][</span><span class="s1">&#39;agent_name&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="n">device_mode</span><span class="p">]</span>
     <span class="n">liftstate_agent</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">agents</span><span class="p">[</span><span class="n">DEVICE_CLIENT_CONFIGS</span><span class="p">[</span><span class="s1">&#39;lm_state&#39;</span><span class="p">][</span><span class="s1">&#39;agent_name&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="n">device_mode</span><span class="p">]</span>
     <span class="n">robotpose_agent</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">agents</span><span class="p">[</span><span class="n">DEVICE_CLIENT_CONFIGS</span><span class="p">[</span><span class="s1">&#39;robot_pose&#39;</span><span class="p">][</span><span class="s1">&#39;agent_name&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="n">device_mode</span><span class="p">]</span>
-    <span class="n">lift_agent</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">agents</span><span class="p">[</span><span class="n">DEVICE_CLIENT_CONFIGS</span><span class="p">[</span><span class="s1">&#39;lift&#39;</span><span class="p">][</span><span class="s1">&#39;agent_name&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="n">device_mode</span><span class="p">]</span>
-
-    <span class="n">ret</span> <span class="o">=</span> <span class="n">grip_agent</span><span class="o">.</span><span class="n">send</span><span class="p">({</span><span class="s1">&#39;task&#39;</span><span class="p">:</span> <span class="s1">&#39;grip::open::&#39;</span><span class="p">})</span>
+    
+    <span class="n">obj_name</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;inputs&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+    <span class="n">obj_laying</span> <span class="o">=</span> <span class="n">normavector2islying</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;ins&#39;</span><span class="p">][</span><span class="n">obj_name</span><span class="p">][</span><span class="s1">&#39;normal_vector&#39;</span><span class="p">])</span>
+    <span class="n">data</span><span class="p">[</span><span class="s1">&#39;obj_lying&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">obj_laying</span>
+    <span class="c1"># grip open</span>
+    <span class="n">ret</span> <span class="o">=</span> <span class="n">grip_agent</span><span class="o">.</span><span class="n">send</span><span class="p">({</span><span class="s1">&#39;inputs&#39;</span><span class="p">:</span> <span class="s1">&#39;open&#39;</span><span class="p">})</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">ret</span><span class="p">[</span><span class="s1">&#39;isdone&#39;</span><span class="p">]:</span>
         <span class="k">return</span> <span class="n">ret</span>
     
     <span class="c1"># Approach to center of object</span>
-    <span class="n">obj_name</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;task&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;::&#39;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
     <span class="n">x0</span><span class="p">,</span> <span class="n">y0</span><span class="p">,</span> <span class="n">x1</span><span class="p">,</span> <span class="n">y1</span><span class="p">,</span> <span class="n">obj_depth</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;ins&#39;</span><span class="p">][</span><span class="n">obj_name</span><span class="p">][</span><span class="s1">&#39;pose&#39;</span><span class="p">]</span>
     <span class="n">xc</span><span class="p">,</span> <span class="n">yc</span> <span class="o">=</span> <span class="p">(</span><span class="n">x0</span> <span class="o">+</span> <span class="n">x1</span><span class="p">)</span> <span class="o">//</span> <span class="mi">2</span><span class="p">,</span> <span class="p">(</span><span class="n">y0</span> <span class="o">+</span> <span class="n">y1</span><span class="p">)</span> <span class="o">//</span> <span class="mi">2</span>
     <span class="n">head_state</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;ins&#39;</span><span class="p">][</span><span class="n">obj_name</span><span class="p">][</span><span class="s1">&#39;head_state&#39;</span><span class="p">]</span>
 
     <span class="n">z</span><span class="p">,</span> <span class="n">trans_armrobot_XYZ</span> <span class="o">=</span> <span class="n">calib</span><span class="o">.</span><span class="n">convert_femto_to_arm</span><span class="p">(</span>
         <span class="n">xc</span><span class="p">,</span> <span class="n">yc</span><span class="p">,</span> <span class="n">obj_depth</span><span class="p">,</span>
-        <span class="n">liftstate_agent</span><span class="o">.</span><span class="n">rev_data</span><span class="p">[</span><span class="s1">&#39;current_position&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="mi">1000</span><span class="p">,</span>
+        <span class="n">liftstate_agent</span><span class="o">.</span><span class="n">rev_data</span><span class="p">[</span><span class="s1">&#39;current_position&#39;</span><span class="p">],</span>
         <span class="n">robotpose_agent</span><span class="o">.</span><span class="n">rev_data</span><span class="p">[</span><span class="s1">&#39;pose&#39;</span><span class="p">],</span>
         <span class="n">head_state</span><span class="p">[</span><span class="s1">&#39;current_ry&#39;</span><span class="p">],</span>
         <span class="n">head_state</span><span class="p">[</span><span class="s1">&#39;current_rz&#39;</span><span class="p">]</span>
@@ -131,28 +134,40 @@
     
     <span class="n">trans_lift_position</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">calib</span><span class="o">.</span><span class="n">convert_femto_to_arm</span><span class="p">(</span>
         <span class="n">x1</span><span class="p">,</span> <span class="n">y1</span><span class="p">,</span> <span class="n">obj_depth</span><span class="p">,</span>
-        <span class="n">liftstate_agent</span><span class="o">.</span><span class="n">rev_data</span><span class="p">[</span><span class="s1">&#39;current_position&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="mi">1000</span><span class="p">,</span>
+        <span class="n">liftstate_agent</span><span class="o">.</span><span class="n">rev_data</span><span class="p">[</span><span class="s1">&#39;current_position&#39;</span><span class="p">],</span>
         <span class="n">robotpose_agent</span><span class="o">.</span><span class="n">rev_data</span><span class="p">[</span><span class="s1">&#39;pose&#39;</span><span class="p">],</span>
         <span class="n">head_state</span><span class="p">[</span><span class="s1">&#39;current_ry&#39;</span><span class="p">],</span>
         <span class="n">head_state</span><span class="p">[</span><span class="s1">&#39;current_rz&#39;</span><span class="p">]</span>
     <span class="p">)</span>
     <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">trans_armrobot_XYZ</span><span class="p">[:</span><span class="mi">2</span><span class="p">]</span>
-    <span class="n">data</span><span class="p">[</span><span class="s1">&#39;ins&#39;</span><span class="p">][</span><span class="n">obj_name</span><span class="p">][</span><span class="s1">&#39;approach_pose&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">]</span>
     <span class="n">data</span><span class="p">[</span><span class="s1">&#39;obj_center_height&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">z</span> <span class="o">-</span> <span class="n">trans_lift_position</span>
 
-    <span class="n">data</span><span class="p">[</span><span class="s1">&#39;task&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;arm_aproach::</span><span class="si">{</span><span class="n">obj_name</span><span class="si">}</span><span class="s1">::&#39;</span>
+    <span class="k">if</span> <span class="n">obj_laying</span> <span class="ow">and</span> <span class="n">USE_LIFT</span><span class="p">:</span>
+        <span class="n">z</span> <span class="o">+=</span> <span class="mi">100</span> <span class="o">+</span> <span class="n">LIFTUP_Z</span>
+        <span class="n">ret</span> <span class="o">=</span> <span class="n">armdmove_agent</span><span class="o">.</span><span class="n">send</span><span class="p">({</span><span class="s1">&#39;inputs&#39;</span><span class="p">:</span> <span class="s1">&#39;dry=30&#39;</span><span class="p">})</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">ret</span><span class="p">[</span><span class="s1">&#39;isdone&#39;</span><span class="p">]:</span>
+            <span class="k">return</span> <span class="n">ret</span>
+    
+    <span class="n">z</span> <span class="o">+=</span> <span class="n">CALIB_OFFSET</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+    <span class="n">data</span><span class="p">[</span><span class="s1">&#39;ins&#39;</span><span class="p">][</span><span class="n">obj_name</span><span class="p">][</span><span class="s1">&#39;approach_pose&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">]</span>
+    <span class="n">data</span><span class="p">[</span><span class="s1">&#39;inputs&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">obj_name</span><span class="si">}</span><span class="s1">&#39;</span>
     <span class="n">ret</span> <span class="o">=</span> <span class="n">arm_approach</span><span class="p">(</span><span class="n">node</span><span class="o">=</span><span class="n">node</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="n">mode</span><span class="p">,</span> <span class="n">device_mode</span><span class="o">=</span><span class="n">device_mode</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">ret</span><span class="p">[</span><span class="s1">&#39;isdone&#39;</span><span class="p">]:</span>
         <span class="k">return</span> <span class="n">ret</span>
     
+    <span class="k">if</span> <span class="n">obj_laying</span><span class="p">:</span>
+        <span class="n">ret</span> <span class="o">=</span> <span class="n">armdmove_agent</span><span class="o">.</span><span class="n">send</span><span class="p">({</span><span class="s1">&#39;inputs&#39;</span><span class="p">:</span> <span class="sa">f</span><span class="s1">&#39;dz=</span><span class="si">{</span><span class="o">-</span><span class="n">LIFTUP_Z</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">})</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">ret</span><span class="p">[</span><span class="s1">&#39;isdone&#39;</span><span class="p">]:</span>
+            <span class="k">return</span> <span class="n">ret</span>
+    
     <span class="c1"># Grasp</span>
-    <span class="n">ret</span> <span class="o">=</span> <span class="n">grip_agent</span><span class="o">.</span><span class="n">send</span><span class="p">({</span><span class="s1">&#39;task&#39;</span><span class="p">:</span> <span class="s1">&#39;grip::150::&#39;</span><span class="p">})</span>
+    <span class="n">ret</span> <span class="o">=</span> <span class="n">grip_agent</span><span class="o">.</span><span class="n">send</span><span class="p">({</span><span class="s1">&#39;inputs&#39;</span><span class="p">:</span> <span class="s1">&#39;50&#39;</span><span class="p">})</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">ret</span><span class="p">[</span><span class="s1">&#39;isdone&#39;</span><span class="p">]:</span>
         <span class="k">return</span> <span class="n">ret</span>
-    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">1.2</span><span class="p">)</span>
+    <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
 
     <span class="c1"># Lift up</span>
-    <span class="n">ret</span> <span class="o">=</span> <span class="n">dmove_agent</span><span class="o">.</span><span class="n">send</span><span class="p">({</span><span class="s1">&#39;task&#39;</span><span class="p">:</span> <span class="sa">f</span><span class="s1">&#39;dmove::dz=</span><span class="si">{</span><span class="n">LIFTUP_Z</span><span class="si">}</span><span class="s1">::&#39;</span><span class="p">})</span>
+    <span class="n">ret</span> <span class="o">=</span> <span class="n">armdmove_agent</span><span class="o">.</span><span class="n">send</span><span class="p">({</span><span class="s1">&#39;inputs&#39;</span><span class="p">:</span> <span class="sa">f</span><span class="s1">&#39;dz=</span><span class="si">{</span><span class="n">LIFTUP_Z</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">})</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">ret</span><span class="p">[</span><span class="s1">&#39;isdone&#39;</span><span class="p">]:</span>
         <span class="k">return</span> <span class="n">ret</span>
 
@@ -161,14 +176,7 @@
     <span class="k">if</span> <span class="ow">not</span> <span class="n">ret</span><span class="p">[</span><span class="s1">&#39;isdone&#39;</span><span class="p">]:</span>
         <span class="k">return</span> <span class="n">ret</span>
     
-    <span class="n">ret</span> <span class="o">=</span> <span class="n">lift_agent</span><span class="o">.</span><span class="n">send</span><span class="p">({</span><span class="s1">&#39;task&#39;</span><span class="p">:</span> <span class="s1">&#39;lift::home::&#39;</span><span class="p">})</span>
-    <span class="k">if</span> <span class="ow">not</span> <span class="n">ret</span><span class="p">[</span><span class="s1">&#39;isdone&#39;</span><span class="p">]:</span>
-        <span class="k">return</span> <span class="n">ret</span>
-    
-    <span class="n">ret</span> <span class="o">=</span> <span class="n">movenangles_agent</span><span class="o">.</span><span class="n">send</span><span class="p">({</span><span class="s1">&#39;task&#39;</span><span class="p">:</span> <span class="s1">&#39;move_angles::ready::&#39;</span><span class="p">})</span>
-    <span class="k">if</span> <span class="ow">not</span> <span class="n">ret</span><span class="p">[</span><span class="s1">&#39;isdone&#39;</span><span class="p">]:</span>
-        <span class="k">return</span> <span class="n">ret</span>
-
+        
     <span class="n">data</span><span class="p">[</span><span class="s1">&#39;isdone&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
     <span class="k">return</span> <span class="n">data</span></div>
 

@@ -1,4 +1,4 @@
-# Doc CareRobot
+# Installations
 
 This repository contains documentation for the CareRobot project. Below are the steps to set up, generate, and deploy the documentation using Sphinx.
 
@@ -24,8 +24,7 @@ sphinx-apidoc -f -o source/apidoc $CORE_DIR
 ## Building the Documentation
 ```bash
 mkdir build
-make clean
-make html
+make clean && make html
 ```
 
 ## Deployment
@@ -48,6 +47,26 @@ https://keti-ai.github.io/$REPOSITORY_NAME
 ```
 
 ---
+
+# Writing code with description
+Example
+```
+def sum(a, b):
+   """
+   Summation of 2 numbers
+
+    Args:
+        a: First number.
+        b: Sencod number
+
+    Returns:
+        summation of 2 numbers.
+    Notes:
+         input number can be float, int, or numpy.ndarray
+    """
+    
+    return a + b
+```
 
 # Editing .rst Guide
 

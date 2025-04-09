@@ -83,7 +83,7 @@
 <span class="c1"># INPUTS = [&#39;rgb&#39;,&#39;depth&#39;,&#39;cam_params&#39;,&#39;crop_roi&#39;,&#39;min_mass&#39;,&#39;max_ratio&#39;,&#39;dmin&#39;,&#39;dmax&#39;,&#39;topn&#39;, &#39;nfingers&#39;]</span>
 <span class="c1"># SAVE_DIR = None</span>
 <span class="n">INPUTS</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;rgb&#39;</span><span class="p">,</span> <span class="s1">&#39;caption&#39;</span><span class="p">]</span>
-<span class="n">SAVE_DIR</span> <span class="o">=</span> <span class="s1">&#39;/media/keti/workdir/projects/pyconnect/logs/dino&#39;</span>
+<span class="n">SAVE_DIR</span> <span class="o">=</span> <span class="kc">None</span> <span class="c1">#&#39;/media/keti/workdir/projects/pyconnect/logs/dino&#39;</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">pyinterfaces.utils</span><span class="w">  </span><span class="kn">import</span> <span class="n">visualize_pred</span>
 
 
@@ -101,6 +101,8 @@
     <span class="k">return</span> <span class="n">client</span></div>
 
 
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="n">args2str</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">inputs</span><span class="p">:</span> <span class="s1">&#39;,&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">k</span><span class="si">}</span><span class="s1">.</span><span class="si">{</span><span class="n">v</span><span class="si">}</span><span class="s1">&#39;</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span><span class="n">v</span> <span class="ow">in</span> <span class="n">inputs</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)])</span>
 
 <div class="viewcode-block" id="run_client">
 <a class="viewcode-back" href="../../apidoc/pyconnect/pyconnect.html#pyconnect.run_client.run_client">[docs]</a>
@@ -112,7 +114,8 @@
 
     <span class="n">args</span> <span class="o">=</span> <span class="n">parse_keys_values</span><span class="p">(</span><span class="n">optional_args</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;client_type&#39;</span><span class="p">:</span> <span class="n">CLIENT_TYPE</span><span class="p">,</span><span class="s1">&#39;host&#39;</span><span class="p">:</span><span class="n">HOST</span><span class="p">,</span> 
                                             <span class="s1">&#39;port&#39;</span><span class="p">:</span><span class="n">PORT</span><span class="p">,</span> <span class="s1">&#39;inputs&#39;</span><span class="p">:</span> <span class="n">INPUTS</span><span class="p">,</span> <span class="s1">&#39;save_dir&#39;</span><span class="p">:</span> <span class="n">SAVE_DIR</span><span class="p">})</span>
-    <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="s1">&#39;save_dir&#39;</span><span class="p">],</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">args</span><span class="p">[</span><span class="s1">&#39;save_dir&#39;</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="s1">&#39;save_dir&#39;</span><span class="p">],</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">client</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">client</span> <span class="o">=</span> <span class="n">get_client</span><span class="p">(</span><span class="n">client_type</span><span class="o">=</span><span class="n">args</span><span class="p">[</span><span class="s1">&#39;client_type&#39;</span><span class="p">],</span> <span class="n">host</span><span class="o">=</span><span class="n">args</span><span class="p">[</span><span class="s1">&#39;host&#39;</span><span class="p">],</span> <span class="n">port</span><span class="o">=</span><span class="n">args</span><span class="p">[</span><span class="s1">&#39;port&#39;</span><span class="p">])</span>
         
@@ -139,28 +142,17 @@
         <span class="k">if</span> <span class="s1">&#39;rgbs&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">inputs</span> <span class="ow">and</span> <span class="s1">&#39;depths&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">inputs</span><span class="p">:</span>
             <span class="c1"># send data and get predurn</span>
             <span class="n">pred</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">inputs</span><span class="p">)</span>
-            <span class="c1"># show predurn</span>
-            <span class="c1"># try: </span>
-            <span class="c1">#     for i,el in enumerate(pred):</span>
-            <span class="c1">#         try:</span>
-            <span class="c1">#             if &#39;rgb&#39; in inputs or &#39;depth&#39; in inputs:</span>
-            <span class="c1">#                 cv2.imwrite(os.path.join(out_dir, f&#39;{im_name}_out{i}.png&#39;), el if len(el.shape)&lt;3 else el[...,::-1])</span>
-                            
-            <span class="c1">#             cv2.imshow(f&#39;predurn{i}&#39;, pred[i] if len(pred[i].shape)&lt;3 else pred[i][...,::-1])</span>
-            <span class="c1">#         except:</span>
-            <span class="c1">#             print(f&#39;predurn {i} not an image&#39;)</span>
-            <span class="c1">#     if cv2.waitKey()==27:</span>
-            <span class="c1">#         exit()</span>
-            <span class="c1"># except:</span>
-            <span class="c1">#     print(f&#39;No image to show&#39;)</span>
             <span class="nb">print</span><span class="p">(</span><span class="n">data_info</span><span class="p">(</span><span class="n">pred</span><span class="p">))</span>
-            <span class="n">rgb_out</span> <span class="o">=</span> <span class="n">visualize_pred</span><span class="p">(</span><span class="n">rgb</span><span class="o">=</span><span class="n">inputs</span><span class="p">[</span><span class="s1">&#39;rgb&#39;</span><span class="p">],</span> <span class="n">pred</span><span class="o">=</span><span class="n">pred</span><span class="p">)</span>
-            <span class="n">out_path</span>  <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">out_dir</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">im_name</span><span class="si">}</span><span class="s1">_out.png&#39;</span><span class="p">)</span>
-            <span class="n">cv2</span><span class="o">.</span><span class="n">imwrite</span><span class="p">(</span><span class="n">out_path</span><span class="p">,</span> <span class="n">rgb_out</span><span class="p">[</span><span class="o">...</span><span class="p">,::</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
-            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;rgb_out saved to </span><span class="si">{</span><span class="n">out_path</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
-            <span class="n">cv2</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="s1">&#39;rgb_out&#39;</span><span class="p">,</span> <span class="n">rgb_out</span><span class="p">[</span><span class="o">...</span><span class="p">,::</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
-            <span class="k">if</span> <span class="n">cv2</span><span class="o">.</span><span class="n">waitKey</span><span class="p">()</span><span class="o">==</span><span class="mi">27</span><span class="p">:</span>
-                <span class="n">exit</span><span class="p">()</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">rgb_out</span> <span class="o">=</span> <span class="n">visualize_pred</span><span class="p">(</span><span class="n">rgb</span><span class="o">=</span><span class="n">inputs</span><span class="p">[</span><span class="s1">&#39;rgb&#39;</span><span class="p">],</span> <span class="n">pred</span><span class="o">=</span><span class="n">pred</span><span class="p">)</span>
+                <span class="n">out_path</span>  <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">out_dir</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">im_name</span><span class="si">}</span><span class="s1">_</span><span class="si">{</span><span class="n">args2str</span><span class="p">(</span><span class="n">inputs</span><span class="p">)</span><span class="si">}</span><span class="s1">.png&#39;</span><span class="p">)</span>
+                <span class="n">cv2</span><span class="o">.</span><span class="n">imwrite</span><span class="p">(</span><span class="n">out_path</span><span class="p">,</span> <span class="n">rgb_out</span><span class="p">[</span><span class="o">...</span><span class="p">,::</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;rgb_out saved to </span><span class="si">{</span><span class="n">out_path</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+                <span class="n">cv2</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="s1">&#39;rgb_out&#39;</span><span class="p">,</span> <span class="n">rgb_out</span><span class="p">[</span><span class="o">...</span><span class="p">,::</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+                <span class="k">if</span> <span class="n">cv2</span><span class="o">.</span><span class="n">waitKey</span><span class="p">()</span><span class="o">==</span><span class="mi">27</span><span class="p">:</span>
+                    <span class="n">exit</span><span class="p">()</span>
+            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s1">. No image to show&#39;</span><span class="p">)</span>
             
             
         <span class="k">else</span><span class="p">:</span>

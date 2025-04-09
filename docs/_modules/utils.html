@@ -79,6 +79,7 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">os</span><span class="o">,</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span><span class="o">,</span><span class="w"> </span><span class="nn">open3d</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">o3d</span><span class="o">,</span><span class="w"> </span><span class="nn">cv2</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">pyconnect.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">str2dict</span><span class="p">,</span> <span class="n">dict2str</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pyconnect.ros.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_states_from_trajectory</span>
 
 
 <span class="n">root_dir</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)</span><span class="o">.</span><span class="n">parent</span>
@@ -145,7 +146,7 @@
     
     <span class="k">if</span> <span class="s1">&#39;agent_name&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">config</span><span class="p">:</span>
         <span class="n">config</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="s1">&#39;agent_name&#39;</span><span class="p">:</span> <span class="n">agent_name</span><span class="p">})</span>
-    <span class="n">config</span><span class="p">[</span><span class="s1">&#39;agent_name&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;agent_name&quot;</span><span class="p">]</span><span class="si">}{</span><span class="n">mode</span><span class="si">}</span><span class="s1">&#39;</span>
+    <span class="n">config</span><span class="p">[</span><span class="s1">&#39;agent_name&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">mode</span><span class="si">}{</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;agent_name&quot;</span><span class="p">]</span><span class="si">}</span><span class="s1">&#39;</span>
 
     <span class="n">node</span><span class="o">.</span><span class="n">add_agent</span><span class="p">(</span><span class="n">callback_group</span><span class="o">=</span><span class="n">callback_group</span><span class="p">,</span> <span class="o">**</span><span class="n">config</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">node</span></div>
@@ -168,7 +169,46 @@
     <span class="k">return</span> <span class="n">node</span></div>
 
 
+
+<span class="n">state2liftprompt</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">state</span><span class="p">:</span> <span class="sa">f</span><span class="s1">&#39;lift::</span><span class="si">{</span><span class="nb">round</span><span class="p">(</span><span class="n">state</span><span class="p">[</span><span class="s2">&quot;/elevation/state&quot;</span><span class="p">][</span><span class="s2">&quot;current_position&quot;</span><span class="p">])</span><span class="si">}</span><span class="se">\n</span><span class="s1">&#39;</span> <span class="k">if</span> <span class="s1">&#39;/elevation/state&#39;</span> <span class="ow">in</span> <span class="n">state</span> <span class="k">else</span> <span class="s1">&#39;&#39;</span>
+<span class="n">state2gripprompt</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">state</span><span class="p">:</span> <span class="sa">f</span><span class="s1">&#39;grip::</span><span class="si">{</span><span class="n">state</span><span class="p">[</span><span class="s2">&quot;/gripper/state&quot;</span><span class="p">][</span><span class="s2">&quot;motor_position&quot;</span><span class="p">]</span><span class="si">}</span><span class="se">\n</span><span class="s1">&#39;</span> <span class="k">if</span> <span class="s1">&#39;/gripper/state&#39;</span> <span class="ow">in</span> <span class="n">state</span> <span class="k">else</span> <span class="s1">&#39;&#39;</span>
+<div class="viewcode-block" id="state2armmoveprompt">
+<a class="viewcode-back" href="../apidoc/app_carerobot/utils.html#utils.state2armmoveprompt">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">state2armmoveprompt</span><span class="p">(</span><span class="n">state</span><span class="p">):</span>
+    <span class="n">agent_name</span> <span class="o">=</span> <span class="s1">&#39;/xarm/robot_states&#39;</span>
+    <span class="k">if</span> <span class="n">agent_name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">state</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s1">&#39;&#39;</span>
+    
+    <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">state</span><span class="p">[</span><span class="n">agent_name</span><span class="p">][</span><span class="s1">&#39;pose&#39;</span><span class="p">])[:</span><span class="mi">3</span><span class="p">]</span>
+    <span class="k">return</span> <span class="sa">f</span><span class="s1">&#39;arm_move::</span><span class="si">{</span><span class="n">x</span><span class="si">:</span><span class="s1">.2f</span><span class="si">}</span><span class="s1">,</span><span class="si">{</span><span class="n">y</span><span class="si">:</span><span class="s1">.2f</span><span class="si">}</span><span class="s1">,</span><span class="si">{</span><span class="n">z</span><span class="si">:</span><span class="s1">.2f</span><span class="si">}</span><span class="se">\n</span><span class="s1">&#39;</span></div>
+
+
+<div class="viewcode-block" id="state2imagepaths">
+<a class="viewcode-back" href="../apidoc/app_carerobot/utils.html#utils.state2imagepaths">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">state2imagepaths</span><span class="p">(</span><span class="n">state</span><span class="p">):</span>
+    <span class="k">return</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">k</span><span class="si">}</span><span class="s1">::</span><span class="si">{</span><span class="n">v</span><span class="si">}</span><span class="s1">&#39;</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span><span class="n">v</span> <span class="ow">in</span> <span class="n">state</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="s1">&#39;image_raw&#39;</span> <span class="ow">in</span> <span class="n">k</span><span class="p">])</span></div>
+
+
+<div class="viewcode-block" id="get_actions_from_trajectory">
+<a class="viewcode-back" href="../apidoc/app_carerobot/utils.html#utils.get_actions_from_trajectory">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">get_actions_from_trajectory</span><span class="p">(</span><span class="n">trajectory</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="n">states</span> <span class="o">=</span> <span class="n">get_states_from_trajectory</span><span class="p">(</span><span class="n">trajectory</span><span class="o">=</span><span class="n">trajectory</span><span class="p">)</span>
+    <span class="n">plans</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">state</span> <span class="ow">in</span> <span class="n">states</span><span class="p">:</span>
+        <span class="n">plan</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+        <span class="n">plan</span> <span class="o">+=</span> <span class="n">state2liftprompt</span><span class="p">(</span><span class="n">state</span><span class="o">=</span><span class="n">state</span><span class="p">)</span>
+        <span class="n">plan</span> <span class="o">+=</span> <span class="n">state2gripprompt</span><span class="p">(</span><span class="n">state</span><span class="o">=</span><span class="n">state</span><span class="p">)</span>
+        <span class="n">plan</span> <span class="o">+=</span> <span class="n">state2armmoveprompt</span><span class="p">(</span><span class="n">state</span><span class="o">=</span><span class="n">state</span><span class="p">)</span>
+        <span class="n">plan</span> <span class="o">+=</span> <span class="n">state2imagepaths</span><span class="p">(</span><span class="n">state</span><span class="o">=</span><span class="n">state</span><span class="p">)</span>
+
+        <span class="n">plans</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">plan</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">plans</span></div>
+
+
+
 <span class="n">n2colormap</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">n</span><span class="p">:</span> <span class="n">cv2</span><span class="o">.</span><span class="n">applyColorMap</span><span class="p">((</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="o">/</span> <span class="n">n</span> <span class="o">*</span> <span class="mi">255</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;uint8&#39;</span><span class="p">),</span> <span class="n">cv2</span><span class="o">.</span><span class="n">COLORMAP_JET</span><span class="p">)</span>
+<span class="n">normavector2islying</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">normal_vector</span><span class="p">:</span> <span class="kc">True</span> <span class="k">if</span> <span class="n">normal_vector</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="nb">abs</span><span class="p">(</span><span class="n">normal_vector</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="o">&gt;</span> <span class="mf">.5</span>
 
 <div class="viewcode-block" id="show_masks_on_rgb">
 <a class="viewcode-back" href="../apidoc/app_carerobot/utils.html#utils.show_masks_on_rgb">[docs]</a>

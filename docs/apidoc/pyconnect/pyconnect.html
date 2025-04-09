@@ -63,6 +63,7 @@
 </li>
 <li class="toctree-l3"><a class="reference internal" href="#submodules">Submodules</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#module-pyconnect.run_client">pyconnect.run_client module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#pyconnect.run_client.args2str"><code class="docutils literal notranslate"><span class="pre">args2str()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#pyconnect.run_client.get_client"><code class="docutils literal notranslate"><span class="pre">get_client()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#pyconnect.run_client.run_client"><code class="docutils literal notranslate"><span class="pre">run_client()</span></code></a></li>
 </ul>
@@ -203,11 +204,24 @@
 <li class="toctree-l2"><a class="reference internal" href="pyconnect.ros.html#pyconnect-ros-custom-node-module">pyconnect.ros.custom_node module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="pyconnect.ros.html#module-pyconnect.ros.topic">pyconnect.ros.topic module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="pyconnect.ros.html#module-pyconnect.ros.utils">pyconnect.ros.utils module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pyconnect.ros.html#pyconnect.ros.utils.ShowRosCam"><code class="docutils literal notranslate"><span class="pre">ShowRosCam</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pyconnect.ros.html#pyconnect.ros.utils.ShowRosCam.show"><code class="docutils literal notranslate"><span class="pre">ShowRosCam.show()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyconnect.ros.html#pyconnect.ros.utils.ShowRosCam.start"><code class="docutils literal notranslate"><span class="pre">ShowRosCam.start()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyconnect.ros.html#pyconnect.ros.utils.ShowRosCam.stop"><code class="docutils literal notranslate"><span class="pre">ShowRosCam.stop()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="pyconnect.ros.html#pyconnect.ros.utils.SubLog"><code class="docutils literal notranslate"><span class="pre">SubLog</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="pyconnect.ros.html#pyconnect.ros.utils.SubLog.log"><code class="docutils literal notranslate"><span class="pre">SubLog.log()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyconnect.ros.html#pyconnect.ros.utils.SubLog.start"><code class="docutils literal notranslate"><span class="pre">SubLog.start()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="pyconnect.ros.html#pyconnect.ros.utils.SubLog.stop"><code class="docutils literal notranslate"><span class="pre">SubLog.stop()</span></code></a></li>
+</ul>
+</li>
 <li class="toctree-l3"><a class="reference internal" href="pyconnect.ros.html#pyconnect.ros.utils.default_srvstr_resfunc"><code class="docutils literal notranslate"><span class="pre">default_srvstr_resfunc()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="pyconnect.ros.html#pyconnect.ros.utils.default_srvstr_revfunc"><code class="docutils literal notranslate"><span class="pre">default_srvstr_revfunc()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="pyconnect.ros.html#pyconnect.ros.utils.default_strmsg_resfunc"><code class="docutils literal notranslate"><span class="pre">default_strmsg_resfunc()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="pyconnect.ros.html#pyconnect.ros.utils.default_strmsg_revfunc"><code class="docutils literal notranslate"><span class="pre">default_strmsg_revfunc()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="pyconnect.ros.html#pyconnect.ros.utils.find_last_session_log_dir"><code class="docutils literal notranslate"><span class="pre">find_last_session_log_dir()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyconnect.ros.html#pyconnect.ros.utils.get_states_from_trajectory"><code class="docutils literal notranslate"><span class="pre">get_states_from_trajectory()</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="pyconnect.ros.html#module-pyconnect.ros">Module contents</a></li>
@@ -279,6 +293,11 @@
 </section>
 <section id="module-pyconnect.run_client">
 <span id="pyconnect-run-client-module"></span><h2>pyconnect.run_client module<a class="headerlink" href="#module-pyconnect.run_client" title="Link to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="pyconnect.run_client.args2str">
+<span class="sig-prename descclassname"><span class="pre">pyconnect.run_client.</span></span><span class="sig-name descname"><span class="pre">args2str</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">inputs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyconnect.run_client.args2str" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
 <dl class="py function">
 <dt class="sig sig-object py" id="pyconnect.run_client.get_client">
 <span class="sig-prename descclassname"><span class="pre">pyconnect.run_client.</span></span><span class="sig-name descname"><span class="pre">get_client</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">client_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'tcp'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">host</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'localhost'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">port</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">8888</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/pyconnect/run_client.html#get_client"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyconnect.run_client.get_client" title="Link to this definition"></a></dt>

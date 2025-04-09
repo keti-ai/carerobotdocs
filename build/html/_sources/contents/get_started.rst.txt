@@ -6,7 +6,7 @@ This guide provides step-by-step instructions to set up the necessary environmen
 
 ---
 
-Cuda Installation (Host PC)
+GPU Driver Installation (Host PC)
 ===================
 
 **Prerequisites:**
@@ -29,20 +29,146 @@ Steps to Install CUDA Drivers:
 
        reboot
 
+4. Install dependencies:
+
+   .. code-block:: bash
+
+       sudo update
+       sudo apt install terminator htop openssh-server vsftpd  -y 
+       sudo apt install python3-dev  python3-venv python-pip -y
+
+5. Install docker
+
+https://docs.docker.com/engine/install/ubuntu/
+
+6. Install nvidia docker toolkit
+
+https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/latest/install-guide.html
+
+
+7. Add some custom useful alias (Optional)
+
+.. code-block:: bash
+
+       # utils
+       alias chown_keti='sudo chown -R keti .'
+       alias sb='source ~/.bashrc'
+       alias eb='sudo gedit ~/.bashrc'
+       alias nb='nano ~/.bashrc'
+       alias about_pc='lsb_release -a'
+       alias create_py_simple_pkg='cookiecutter https://github.com/mtbui2010/python_pkg_simple_template.git'
+       alias vscode='sudo code --no-sandbox --user-data-dir ~/.vscode_cache'
+       alias run_pyvir='source ~/.pyvir/bin/activate'
+
+       #docker
+       alias docker_start='sudo docker start'
+       alias docker_stop='sudo docker stop'
+       alias docker_run='sudo docker run -it'
+       alias docker_watch='sudo watch docker ps -a'
+       alias image_watch='sudo watch docker image ls -a'
+       alias image_rm='sudo docker image rm'
+
+
+       #functions
+       dockerexec() {
+       xhost local: & sudo docker start "$@" & sudo docker exec -it "$@" /bin/bash
+       }
+       dockerrm() {
+       sudo docker stop "$@" && sudo docker rm "$@"
+       }
+       gitpush() {
+       git add . .gitignore && git commit -m "$@" && git push
+       }
+       runa() {
+       container_name="$1"  # First argument is the container name
+       shift 1              # Remove the first two arguments, leaving only additional script arguments
+       
+       xhost +
+       sudo docker start "$container_name"
+       sudo docker exec -it "$container_name" /bin/bash -c \
+       "source ~/.bashrc && source /opt/ros/humble/setup.bash && source ~/ros2_ws/install/setup.bash && $@"
+       }
+
+
+8. Install and configure SSH and FTP server (Optional)
+
+   .. code-block:: bash
+       sudo ufw allow ssh
+       sudo systemctl start ssh
+
+Configure FTP
+
+   .. code-block:: bash
+
+       #!/bin/bash
+       set -e
+
+       FTP_DIR="/media/keti/workdir"
+       FTP_USER="keti"
+
+       echo "🛠 Backing up original config..."
+       sudo cp /etc/vsftpd.conf /etc/vsftpd.conf.bak
+
+       echo "📝 Writing new vsftpd config..."
+       sudo tee /etc/vsftpd.conf > /dev/null <<EOL
+       listen=YES
+       listen_ipv6=NO
+       anonymous_enable=NO
+       local_enable=YES
+       write_enable=YES
+       local_umask=022
+       chroot_local_user=YES
+       allow_writeable_chroot=YES
+       user_sub_token=\$USER
+       local_root=${FTP_DIR}
+       pasv_enable=YES
+       pasv_min_port=10000
+       pasv_max_port=10100
+       EOL
+
+       echo "📁 Setting permissions for $FTP_DIR..."
+       sudo chown -R "$FTP_USER":"$FTP_USER" "$FTP_DIR"
+       sudo chmod -R 755 "$FTP_DIR"
+
+       echo "🔁 Restarting vsftpd..."
+       sudo systemctl restart vsftpd
+       sudo systemctl enable vsftpd
+
+       echo "✅ FTP setup complete. You can now FTP into this machine with your user account."
+
+
+Test SSH and FTP servers
+
+   .. code-block:: bash
+
+       ssh keti@0.0.0.0
+       ftp 0.0.0.0
+
+
 
 Docker Installation
 ===================
 
+0. Git credential:
+
+   .. code-block:: bash
+
+       git config --global credential.helper store
+       
+
 To set up a Docker containerized environment for your project, follow these steps:
 
-1. Clone the Docker configuration repository:
+1. Build containers on Edge and Control PCs
+
+- Clone the Docker configuration repository:
 
    .. code-block:: bash
 
        git clone https://github.com/keti-ai/dockers.git
        cd dockers
 
-2. Build the Docker image with the required specifications:
+
+- Build the Docker image with the required specifications:
 
    .. code-block:: bash
 
@@ -52,66 +178,68 @@ To set up a Docker containerized environment for your project, follow these step
 
    Support versions:
    
-   - Ubuntu20.04, 22.04 (recommeded)
+   - Ubuntu20.04, 22.04 (default)
 
-   - CUDA 11.1.1, 11.7.1(recommeded), 12.1.0, 12.4.1, 12.6.3
+   - CUDA 11.1.1, 11.7.1(default), 12.1.0, 12.4.1, 12.6.3
 
-   - ROS2: foxy, humble (recommeded)
+   - ROS2: foxy, humble (default)
    
 
-3. Create and run a Docker container:
+- Create and run a Docker container:
 
    .. code-block:: bash
 
        ./build_container.sh <UBUNTU_VERSION> <CUDA_VERSION> <ROS_DISTRO> <CONTAINER_NAME> <SHARE_DIR> <SSH_PORT> <PORT_MAP>
 
-   - `<CONTAINER_NAME>`: Name of the container
-   - `<SHARE_DIR>`: Shared directory path
-   - `<SSH_PORT>`: SSH port number
-   - `<PORT_MAP>`: Additional port mappings
+   - `<CONTAINER_NAME>`: Name of the container [default: kcare]
+   - `<SHARE_DIR>`: Shared directory path [default: /media/keti/workdir/projects]
+   - `<SSH_PORT>`: SSH port number        [default: 2222]
+   - `<PORT_MAP>`: Additional port mappings [default: 8000-8099:8000-8099]
 
----
+2. Build recognition container (On Server PC)
 
-Dependencies Installation
-===================
+   .. code-block:: bash
+       
+       cd dockers
+       ./build_recognition_container.sh <SSH_PORT> <PORT_MAP> <SHARE_DIR> <IMAGE_NAME> <CONTAINER_NAME>
+   
+   - `<IMAGE_NAME_NAME>`: Name of the image [default: mtbui2010/ubuntu22:cuda11.7-recognition]
+   - `<CONTAINER_NAME>`: Name of the container [default: reg_u22cu11]
+   - `<SHARE_DIR>`: Shared directory path [default: /media/keti/workdir/projects]
+   - `<SSH_PORT>`: SSH port number        [default: 2202]
+   - `<PORT_MAP>`: Additional port mappings [default: 8000-8099:8000-8099]
 
-Download Required Repositories
-------------------------------
+       
+
 
 Clone the following repositories to set up the necessary dependencies:
 
 .. code-block:: bash
 
-       git clone https://github.com/CASIA-IVA-Lab/FastSAM.git
-       git clone https://github.com/IDEA-Research/GroundingDINO.git
        git clone https://github.com/keti-ai/pyrecognition.git
        git clone https://github.com/keti-ai/pyconnect.git
        git clone https://github.com/keti-ai/pyinterfaces.git
        git clone https://github.com/keti-ai/rosinterfaces.git
 
-Install Python Packages
------------------------
+
 
 Install the repositories as editable Python packages:
 
 .. code-block:: bash
 
-       pip install -e FastSAM
-       pip install -e GroundingDINO
        pip install -e pyrecognition
        pip install -e pyconnect
        pip install -e pyinterfaces
 
 Install ROS Interfaces
----------------------
 
-1. Create a symbolic link to `rosinterfaces` inside the ROS2 workspace:
+- Create a symbolic link to `rosinterfaces` inside the ROS2 workspace:
 
    .. code-block:: bash
 
        ln -s rosinterfaces ~/ros2_ws/src
 
-2. Build the ROS package:
+- Build the ROS package:
 
    .. code-block:: bash
 
@@ -140,6 +268,7 @@ To enter the running Ollama server’s container:
 
 .. code-block:: bash
 
+       sudo docker run -d --gpus=all -v ollama:/root/.ollama -p 11434:11434 --name ollama ollama/ollama
        sudo docker exec -it ollama /bin/bash
 
 VLM Server Execution in Server PC

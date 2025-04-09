@@ -76,6 +76,9 @@
              
   <h1>Source code for node_taskmanager</h1><div class="highlight"><pre>
 <span></span><span class="kn">from</span><span class="w"> </span><span class="nn">pyconnect.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">parse_keys_values</span><span class="p">,</span> <span class="n">dict2str</span><span class="p">,</span> <span class="n">str2dict</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pyconnect.ros.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">SubLog</span><span class="p">,</span> <span class="n">ShowRosCam</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">threading</span><span class="o">,</span><span class="w"> </span><span class="nn">cv2</span><span class="o">,</span><span class="w"> </span><span class="nn">json</span>
+
 
 <div class="viewcode-block" id="add_skill_service_clients">
 <a class="viewcode-back" href="../apidoc/app_carerobot/node_taskmanager.html#node_taskmanager.add_skill_service_clients">[docs]</a>
@@ -113,6 +116,9 @@
 
     <span class="k">return</span> <span class="n">node</span></div>
 
+    
+    
+
 
 <div class="viewcode-block" id="run_node">
 <a class="viewcode-back" href="../apidoc/app_carerobot/node_taskmanager.html#node_taskmanager.run_node">[docs]</a>
@@ -144,8 +150,8 @@
 <span class="sd">        - The node uses `listen()` to run in the main thread, blocking until interrupted.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="kn">from</span><span class="w"> </span><span class="nn">pyconnect.ros.custom_node</span><span class="w"> </span><span class="kn">import</span> <span class="n">CustomNode</span>
-    <span class="kn">from</span><span class="w"> </span><span class="nn">pyconnect.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">str2dict</span>
-    <span class="kn">from</span><span class="w"> </span><span class="nn">configs.tasks</span><span class="w"> </span><span class="kn">import</span> <span class="n">MANAGER_CONFIGS</span><span class="p">,</span> <span class="n">SKILL_CLIENT_CONFIGS</span><span class="p">,</span> <span class="n">MODE</span><span class="p">,</span> <span class="n">DEVICE_MODE</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">pyconnect.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">str2dict</span><span class="p">,</span> <span class="n">data_info</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">configs.tasks</span><span class="w"> </span><span class="kn">import</span> <span class="n">MANAGER_CONFIGS</span><span class="p">,</span> <span class="n">SKILL_CLIENT_CONFIGS</span><span class="p">,</span> <span class="n">MODE</span><span class="p">,</span> <span class="n">DEVICE_MODE</span><span class="p">,</span> <span class="n">DO_LOG_SUB</span><span class="p">,</span> <span class="n">SHOW_NODE_CONFIGS</span>
     <span class="kn">from</span><span class="w"> </span><span class="nn">configs.device_clients</span><span class="w"> </span><span class="kn">import</span> <span class="n">DEVICE_CLIENT_CONFIGS</span>
     <span class="kn">from</span><span class="w"> </span><span class="nn">utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">node_add_agents_from_configs</span><span class="p">,</span> <span class="n">node_add_agent_from_config</span>
 
@@ -153,43 +159,105 @@
                                             <span class="s1">&#39;device_mode&#39;</span><span class="p">:</span> <span class="n">DEVICE_MODE</span><span class="p">,</span> <span class="s1">&#39;skip_inactive&#39;</span><span class="p">:</span> <span class="n">MANAGER_CONFIGS</span><span class="p">[</span><span class="s1">&#39;skip_inactive&#39;</span><span class="p">]})</span>
 
     <span class="c1"># Deploy node</span>
-    <span class="n">node</span> <span class="o">=</span> <span class="n">CustomNode</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;manager&#39;</span><span class="p">,</span> <span class="n">is_init_node</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">num_callbackgroup</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+    <span class="n">node</span> <span class="o">=</span> <span class="n">CustomNode</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;manager&#39;</span><span class="p">,</span> <span class="n">is_init_node</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">num_callbackgroup</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
     <span class="n">node</span> <span class="o">=</span> <span class="n">node_add_agent_from_config</span><span class="p">(</span><span class="n">node</span><span class="o">=</span><span class="n">node</span><span class="p">,</span> <span class="n">config</span><span class="o">=</span><span class="n">MANAGER_CONFIGS</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="n">args</span><span class="p">[</span><span class="s1">&#39;mode&#39;</span><span class="p">])</span>
     <span class="n">node</span> <span class="o">=</span> <span class="n">node_add_agents_from_configs</span><span class="p">(</span><span class="n">node</span><span class="o">=</span><span class="n">node</span><span class="p">,</span> <span class="n">configs</span><span class="o">=</span><span class="n">SKILL_CLIENT_CONFIGS</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="n">args</span><span class="p">[</span><span class="s1">&#39;mode&#39;</span><span class="p">])</span>
     <span class="n">node</span> <span class="o">=</span> <span class="n">node_add_agents_from_configs</span><span class="p">(</span><span class="n">node</span><span class="o">=</span><span class="n">node</span><span class="p">,</span> <span class="n">configs</span><span class="o">=</span><span class="n">DEVICE_CLIENT_CONFIGS</span><span class="p">,</span> 
                                         <span class="n">mode</span><span class="o">=</span><span class="n">args</span><span class="p">[</span><span class="s1">&#39;device_mode&#39;</span><span class="p">],</span> <span class="n">agents_select</span><span class="o">=</span><span class="n">args</span><span class="p">[</span><span class="s1">&#39;devices_select&#39;</span><span class="p">])</span>
+    <span class="n">node</span> <span class="o">=</span> <span class="n">node_add_agents_from_configs</span><span class="p">(</span><span class="n">node</span><span class="o">=</span><span class="n">node</span><span class="p">,</span> <span class="n">configs</span><span class="o">=</span><span class="n">SHOW_NODE_CONFIGS</span><span class="p">)</span>
+    
+    <span class="k">if</span> <span class="n">DO_LOG_SUB</span><span class="p">:</span>
+        <span class="n">device_node</span> <span class="o">=</span> <span class="n">CustomNode</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;device&#39;</span><span class="p">,</span> <span class="n">is_init_node</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">num_callbackgroup</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+        <span class="n">device_node</span> <span class="o">=</span> <span class="n">node_add_agents_from_configs</span><span class="p">(</span><span class="n">node</span><span class="o">=</span><span class="n">device_node</span><span class="p">,</span> <span class="n">configs</span><span class="o">=</span><span class="n">DEVICE_CLIENT_CONFIGS</span><span class="p">,</span> 
+                                            <span class="n">mode</span><span class="o">=</span><span class="n">args</span><span class="p">[</span><span class="s1">&#39;device_mode&#39;</span><span class="p">],</span> <span class="n">agents_select</span><span class="o">=</span><span class="n">args</span><span class="p">[</span><span class="s1">&#39;devices_select&#39;</span><span class="p">])</span>
+        <span class="n">logger</span> <span class="o">=</span> <span class="n">SubLog</span><span class="p">(</span><span class="n">node</span><span class="o">=</span><span class="n">device_node</span><span class="p">,</span> <span class="n">every</span><span class="o">=</span><span class="mf">0.2</span><span class="p">)</span>
+        <span class="n">device_node</span><span class="o">.</span><span class="n">spin</span><span class="p">(</span><span class="n">run_thread</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>        
+    
+
+    <span class="n">findresult_agent</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">agents</span><span class="p">[</span><span class="s1">&#39;find_result&#39;</span><span class="p">]</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">action2agentname</span><span class="p">(</span><span class="n">action</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">action</span> <span class="ow">in</span> <span class="n">SKILL_CLIENT_CONFIGS</span><span class="p">:</span>
+            <span class="k">return</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">args</span><span class="p">[</span><span class="s2">&quot;mode&quot;</span><span class="p">]</span><span class="si">}{</span><span class="n">action</span><span class="si">}</span><span class="s1">&#39;</span>
+        <span class="k">elif</span> <span class="n">action</span> <span class="ow">in</span> <span class="n">DEVICE_CLIENT_CONFIGS</span><span class="p">:</span> 
+            <span class="k">return</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">args</span><span class="p">[</span><span class="s2">&quot;device_mode&quot;</span><span class="p">]</span><span class="si">}{</span><span class="n">DEVICE_CLIENT_CONFIGS</span><span class="p">[</span><span class="n">action</span><span class="p">][</span><span class="s2">&quot;agent_name&quot;</span><span class="p">]</span><span class="si">}</span><span class="s1">&#39;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+
 
     <span class="c1"># Main task manager</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">taskplan_responsefunc</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
-        <span class="n">tasks</span> <span class="o">=</span> <span class="p">[</span><span class="n">el</span> <span class="k">for</span> <span class="n">el</span> <span class="ow">in</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;plan&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">el</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;::&#39;</span><span class="p">))</span> <span class="o">==</span> <span class="mi">3</span><span class="p">]</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">exec_actions</span><span class="p">(</span><span class="n">actions</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">j</span><span class="p">,</span> <span class="n">plan</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">actions</span><span class="p">):</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;[</span><span class="si">{</span><span class="n">j</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s1">/</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">actions</span><span class="p">)</span><span class="si">}</span><span class="s1">]: </span><span class="si">{</span><span class="n">plan</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+            <span class="n">tasks</span> <span class="o">=</span> <span class="p">[</span><span class="n">el</span> <span class="k">for</span> <span class="n">el</span> <span class="ow">in</span> <span class="n">plan</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">el</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;::&#39;</span><span class="p">))</span> <span class="o">==</span> <span class="mi">2</span><span class="p">]</span>
+
+            <span class="n">ts</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">task</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">tasks</span><span class="p">):</span>
+                <span class="n">action</span><span class="p">,</span> <span class="n">inputs</span> <span class="o">=</span> <span class="p">[</span><span class="n">el</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="k">for</span> <span class="n">el</span> <span class="ow">in</span> <span class="n">task</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;::&#39;</span><span class="p">)[:</span><span class="mi">2</span><span class="p">]]</span>
+
+                <span class="k">if</span> <span class="s1">&#39;image_raw&#39;</span> <span class="ow">in</span> <span class="n">action</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="s1">&#39;color&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">action</span><span class="p">:</span>
+                        <span class="k">continue</span>
+                    <span class="n">impath</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">inputs</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;&#39;&quot;</span><span class="p">,</span> <span class="s1">&#39;&quot;&#39;</span><span class="p">))[</span><span class="s1">&#39;im&#39;</span><span class="p">]</span>
+                    <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
+                        <span class="n">findresult_agent</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">cv2</span><span class="o">.</span><span class="n">imread</span><span class="p">(</span><span class="n">impath</span><span class="p">)[</span><span class="o">...</span><span class="p">,::</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+                    
+                    <span class="k">continue</span>
+
+                <span class="n">agent_name</span> <span class="o">=</span> <span class="n">action2agentname</span><span class="p">(</span><span class="n">action</span><span class="o">=</span><span class="n">action</span><span class="p">)</span>
+                <span class="c1"># node.agents[agent_name].send({&#39;inputs&#39;: inputs})</span>
+                <span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;inputs&#39;</span><span class="p">:</span> <span class="n">inputs</span><span class="p">}</span>
+                <span class="n">ts</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">node</span><span class="o">.</span><span class="n">agents</span><span class="p">[</span><span class="n">agent_name</span><span class="p">]</span><span class="o">.</span><span class="n">send</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">data</span><span class="p">,),</span> <span class="n">daemon</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
+            <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">ts</span><span class="p">:</span>
+                <span class="n">t</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+            <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">ts</span><span class="p">:</span>
+                <span class="n">t</span><span class="o">.</span><span class="n">join</span><span class="p">()</span>
+            
+            
+
+            <span class="n">aa</span> <span class="o">=</span> <span class="mi">1</span>
+        
+        <span class="k">return</span> <span class="p">{</span><span class="s1">&#39;isdone&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">}</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">exec_plan</span><span class="p">(</span><span class="n">plan</span><span class="p">,</span> <span class="n">do_log_sub</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="n">tasks</span> <span class="o">=</span> <span class="p">[</span><span class="n">el</span> <span class="k">for</span> <span class="n">el</span> <span class="ow">in</span> <span class="n">plan</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">el</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;::&#39;</span><span class="p">))</span> <span class="o">==</span> <span class="mi">2</span><span class="p">]</span>
+        
+        <span class="k">if</span> <span class="n">do_log_sub</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+        
         <span class="n">prev_res</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;isdone&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">}</span>
         <span class="n">num_task</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">tasks</span><span class="p">)</span>
+        <span class="n">isdone</span> <span class="o">=</span> <span class="kc">True</span>
         <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">task</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">tasks</span><span class="p">):</span>
             <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;[</span><span class="si">{</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s1">/</span><span class="si">{</span><span class="n">num_task</span><span class="si">}</span><span class="s1">]: </span><span class="si">{</span><span class="n">task</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+            <span class="n">action</span><span class="p">,</span> <span class="n">inputs</span> <span class="o">=</span> <span class="p">[</span><span class="n">el</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="k">for</span> <span class="n">el</span> <span class="ow">in</span> <span class="n">task</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;::&#39;</span><span class="p">)[:</span><span class="mi">2</span><span class="p">]]</span>
 
-            <span class="k">try</span><span class="p">:</span> 
-                <span class="k">if</span> <span class="ow">not</span> <span class="n">prev_res</span><span class="p">[</span><span class="s1">&#39;isdone&#39;</span><span class="p">]:</span>
-                    <span class="k">break</span>
-                <span class="n">data</span> <span class="o">=</span> <span class="n">prev_res</span>
-                <span class="n">data</span><span class="p">[</span><span class="s1">&#39;task&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">task</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">prev_res</span><span class="p">[</span><span class="s1">&#39;isdone&#39;</span><span class="p">]:</span>
+                <span class="n">isdone</span> <span class="o">=</span> <span class="kc">False</span>
+                <span class="k">break</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="n">prev_res</span>
+            <span class="n">data</span><span class="p">[</span><span class="s1">&#39;inputs&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">inputs</span>
 
-                <span class="n">action</span> <span class="o">=</span> <span class="n">task</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;::&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
-                <span class="k">if</span> <span class="n">action</span> <span class="ow">in</span> <span class="n">SKILL_CLIENT_CONFIGS</span><span class="p">:</span>
-                    <span class="n">agent_name</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">action</span><span class="si">}{</span><span class="n">args</span><span class="p">[</span><span class="s2">&quot;mode&quot;</span><span class="p">]</span><span class="si">}</span><span class="s1">&#39;</span>
-                <span class="k">elif</span> <span class="n">action</span> <span class="ow">in</span> <span class="n">DEVICE_CLIENT_CONFIGS</span><span class="p">:</span> 
-                    <span class="n">agent_name</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">DEVICE_CLIENT_CONFIGS</span><span class="p">[</span><span class="n">action</span><span class="p">][</span><span class="s2">&quot;agent_name&quot;</span><span class="p">]</span><span class="si">}{</span><span class="n">args</span><span class="p">[</span><span class="s2">&quot;device_mode&quot;</span><span class="p">]</span><span class="si">}</span><span class="s1">&#39;</span>
-                <span class="k">else</span><span class="p">:</span>
-                    <span class="k">raise</span> <span class="ne">NotImplementedError</span>
 
-                <span class="n">prev_res</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">agents</span><span class="p">[</span><span class="n">agent_name</span><span class="p">]</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
-
-            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s1">. </span><span class="si">{</span><span class="s2">&quot;skipped&quot;</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="n">args</span><span class="p">[</span><span class="s2">&quot;skip_inactive&quot;</span><span class="p">]</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="s2">&quot;returned&quot;</span><span class="si">}</span><span class="s1">...&#39;</span><span class="p">)</span>
-                <span class="k">if</span> <span class="n">args</span><span class="p">[</span><span class="s2">&quot;skip_inactive&quot;</span><span class="p">]:</span>
-                    <span class="k">continue</span>
-                <span class="k">else</span><span class="p">:</span>
-                    <span class="k">return</span>
+            <span class="n">agent_name</span> <span class="o">=</span> <span class="n">action2agentname</span><span class="p">(</span><span class="n">action</span><span class="o">=</span><span class="n">action</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">agent_name</span><span class="si">}</span><span class="s1"> sending </span><span class="si">{</span><span class="n">data_info</span><span class="p">(</span><span class="n">data</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+            
+            <span class="c1"># exec</span>
+            <span class="n">prev_res</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">agents</span><span class="p">[</span><span class="n">agent_name</span><span class="p">]</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+                
+        <span class="k">if</span> <span class="n">do_log_sub</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>
+        
+        <span class="k">return</span> <span class="p">{</span><span class="s1">&#39;isdone&#39;</span><span class="p">:</span> <span class="n">isdone</span><span class="p">}</span>
     
+    <span class="k">def</span><span class="w"> </span><span class="nf">taskplan_responsefunc</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
+        <span class="k">if</span> <span class="s1">&#39;plan&#39;</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">exec_plan</span><span class="p">(</span><span class="n">plan</span><span class="o">=</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;plan&#39;</span><span class="p">],</span> <span class="n">do_log_sub</span><span class="o">=</span><span class="n">DO_LOG_SUB</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="s1">&#39;actions&#39;</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">exec_actions</span><span class="p">(</span><span class="n">actions</span><span class="o">=</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;actions&#39;</span><span class="p">])</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">{</span><span class="s1">&#39;isdone&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">}</span>
+        
     <span class="c1"># Deploy node</span>
     <span class="n">node</span><span class="o">.</span><span class="n">agents</span><span class="p">[</span><span class="n">MANAGER_CONFIGS</span><span class="p">[</span><span class="s1">&#39;agent_name&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">response_func</span> <span class="o">=</span> <span class="n">taskplan_responsefunc</span>
     <span class="n">node</span><span class="o">.</span><span class="n">listen</span><span class="p">()</span></div>

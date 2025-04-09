@@ -101,31 +101,32 @@
     <span class="n">movehead</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">agents</span><span class="p">[</span><span class="n">DEVICE_CLIENT_CONFIGS</span><span class="p">[</span><span class="s1">&#39;move_head&#39;</span><span class="p">][</span><span class="s1">&#39;agent_name&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="n">device_mode</span><span class="p">]</span>
 
     <span class="k">try</span><span class="p">:</span> 
-        <span class="n">ret</span> <span class="o">=</span> <span class="n">cleanerror_agent</span><span class="o">.</span><span class="n">send</span><span class="p">({</span><span class="s1">&#39;task&#39;</span><span class="p">:</span> <span class="s1">&#39;clean_error::0::&#39;</span><span class="p">})</span>
+        <span class="n">ret</span> <span class="o">=</span> <span class="n">cleanerror_agent</span><span class="o">.</span><span class="n">send</span><span class="p">({</span><span class="s1">&#39;inputs&#39;</span><span class="p">:</span> <span class="s1">&#39;0&#39;</span><span class="p">})</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">ret</span><span class="p">[</span><span class="s1">&#39;isdone&#39;</span><span class="p">]:</span>
             <span class="k">return</span> <span class="n">ret</span>
 
-        <span class="n">ret</span> <span class="o">=</span> <span class="n">setmode_agent</span><span class="o">.</span><span class="n">send</span><span class="p">({</span><span class="s1">&#39;task&#39;</span><span class="p">:</span> <span class="s1">&#39;set_mode::0::&#39;</span><span class="p">})</span>
+        <span class="n">ret</span> <span class="o">=</span> <span class="n">setmode_agent</span><span class="o">.</span><span class="n">send</span><span class="p">({</span><span class="s1">&#39;inputs&#39;</span><span class="p">:</span> <span class="s1">&#39;0&#39;</span><span class="p">})</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">ret</span><span class="p">[</span><span class="s1">&#39;isdone&#39;</span><span class="p">]:</span>
             <span class="k">return</span> <span class="n">ret</span>
         
-        <span class="n">ret</span> <span class="o">=</span> <span class="n">setstate_agent</span><span class="o">.</span><span class="n">send</span><span class="p">({</span><span class="s1">&#39;task&#39;</span><span class="p">:</span> <span class="s1">&#39;set_state::0::&#39;</span><span class="p">})</span>
+        <span class="n">ret</span> <span class="o">=</span> <span class="n">setstate_agent</span><span class="o">.</span><span class="n">send</span><span class="p">({</span><span class="s1">&#39;inputs&#39;</span><span class="p">:</span> <span class="s1">&#39;0&#39;</span><span class="p">})</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">ret</span><span class="p">[</span><span class="s1">&#39;isdone&#39;</span><span class="p">]:</span>
             <span class="k">return</span> <span class="n">ret</span>
         
-        <span class="n">ret</span> <span class="o">=</span> <span class="n">moveangles_agent</span><span class="o">.</span><span class="n">send</span><span class="p">({</span><span class="s1">&#39;task&#39;</span><span class="p">:</span> <span class="s1">&#39;move_angles::home::&#39;</span><span class="p">})</span>
+        <span class="n">ret</span> <span class="o">=</span> <span class="n">moveangles_agent</span><span class="o">.</span><span class="n">send</span><span class="p">({</span><span class="s1">&#39;inputs&#39;</span><span class="p">:</span> <span class="s1">&#39;home&#39;</span><span class="p">})</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">ret</span><span class="p">[</span><span class="s1">&#39;isdone&#39;</span><span class="p">]:</span>
             <span class="k">return</span> <span class="n">ret</span>
         
-        <span class="n">ret</span> <span class="o">=</span> <span class="n">moveangles_agent</span><span class="o">.</span><span class="n">send</span><span class="p">({</span><span class="s1">&#39;task&#39;</span><span class="p">:</span> <span class="s1">&#39;move_angles::ready::&#39;</span><span class="p">})</span>
+        
+        <span class="n">ret</span> <span class="o">=</span> <span class="n">moveangles_agent</span><span class="o">.</span><span class="n">send</span><span class="p">({</span><span class="s1">&#39;inputs&#39;</span><span class="p">:</span> <span class="s1">&#39;ready&#39;</span><span class="p">})</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">ret</span><span class="p">[</span><span class="s1">&#39;isdone&#39;</span><span class="p">]:</span>
             <span class="k">return</span> <span class="n">ret</span>
         
-        <span class="n">ret</span> <span class="o">=</span> <span class="n">movehead</span><span class="o">.</span><span class="n">send</span><span class="p">({</span><span class="s1">&#39;task&#39;</span><span class="p">:</span> <span class="s1">&#39;move_head::ry=0::&#39;</span><span class="p">})</span>
+        <span class="n">ret</span> <span class="o">=</span> <span class="n">movehead</span><span class="o">.</span><span class="n">send</span><span class="p">({</span><span class="s1">&#39;inputs&#39;</span><span class="p">:</span> <span class="s1">&#39;ry=0&#39;</span><span class="p">})</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">ret</span><span class="p">[</span><span class="s1">&#39;isdone&#39;</span><span class="p">]:</span>
             <span class="k">return</span> <span class="n">ret</span>
         
-        <span class="n">ret</span> <span class="o">=</span> <span class="n">movehead</span><span class="o">.</span><span class="n">send</span><span class="p">({</span><span class="s1">&#39;task&#39;</span><span class="p">:</span> <span class="s1">&#39;move_head::ry=-25::&#39;</span><span class="p">})</span>
+        <span class="n">ret</span> <span class="o">=</span> <span class="n">movehead</span><span class="o">.</span><span class="n">send</span><span class="p">({</span><span class="s1">&#39;inputs&#39;</span><span class="p">:</span> <span class="s1">&#39;ry=-25&#39;</span><span class="p">})</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">ret</span><span class="p">[</span><span class="s1">&#39;isdone&#39;</span><span class="p">]:</span>
             <span class="k">return</span> <span class="n">ret</span>
         
@@ -156,12 +157,21 @@
     
     <span class="n">armdmove_agent</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">agents</span><span class="p">[</span><span class="n">DEVICE_CLIENT_CONFIGS</span><span class="p">[</span><span class="s1">&#39;arm_dmove&#39;</span><span class="p">][</span><span class="s1">&#39;agent_name&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="n">device_mode</span><span class="p">]</span>
     <span class="n">robotpose_agent</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">agents</span><span class="p">[</span><span class="n">DEVICE_CLIENT_CONFIGS</span><span class="p">[</span><span class="s1">&#39;robot_pose&#39;</span><span class="p">][</span><span class="s1">&#39;agent_name&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="n">device_mode</span><span class="p">]</span>
+    <span class="c1"># moveangles_agent = node.agents[DEVICE_CLIENT_CONFIGS[&#39;move_angles&#39;][&#39;agent_name&#39;] + device_mode]</span>
     <span class="k">try</span><span class="p">:</span>
         <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">robotpose_agent</span><span class="o">.</span><span class="n">rev_data</span><span class="p">[</span><span class="s1">&#39;pose&#39;</span><span class="p">][:</span><span class="mi">2</span><span class="p">]</span>
         <span class="n">dx</span><span class="p">,</span> <span class="n">dy</span> <span class="o">=</span> <span class="n">ARM_ENPOINT</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">x</span><span class="p">,</span> <span class="n">ARM_ENPOINT</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">y</span>
-        <span class="n">ret</span> <span class="o">=</span> <span class="n">armdmove_agent</span><span class="o">.</span><span class="n">send</span><span class="p">({</span><span class="s1">&#39;task&#39;</span><span class="p">:</span> <span class="sa">f</span><span class="s1">&#39;arm_dmove::dx=</span><span class="si">{</span><span class="n">dx</span><span class="si">}</span><span class="s1">,dy=</span><span class="si">{</span><span class="n">dy</span><span class="si">}</span><span class="s1">::&#39;</span><span class="p">})</span>
+        <span class="n">ret</span> <span class="o">=</span> <span class="n">armdmove_agent</span><span class="o">.</span><span class="n">send</span><span class="p">({</span><span class="s1">&#39;inputs&#39;</span><span class="p">:</span> <span class="sa">f</span><span class="s1">&#39;dx=</span><span class="si">{</span><span class="n">dx</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">})</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">ret</span><span class="p">[</span><span class="s1">&#39;isdone&#39;</span><span class="p">]:</span>
             <span class="k">return</span> <span class="n">ret</span>
+        
+        <span class="n">ret</span> <span class="o">=</span> <span class="n">armdmove_agent</span><span class="o">.</span><span class="n">send</span><span class="p">({</span><span class="s1">&#39;inputs&#39;</span><span class="p">:</span> <span class="sa">f</span><span class="s1">&#39;dy=</span><span class="si">{</span><span class="n">dy</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">})</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">ret</span><span class="p">[</span><span class="s1">&#39;isdone&#39;</span><span class="p">]:</span>
+            <span class="k">return</span> <span class="n">ret</span>
+        
+        <span class="c1"># ret = moveangles_agent.send({&#39;task&#39;: f&#39;move_angles::ready::&#39;})</span>
+        <span class="c1"># if not ret[&#39;isdone&#39;]:</span>
+        <span class="c1">#     return ret</span>
     
         <span class="k">return</span> <span class="p">{</span><span class="s1">&#39;isdone&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">}</span>
     <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
@@ -192,7 +202,7 @@
     <span class="n">movehead</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">agents</span><span class="p">[</span><span class="n">DEVICE_CLIENT_CONFIGS</span><span class="p">[</span><span class="s1">&#39;move_head&#39;</span><span class="p">][</span><span class="s1">&#39;agent_name&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="n">device_mode</span><span class="p">]</span>
     <span class="k">try</span><span class="p">:</span>
         <span class="c1"># Go to init pose</span>
-        <span class="n">ret</span> <span class="o">=</span> <span class="n">movehead</span><span class="o">.</span><span class="n">send</span><span class="p">({</span><span class="s1">&#39;task&#39;</span><span class="p">:</span> <span class="s1">&#39;move_head::ry=-25::&#39;</span><span class="p">})</span>
+        <span class="n">ret</span> <span class="o">=</span> <span class="n">movehead</span><span class="o">.</span><span class="n">send</span><span class="p">({</span><span class="s1">&#39;inputs&#39;</span><span class="p">:</span> <span class="s1">&#39;ry=-25&#39;</span><span class="p">})</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">ret</span><span class="p">[</span><span class="s1">&#39;isdone&#39;</span><span class="p">]:</span>
             <span class="k">return</span> <span class="n">ret</span>
         
@@ -200,15 +210,15 @@
         <span class="k">if</span> <span class="ow">not</span> <span class="n">ret</span><span class="p">[</span><span class="s1">&#39;isdone&#39;</span><span class="p">]:</span>
             <span class="k">return</span> <span class="n">ret</span>
         
-        <span class="n">ret</span> <span class="o">=</span> <span class="n">grip_agent</span><span class="o">.</span><span class="n">send</span><span class="p">({</span><span class="s1">&#39;task&#39;</span><span class="p">:</span> <span class="s1">&#39;grip::open::&#39;</span><span class="p">})</span>
+        <span class="n">ret</span> <span class="o">=</span> <span class="n">grip_agent</span><span class="o">.</span><span class="n">send</span><span class="p">({</span><span class="s1">&#39;inputs&#39;</span><span class="p">:</span> <span class="s1">&#39;open&#39;</span><span class="p">})</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">ret</span><span class="p">[</span><span class="s1">&#39;isdone&#39;</span><span class="p">]:</span>
             <span class="k">return</span> <span class="n">ret</span>
         
-        <span class="n">ret</span> <span class="o">=</span> <span class="n">moveangles_agent</span><span class="o">.</span><span class="n">send</span><span class="p">({</span><span class="s1">&#39;task&#39;</span><span class="p">:</span> <span class="s1">&#39;move_angles::ready::&#39;</span><span class="p">})</span>
+        <span class="n">ret</span> <span class="o">=</span> <span class="n">moveangles_agent</span><span class="o">.</span><span class="n">send</span><span class="p">({</span><span class="s1">&#39;inputs&#39;</span><span class="p">:</span> <span class="s1">&#39;ready&#39;</span><span class="p">})</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">ret</span><span class="p">[</span><span class="s1">&#39;isdone&#39;</span><span class="p">]:</span>
             <span class="k">return</span> <span class="n">ret</span>
         
-        <span class="n">ret</span> <span class="o">=</span> <span class="n">lift_agent</span><span class="o">.</span><span class="n">send</span><span class="p">({</span><span class="s1">&#39;task&#39;</span><span class="p">:</span> <span class="s1">&#39;lift::home::&#39;</span><span class="p">})</span>
+        <span class="n">ret</span> <span class="o">=</span> <span class="n">lift_agent</span><span class="o">.</span><span class="n">send</span><span class="p">({</span><span class="s1">&#39;inputs&#39;</span><span class="p">:</span> <span class="s1">&#39;home&#39;</span><span class="p">})</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">ret</span><span class="p">[</span><span class="s1">&#39;isdone&#39;</span><span class="p">]:</span>
             <span class="k">return</span> <span class="n">ret</span>
     

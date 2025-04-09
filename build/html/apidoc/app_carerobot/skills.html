@@ -59,6 +59,7 @@
 <li class="toctree-l3"><a class="reference internal" href="#submodules">Submodules</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#module-skills.arm">skills.arm module</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#skills.arm.arm_approach"><code class="docutils literal notranslate"><span class="pre">arm_approach()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#skills.arm.arm_move"><code class="docutils literal notranslate"><span class="pre">arm_move()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#skills.arm.dlift"><code class="docutils literal notranslate"><span class="pre">dlift()</span></code></a></li>
 </ul>
 </li>
@@ -81,8 +82,8 @@
 <li class="toctree-l4"><a class="reference internal" href="#skills.recognition.detect_grasp"><code class="docutils literal notranslate"><span class="pre">detect_grasp()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#skills.recognition.detect_tooltip"><code class="docutils literal notranslate"><span class="pre">detect_tooltip()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#skills.recognition.find"><code class="docutils literal notranslate"><span class="pre">find()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#skills.recognition.find_surface"><code class="docutils literal notranslate"><span class="pre">find_surface()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#skills.recognition.find_tooltip"><code class="docutils literal notranslate"><span class="pre">find_tooltip()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#skills.recognition.test_normals"><code class="docutils literal notranslate"><span class="pre">test_normals()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#skills.recognition.track"><code class="docutils literal notranslate"><span class="pre">track()</span></code></a></li>
 </ul>
 </li>
@@ -135,7 +136,7 @@
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>node</strong> (<em>-</em>) – The ROS node with movement-related agents.</p></li>
-<li><p><strong>data</strong> (<em>-</em>) – Task data with ‘task’ (format ‘approach::obj_name’) and ‘ins’ (object info).</p></li>
+<li><p><strong>data</strong> (<em>-</em>) – Task data with ‘inputs’ (format ‘approach::obj_name’) and ‘ins’ (object info).</p></li>
 <li><p><strong>mode</strong> (<em>-</em>) – Mode suffix for skill agents. Defaults to ‘’.</p></li>
 <li><p><strong>device_mode</strong> (<em>-</em>) – Mode suffix for device agents. Defaults to ‘’.</p></li>
 <li><p><strong>**kwargs</strong> (<em>-</em>) – <p>Additional keyword arguments (unused).</p>
@@ -161,6 +162,11 @@
 </dd></dl>
 
 <dl class="py function">
+<dt class="sig sig-object py" id="skills.arm.arm_move">
+<span class="sig-prename descclassname"><span class="pre">skills.arm.</span></span><span class="sig-name descname"><span class="pre">arm_move</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">device_mode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/skills/arm.html#arm_move"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#skills.arm.arm_move" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
 <dt class="sig sig-object py" id="skills.arm.dlift">
 <span class="sig-prename descclassname"><span class="pre">skills.arm.</span></span><span class="sig-name descname"><span class="pre">dlift</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">device_mode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/skills/arm.html#dlift"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#skills.arm.dlift" title="Link to this definition"></a></dt>
 <dd><p>Lift the robot arm by a specified distance.</p>
@@ -168,7 +174,7 @@
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>node</strong> (<em>-</em>) – The ROS node with lift-related agents.</p></li>
-<li><p><strong>data</strong> (<em>-</em>) – Task data, including ‘task’ key with format ‘lift::distance’.</p></li>
+<li><p><strong>data</strong> (<em>-</em>) – Task data, including ‘inputs’ key with format ‘lift::distance’.</p></li>
 <li><p><strong>device_mode</strong> (<em>-</em>) – Mode suffix for agent names. Defaults to ‘’.</p></li>
 <li><p><strong>**kwargs</strong> (<em>-</em>) – <p>Additional keyword arguments (unused).</p>
 </p></li>
@@ -185,7 +191,7 @@
 </dd>
 <dt class="field-even">Raises<span class="colon">:</span></dt>
 <dd class="field-even"><ul class="simple">
-<li><p><strong>- KeyError</strong> – If ‘task’ or agent data is missing.</p></li>
+<li><p><strong>- KeyError</strong> – If ‘inputs’ or agent data is missing.</p></li>
 <li><p><strong>- ValueError</strong> – If task format is invalid.</p></li>
 </ul>
 </dd>
@@ -335,7 +341,7 @@
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>node</strong> (<em>-</em>) – The ROS node with movement and grip agents.</p></li>
-<li><p><strong>data</strong> (<em>-</em>) – Task data with ‘task’ (format ‘place::obj_name’) and ‘ins’ (object info).</p></li>
+<li><p><strong>data</strong> (<em>-</em>) – Task data with ‘inputs’ (format ‘place::obj_name’) and ‘ins’ (object info).</p></li>
 <li><p><strong>mode</strong> (<em>-</em>) – Mode suffix for skill agents. Defaults to ‘’.</p></li>
 <li><p><strong>device_mode</strong> (<em>-</em>) – Mode suffix for device agents. Defaults to ‘’.</p></li>
 <li><p><strong>**kwargs</strong> (<em>-</em>) – <p>Additional keyword arguments passed to <cite>arm_approach</cite> and <cite>arm_back</cite>.</p>
@@ -371,7 +377,7 @@
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>node</strong> (<em>-</em>) – The ROS node with camera and result agents.</p></li>
-<li><p><strong>data</strong> (<em>-</em>) – Task data with ‘task’ (format ‘detect::obj_name’).</p></li>
+<li><p><strong>data</strong> (<em>-</em>) – Task data with ‘inputs’ (format ‘detect::obj_name’).</p></li>
 <li><p><strong>show_mode</strong> (<em>-</em>) – Mode suffix for show agents. Defaults to ‘’.</p></li>
 <li><p><strong>device_mode</strong> (<em>-</em>) – Mode suffix for device agents. Defaults to ‘’.</p></li>
 <li><p><strong>camera</strong> (<em>-</em>) – Camera type from CONFIGS. Defaults to CONFIGS[‘camera’].</p></li>
@@ -389,7 +395,7 @@
 </p>
 </dd>
 <dt class="field-even">Raises<span class="colon">:</span></dt>
-<dd class="field-even"><p><strong>- KeyError</strong> – If agent data or ‘task’ format is invalid.</p>
+<dd class="field-even"><p><strong>- KeyError</strong> – If agent data or ‘inputs’ format is invalid.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -402,7 +408,7 @@
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>node</strong> (<em>-</em>) – The ROS node with camera and result agents.</p></li>
-<li><p><strong>data</strong> (<em>-</em>) – Task data with ‘task’ (format ‘detect_grasp::obj_name’).</p></li>
+<li><p><strong>data</strong> (<em>-</em>) – Task data with ‘inputs’ (format ‘detect_grasp::obj_name’).</p></li>
 <li><p><strong>show_mode</strong> (<em>-</em>) – Mode suffix for show agents. Defaults to ‘’.</p></li>
 <li><p><strong>device_mode</strong> (<em>-</em>) – Mode suffix for device agents. Defaults to ‘’.</p></li>
 <li><p><strong>camera</strong> (<em>-</em>) – Camera type from config. Defaults to detectgrasp_cfg[‘camera’].</p></li>
@@ -420,7 +426,7 @@
 </p>
 </dd>
 <dt class="field-even">Raises<span class="colon">:</span></dt>
-<dd class="field-even"><p><strong>- KeyError</strong> – If agent data or ‘task’ format is invalid.</p>
+<dd class="field-even"><p><strong>- KeyError</strong> – If agent data or ‘inputs’ format is invalid.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -464,7 +470,7 @@
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>node</strong> (<em>-</em>) – The ROS node with movement and detection agents.</p></li>
-<li><p><strong>data</strong> (<em>-</em>) – Task data with ‘task’ (format ‘find::obj_name’).</p></li>
+<li><p><strong>data</strong> (<em>-</em>) – Task data with ‘inputs’ (format ‘find::obj_name’).</p></li>
 <li><p><strong>show_mode</strong> (<em>-</em>) – Mode suffix for show agents. Defaults to ‘’.</p></li>
 <li><p><strong>device_mode</strong> (<em>-</em>) – Mode suffix for device agents. Defaults to ‘’.</p></li>
 <li><p><strong>**kwargs</strong> (<em>-</em>) – <p>Additional keyword arguments passed to <cite>detect</cite>.</p>
@@ -481,34 +487,7 @@
 </p>
 </dd>
 <dt class="field-even">Raises<span class="colon">:</span></dt>
-<dd class="field-even"><p><strong>- KeyError</strong> – If agent data or ‘task’ format is invalid.</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="skills.recognition.find_surface">
-<span class="sig-prename descclassname"><span class="pre">skills.recognition.</span></span><span class="sig-name descname"><span class="pre">find_surface</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rgb</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">depth</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">obj_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'top</span> <span class="pre">surface'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/skills/recognition.html#find_surface"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#skills.recognition.find_surface" title="Link to this definition"></a></dt>
-<dd><p>Detect a surface in RGB and depth images.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>rgb</strong> (<em>-</em>) – RGB image array.</p></li>
-<li><p><strong>depth</strong> (<em>-</em>) – Depth image array.</p></li>
-<li><p><strong>obj_name</strong> (<em>-</em>) – Name of the object to detect. Defaults to ‘top surface’.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>Result with ‘isdone’ (bool), ‘plane_coeffs’ (list), and ‘im’ (np.ndarray) if successful.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><ul class="simple">
-<li><p>dict</p></li>
-</ul>
-</p>
-</dd>
-<dt class="field-even">Raises<span class="colon">:</span></dt>
-<dd class="field-even"><p><strong>- AttributeError</strong> – If <cite>detect_client</cite> or <cite>llm_client</cite> methods fail.</p>
+<dd class="field-even"><p><strong>- KeyError</strong> – If agent data or ‘inputs’ format is invalid.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -545,6 +524,11 @@
 </dd></dl>
 
 <dl class="py function">
+<dt class="sig sig-object py" id="skills.recognition.test_normals">
+<span class="sig-prename descclassname"><span class="pre">skills.recognition.</span></span><span class="sig-name descname"><span class="pre">test_normals</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/skills/recognition.html#test_normals"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#skills.recognition.test_normals" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
 <dt class="sig sig-object py" id="skills.recognition.track">
 <span class="sig-prename descclassname"><span class="pre">skills.recognition.</span></span><span class="sig-name descname"><span class="pre">track</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show_mode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">device_mode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">camera</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'dabai'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/skills/recognition.html#track"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#skills.recognition.track" title="Link to this definition"></a></dt>
 <dd><p>Track an object and align tooltip with its center.</p>
@@ -552,7 +536,7 @@
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>node</strong> (<em>-</em>) – The ROS node with movement and camera agents.</p></li>
-<li><p><strong>data</strong> (<em>-</em>) – Task data with ‘task’ (format ‘track::obj_name’).</p></li>
+<li><p><strong>data</strong> (<em>-</em>) – Task data with ‘inputs’ (format ‘track::obj_name’).</p></li>
 <li><p><strong>show_mode</strong> (<em>-</em>) – Mode suffix for show agents. Defaults to ‘’.</p></li>
 <li><p><strong>device_mode</strong> (<em>-</em>) – Mode suffix for device agents. Defaults to ‘’.</p></li>
 <li><p><strong>camera</strong> (<em>-</em>) – Camera type from config. Defaults to track_cfgs[‘camera’].</p></li>
@@ -570,7 +554,7 @@
 </p>
 </dd>
 <dt class="field-even">Raises<span class="colon">:</span></dt>
-<dd class="field-even"><p><strong>- KeyError</strong> – If agent data or ‘task’ format is invalid.</p>
+<dd class="field-even"><p><strong>- KeyError</strong> – If agent data or ‘inputs’ format is invalid.</p>
 </dd>
 </dl>
 </dd></dl>
