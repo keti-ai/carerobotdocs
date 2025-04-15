@@ -15,9 +15,9 @@ Examples
 Topic Pub/Sub
 -----------------
 
-Import packages
 
 .. code-block:: python
+
        from pyconnect.ros.custom_node import CustomNode
        from std_msgs.msg import String
        from pyconnect.utils import  str2dict, dict2str, set_atrrs, data_info
@@ -48,9 +48,8 @@ Spin subscriber and return a response
 Image Sub
 -----------------
 
-Import packages
-
 .. code-block:: python
+
        from pyconnect.ros.custom_node import CustomNode
        from sensor_msgs.msg import CompressedImage, CameraInfo
        from pyconnect.utils import  str2dict, dict2str, set_atrrs, data_info, decode_caminfomsg, decode_imgmsg
@@ -92,9 +91,8 @@ Retrieve data
 Service Client/Server
 -----------------
 
-Import packages
-
 .. code-block:: python
+
        from pyconnect.ros.custom_node import CustomNode
        from rosinterfaces.srv import SendStringData
        from pyconnect.utils import  encode_srvclient_sendmsg, decode_srvclient_revmsg
