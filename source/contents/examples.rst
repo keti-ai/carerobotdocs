@@ -15,6 +15,8 @@ Examples
 Topic Pub/Sub
 -----------------
 
+Import packages
+
 .. code-block:: python
        from pyconnect.ros.custom_node import CustomNode
        from std_msgs.msg import String
@@ -45,6 +47,8 @@ Spin subscriber and return a response
 
 Image Sub
 -----------------
+
+Import packages
 
 .. code-block:: python
        from pyconnect.ros.custom_node import CustomNode
@@ -87,6 +91,8 @@ Retrieve data
 
 Service Client/Server
 -----------------
+
+Import packages
 
 .. code-block:: python
        from pyconnect.ros.custom_node import CustomNode
