@@ -6,8 +6,11 @@ This guide provides step-by-step instructions to set up the necessary environmen
 
 ---
 
-GPU Driver Installation (Host PC)
+Host PC Installation
 ===================
+
+GPU Driver Installation
+------------------------
 
 **Prerequisites:**
 - Ubuntu version **20.04 or later** (22.04 recommended)
@@ -29,24 +32,28 @@ Steps to Install CUDA Drivers:
 
        reboot
 
-4. Install dependencies:
+
+Dependencies Installation
+-------------------------
 
    .. code-block:: bash
 
        sudo update
-       sudo apt install terminator htop openssh-server vsftpd  -y 
+       sudo apt install terminator htop  -y 
        sudo apt install python3-dev  python3-venv python-pip -y
 
-5. Install docker
+
+Docker  and nvidia docker toolkit Installation
+--------------------
 
 https://docs.docker.com/engine/install/ubuntu/
 
-6. Install nvidia docker toolkit
 
 https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/latest/install-guide.html
 
 
-7. Add some custom useful alias (Optional)
+Add some custom useful alias (Optional)
+----------------------------------------
 
 .. code-block:: bash
 
@@ -90,9 +97,11 @@ https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/latest/install
        }
 
 
-8. Install and configure SSH and FTP server (Optional)
+Install and configure SSH and FTP server (Optional)
+--------------------------------------------------
 
    .. code-block:: bash
+       sudo apt install terminator htop openssh-server vsftpd  -y 
        sudo ufw allow ssh
        sudo systemctl start ssh
 
@@ -146,7 +155,7 @@ Test SSH and FTP servers
 
 
 
-Docker Installation
+Edge and Control PCs Container Installation
 ===================
 
 0. Git credential:
@@ -158,7 +167,7 @@ Docker Installation
 
 To set up a Docker containerized environment for your project, follow these steps:
 
-1. Build containers on Edge and Control PCs
+1. Build containers
 
 - Clone the Docker configuration repository:
 
@@ -196,7 +205,9 @@ To set up a Docker containerized environment for your project, follow these step
    - `<SSH_PORT>`: SSH port number        [default: 2222]
    - `<PORT_MAP>`: Additional port mappings [default: 8000-8099:8000-8099]
 
-2. Build recognition container (On Server PC)
+
+Servere PC Installation
+===================
 
    .. code-block:: bash
        
@@ -250,10 +261,10 @@ Install ROS Interfaces
 System Execution
 ===================
 
-Robot and Device Server Execution in Edge PC
+Edge PC
 -------------------------------------------
 
-Start the various components required for the robot and sensors:
+Robot and Device Server Execution:
 
 .. code-block:: bash
 
@@ -261,29 +272,27 @@ Start the various components required for the robot and sensors:
        femto   # Runs the Femto camera
        hand    # Runs the wrist camera
 
-Ollama Server Execution in Server PC
+Server PC
 ------------------------------------
 
-To enter the running Ollama server’s container:
+Ollama Server Execution:
 
 .. code-block:: bash
 
        sudo docker run -d --gpus=all -v ollama:/root/.ollama -p 11434:11434 --name ollama ollama/ollama
        sudo docker exec -it ollama /bin/bash
 
-VLM Server Execution in Server PC
-----------------------------------
 
-Start the Vision-Language Model (VLM) server:
+VLM Server Execution:
 
 .. code-block:: bash
 
        python3 -m pyrecognition.run_server server_type=tcp port=8801 detector=groundedsam
 
-ROS Node Execution in Control PC
+Control PC
 --------------------------------
 
-Navigate to the ROS application directory and run the necessary nodes:
+ROS Node Execution
 
 .. code-block:: bash
 
@@ -291,6 +300,7 @@ Navigate to the ROS application directory and run the necessary nodes:
        python3 node_prompt.py
        python3 node_taskmanager.py
        python3 node_skill_servers.py
+       
 
 Configuration Files
 ----------------------

@@ -1,0 +1,215 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Examples &mdash; Care Robot 1.0.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=8d563738"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="app_carerobot" href="../apidoc/app_carerobot/modules.html" />
+    <link rel="prev" title="APIs Overview" href="api_overview.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Care Robot
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="get_started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_overview.html">APIs Overview</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Examples</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#topic-pub-sub">Topic Pub/Sub</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#image-sub">Image Sub</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#service-client-server">Service Client/Server</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../apidoc/app_carerobot/modules.html">app_carerobot</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../apidoc/pyconnect/modules.html">pyconnect</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Care Robot</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Examples</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/contents/examples.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="examples">
+<h1>Examples<a class="headerlink" href="#examples" title="Link to this heading"></a></h1>
+<ul class="simple">
+<li><p>Each ROS node contains multiple functional agents, each performing specific tasks.</p></li>
+<li><dl class="simple">
+<dt>Each agent has attributes: agent_name, agent_type, data_interface,  and functions: encode_func, decode_func, response_func.</dt><dd><ul>
+<li><p>agent_name: Topic names for pub/sub, service client/server, or action client/server.</p></li>
+<li><p>agent_type: One of pub, sub, service_client, service_server, action_client, action_server.</p></li>
+<li><p>data_interface: ROS data interface, e.g., std_msgs.msg.String.</p></li>
+<li><p>encode_func(data, msg): Converts data into ROS message format before sending.</p></li>
+<li><p>decode_func(msg): Converts ROS message into a standard data type, e.g., dictionary.</p></li>
+<li><p>response_func(data): Used only for sub and server types; processes data after decoding.</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+<section id="topic-pub-sub">
+<h2>Topic Pub/Sub<a class="headerlink" href="#topic-pub-sub" title="Link to this heading"></a></h2>
+<p>Spin pulisher in thead</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">client_node</span> <span class="o">=</span> <span class="n">CustomNode</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;client&#39;</span><span class="p">)</span>
+<span class="n">client_node</span><span class="o">.</span><span class="n">add_agent</span><span class="p">(</span><span class="n">agent_name</span><span class="o">=</span><span class="s1">&#39;send_data&#39;</span><span class="p">,</span> <span class="n">agent_type</span><span class="o">=</span><span class="s1">&#39;pub&#39;</span><span class="p">,</span> <span class="n">data_interface</span><span class="o">=</span><span class="n">String</span><span class="p">,</span>
+              <span class="n">encode_func</span><span class="o">=</span><span class="k">lambda</span> <span class="n">data</span><span class="p">,</span> <span class="n">msg</span><span class="p">:</span> <span class="n">set_atrrs</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;data&#39;</span><span class="p">:</span> <span class="n">dict2str</span><span class="p">({</span><span class="s1">&#39;prompt&#39;</span><span class="p">:</span> <span class="s1">&#39;hello&#39;</span><span class="p">})}),</span>
+              <span class="n">do_log_msg</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">time_period</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+<span class="n">client_node</span><span class="o">.</span><span class="n">spin</span><span class="p">(</span><span class="n">run_thread</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Spin subscriber and return a response</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">server_node</span> <span class="o">=</span> <span class="n">CustomNode</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;server&#39;</span><span class="p">,</span> <span class="n">num_callbackgroup</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">server_node</span><span class="o">.</span><span class="n">add_agent</span><span class="p">(</span><span class="n">agent_name</span><span class="o">=</span><span class="s1">&#39;send_data&#39;</span><span class="p">,</span> <span class="n">agent_type</span><span class="o">=</span><span class="s1">&#39;sub&#39;</span><span class="p">,</span>
+              <span class="n">data_interface</span><span class="o">=</span><span class="n">String</span><span class="p">,</span> <span class="n">do_log_msg</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+              <span class="n">decode_func</span><span class="o">=</span><span class="k">lambda</span> <span class="n">msg</span><span class="p">:</span> <span class="n">str2dict</span><span class="p">(</span><span class="n">msg</span><span class="o">.</span><span class="n">data</span><span class="p">),</span>
+              <span class="n">response_func</span><span class="o">=</span><span class="k">lambda</span> <span class="n">data</span><span class="p">:</span> <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Received data: </span><span class="si">{</span><span class="n">data_info</span><span class="p">(</span><span class="n">data</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+              <span class="n">callback_group</span><span class="o">=</span><span class="n">node</span><span class="o">.</span><span class="n">callback_groups</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">client_server_nodenode</span><span class="o">.</span><span class="n">spin</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
+<section id="image-sub">
+<h2>Image Sub<a class="headerlink" href="#image-sub" title="Link to this heading"></a></h2>
+<p>Spin subscriber in run_thread</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">node</span> <span class="o">=</span> <span class="n">CustomNode</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;Image Sub&#39;</span><span class="p">,</span> <span class="n">num_callbackgroup</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="n">node</span><span class="o">.</span><span class="n">add_agent</span><span class="p">(</span><span class="n">agent_name</span><span class="o">=</span><span class="s1">&#39;/femto/color/image_raw/compressed&#39;</span><span class="p">,</span> <span class="n">agent_type</span><span class="o">=</span><span class="s1">&#39;sub&#39;</span><span class="p">,</span>
+              <span class="n">data_interface</span><span class="o">=</span><span class="n">CompressedImage</span><span class="p">,</span> <span class="n">do_log_msg</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+              <span class="n">decode_func</span><span class="o">=</span><span class="n">decode_imgmsg</span><span class="p">,</span>
+              <span class="n">callback_group</span><span class="o">=</span><span class="n">node</span><span class="o">.</span><span class="n">callback_groups</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+
+<span class="n">node</span><span class="o">.</span><span class="n">add_agent</span><span class="p">(</span><span class="n">agent_name</span><span class="o">=</span><span class="s1">&#39;/femto/depth/image_raw/compressedDepth&#39;</span><span class="p">,</span> <span class="n">agent_type</span><span class="o">=</span><span class="s1">&#39;sub&#39;</span><span class="p">,</span>
+              <span class="n">data_interface</span><span class="o">=</span><span class="n">CompressedImage</span><span class="p">,</span> <span class="n">do_log_msg</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+              <span class="n">decode_func</span><span class="o">=</span><span class="n">decode_imgmsg</span><span class="p">,</span>
+              <span class="n">callback_group</span><span class="o">=</span><span class="n">node</span><span class="o">.</span><span class="n">callback_groups</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+
+<span class="n">node</span><span class="o">.</span><span class="n">add_agent</span><span class="p">(</span><span class="n">agent_name</span><span class="o">=</span><span class="s1">&#39;/femto/color/camera_info&#39;</span><span class="p">,</span> <span class="n">agent_type</span><span class="o">=</span><span class="s1">&#39;sub&#39;</span><span class="p">,</span>
+              <span class="n">data_interface</span><span class="o">=</span><span class="n">CameraInfo</span><span class="p">,</span> <span class="n">do_log_msg</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+              <span class="n">decode_func</span><span class="o">=</span><span class="n">decode_caminfomsg</span><span class="p">,</span>
+              <span class="n">callback_group</span><span class="o">=</span><span class="n">node</span><span class="o">.</span><span class="n">callback_groups</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+
+<span class="n">node</span><span class="o">.</span><span class="n">spin</span><span class="p">(</span><span class="n">run_thread</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Retrieve data</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+       <span class="n">rgb</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">agents</span><span class="p">[</span><span class="s1">&#39;/femto/color/image_raw/compressed&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">rev_data</span><span class="p">[</span><span class="s1">&#39;im&#39;</span><span class="p">]</span>
+       <span class="n">depth</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">agents</span><span class="p">[</span><span class="s1">&#39;/femto/depth/image_raw/compressedDepth&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">rev_data</span><span class="p">[</span><span class="s1">&#39;im&#39;</span><span class="p">]</span>
+       <span class="n">cam_params</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">agents</span><span class="p">[</span><span class="s1">&#39;/femto/color/camera_info&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">rev_data</span><span class="p">[</span><span class="s1">&#39;cam_params&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</section>
+<section id="service-client-server">
+<h2>Service Client/Server<a class="headerlink" href="#service-client-server" title="Link to this heading"></a></h2>
+<p>Spin server in thead</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">server_node</span> <span class="o">=</span> <span class="n">CustomNode</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;server&#39;</span><span class="p">,</span> <span class="n">num_callbackgroup</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">server_node</span><span class="o">.</span><span class="n">add_agent</span><span class="p">(</span><span class="n">agent_name</span><span class="o">=</span><span class="s1">&#39;send_data&#39;</span><span class="p">,</span> <span class="n">agent_type</span><span class="o">=</span><span class="s1">&#39;service_server&#39;</span><span class="p">,</span> <span class="n">dat_interface</span><span class="o">=</span><span class="n">SendStringData</span><span class="p">,</span>
+              <span class="n">decode_func</span><span class="o">=</span><span class="n">decode_srvclient_revmsg</span><span class="p">,</span>
+              <span class="n">response_func</span><span class="o">=</span><span class="k">lambda</span> <span class="n">data</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;isdone&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">},</span>
+              <span class="n">do_log_msg</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">server_node</span><span class="o">.</span><span class="n">spin</span><span class="p">(</span><span class="n">run_thread</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Spin client in thread</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">client_node</span> <span class="o">=</span> <span class="n">CustomNode</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;client&#39;</span><span class="p">)</span>
+<span class="n">client_node</span><span class="o">.</span><span class="n">add_agent</span><span class="p">(</span><span class="n">agent_name</span><span class="o">=</span><span class="s1">&#39;send_data&#39;</span><span class="p">,</span> <span class="n">agent_type</span><span class="o">=</span><span class="s1">&#39;service_client&#39;</span><span class="p">,</span>
+              <span class="n">data_interface</span><span class="o">=</span><span class="n">SendStringData</span><span class="p">,</span> <span class="n">do_log_msg</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+              <span class="n">enode_func</span><span class="o">=</span><span class="n">encode_srvclient_sendmsg</span><span class="p">)</span>
+<span class="n">client_node</span><span class="o">.</span><span class="n">spin</span><span class="p">(</span><span class="n">run_thread</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Client periodically send to server</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+       <span class="n">client_node</span><span class="o">.</span><span class="n">agents</span><span class="p">[</span><span class="s1">&#39;send_data&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">send</span><span class="p">({</span><span class="s1">&#39;prompt&#39;</span><span class="p">:</span> <span class="s1">&#39;hello&#39;</span><span class="p">})</span>
+       <span class="n">rev_data</span> <span class="o">=</span> <span class="n">client_node</span><span class="o">.</span><span class="n">agents</span><span class="p">[</span><span class="s1">&#39;send_data&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">rev_data</span>
+       <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="api_overview.html" class="btn btn-neutral float-left" title="APIs Overview" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../apidoc/app_carerobot/modules.html" class="btn btn-neutral float-right" title="app_carerobot" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Trung Bui.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

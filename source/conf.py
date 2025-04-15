@@ -20,7 +20,7 @@ sys.path.insert(0, '/media/keti/workdir/projects/pyconnect')
 
 extensions = [
     'sphinx.ext.autodoc',  # For auto-generating docs from code
-    'sphinx.ext.viewcode', # Links to source code
+    # 'sphinx.ext.viewcode', # Links to source code
     'sphinx.ext.napoleon', # Supports Google/NumPy docstring styles
 ]
 

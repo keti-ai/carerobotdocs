@@ -18,9 +18,7 @@
       <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
-    <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="node_skill_servers module" href="node_skill_servers.html" />
-    <link rel="prev" title="configs package" href="configs.html" /> 
+    <link rel="search" title="Search" href="../../search.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -47,21 +45,10 @@
 <li class="toctree-l1"><a class="reference internal" href="../../contents/intro.html">Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../contents/get_started.html">Getting Started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../contents/api_overview.html">APIs Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../contents/examples.html">Examples</a></li>
 </ul>
-<ul class="current">
-<li class="toctree-l1 current"><a class="reference internal" href="modules.html">app_carerobot</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="calibrattion.html">calibrattion module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="configs.html">configs package</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">node_prompt module</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#node_prompt.run_node"><code class="docutils literal notranslate"><span class="pre">run_node()</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="node_skill_servers.html">node_skill_servers module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="node_taskmanager.html">node_taskmanager module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="skills.html">skills package</a></li>
-<li class="toctree-l2"><a class="reference internal" href="utils.html">utils module</a></li>
-</ul>
-</li>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="modules.html">app_carerobot</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../pyconnect/modules.html">pyconnect</a></li>
 </ul>
 
@@ -79,7 +66,6 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
-          <li class="breadcrumb-item"><a href="modules.html">app_carerobot</a></li>
       <li class="breadcrumb-item active">node_prompt module</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../../_sources/apidoc/app_carerobot/node_prompt.rst.txt" rel="nofollow"> View page source</a>
@@ -94,7 +80,7 @@
 <span id="node-prompt-module"></span><h1>node_prompt module<a class="headerlink" href="#module-node_prompt" title="Link to this heading"></a></h1>
 <dl class="py function">
 <dt class="sig sig-object py" id="node_prompt.run_node">
-<span class="sig-prename descclassname"><span class="pre">node_prompt.</span></span><span class="sig-name descname"><span class="pre">run_node</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/node_prompt.html#run_node"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#node_prompt.run_node" title="Link to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">node_prompt.</span></span><span class="sig-name descname"><span class="pre">run_node</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#node_prompt.run_node" title="Link to this definition"></a></dt>
 <dd><p>Run a ROS node for task planning and sensor interaction.</p>
 <p>This function initializes a ROS node (<cite>task_plansender</cite>) using the <cite>CustomNode</cite> class,
 integrates a language model (LLM) client for generating plans based on user input,
@@ -140,10 +126,7 @@ and <cite>configs.device_clients</cite> (e.g., <cite>DEVICE_CLIENT_CONFIGS</cite
 
            </div>
           </div>
-          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="configs.html" class="btn btn-neutral float-left" title="configs package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="node_skill_servers.html" class="btn btn-neutral float-right" title="node_skill_servers module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
-    </div>
+          <footer>
 
   <hr/>
 

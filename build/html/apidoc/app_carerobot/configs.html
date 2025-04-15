@@ -18,9 +18,7 @@
       <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
-    <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="node_prompt module" href="node_prompt.html" />
-    <link rel="prev" title="calibrattion module" href="calibrattion.html" /> 
+    <link rel="search" title="Search" href="../../search.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -47,36 +45,10 @@
 <li class="toctree-l1"><a class="reference internal" href="../../contents/intro.html">Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../contents/get_started.html">Getting Started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../contents/api_overview.html">APIs Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../contents/examples.html">Examples</a></li>
 </ul>
-<ul class="current">
-<li class="toctree-l1 current"><a class="reference internal" href="modules.html">app_carerobot</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="calibrattion.html">calibrattion module</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">configs package</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#submodules">Submodules</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#module-configs.device_clients">configs.device_clients module</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#configs.device_clients.armdmove_encodefunc"><code class="docutils literal notranslate"><span class="pre">armdmove_encodefunc()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#configs.device_clients.dabai_decodefunc"><code class="docutils literal notranslate"><span class="pre">dabai_decodefunc()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#configs.device_clients.enablemotion_encodefunc"><code class="docutils literal notranslate"><span class="pre">enablemotion_encodefunc()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#configs.device_clients.grip_encodefunc"><code class="docutils literal notranslate"><span class="pre">grip_encodefunc()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#configs.device_clients.inputs2dict"><code class="docutils literal notranslate"><span class="pre">inputs2dict()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#configs.device_clients.lift_encode"><code class="docutils literal notranslate"><span class="pre">lift_encode()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#configs.device_clients.move_angles_encodefunc"><code class="docutils literal notranslate"><span class="pre">move_angles_encodefunc()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#configs.device_clients.movehead_encodefunc"><code class="docutils literal notranslate"><span class="pre">movehead_encodefunc()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#configs.device_clients.robotpose_decodefunc"><code class="docutils literal notranslate"><span class="pre">robotpose_decodefunc()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#configs.device_clients.str2joinangle"><code class="docutils literal notranslate"><span class="pre">str2joinangle()</span></code></a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="#module-configs.tasks">configs.tasks module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#module-configs">Module contents</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="node_prompt.html">node_prompt module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="node_skill_servers.html">node_skill_servers module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="node_taskmanager.html">node_taskmanager module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="skills.html">skills package</a></li>
-<li class="toctree-l2"><a class="reference internal" href="utils.html">utils module</a></li>
-</ul>
-</li>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="modules.html">app_carerobot</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../pyconnect/modules.html">pyconnect</a></li>
 </ul>
 
@@ -94,7 +66,6 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
-          <li class="breadcrumb-item"><a href="modules.html">app_carerobot</a></li>
       <li class="breadcrumb-item active">configs package</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../../_sources/apidoc/app_carerobot/configs.rst.txt" rel="nofollow"> View page source</a>
@@ -114,47 +85,47 @@
 <span id="configs-device-clients-module"></span><h2>configs.device_clients module<a class="headerlink" href="#module-configs.device_clients" title="Link to this heading"></a></h2>
 <dl class="py function">
 <dt class="sig sig-object py" id="configs.device_clients.armdmove_encodefunc">
-<span class="sig-prename descclassname"><span class="pre">configs.device_clients.</span></span><span class="sig-name descname"><span class="pre">armdmove_encodefunc</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">req</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/configs/device_clients.html#armdmove_encodefunc"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#configs.device_clients.armdmove_encodefunc" title="Link to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">configs.device_clients.</span></span><span class="sig-name descname"><span class="pre">armdmove_encodefunc</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">req</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#configs.device_clients.armdmove_encodefunc" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="configs.device_clients.dabai_decodefunc">
-<span class="sig-prename descclassname"><span class="pre">configs.device_clients.</span></span><span class="sig-name descname"><span class="pre">dabai_decodefunc</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">msg</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/configs/device_clients.html#dabai_decodefunc"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#configs.device_clients.dabai_decodefunc" title="Link to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">configs.device_clients.</span></span><span class="sig-name descname"><span class="pre">dabai_decodefunc</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">msg</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#configs.device_clients.dabai_decodefunc" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="configs.device_clients.enablemotion_encodefunc">
-<span class="sig-prename descclassname"><span class="pre">configs.device_clients.</span></span><span class="sig-name descname"><span class="pre">enablemotion_encodefunc</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">req</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/configs/device_clients.html#enablemotion_encodefunc"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#configs.device_clients.enablemotion_encodefunc" title="Link to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">configs.device_clients.</span></span><span class="sig-name descname"><span class="pre">enablemotion_encodefunc</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">req</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#configs.device_clients.enablemotion_encodefunc" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="configs.device_clients.grip_encodefunc">
-<span class="sig-prename descclassname"><span class="pre">configs.device_clients.</span></span><span class="sig-name descname"><span class="pre">grip_encodefunc</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">req</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/configs/device_clients.html#grip_encodefunc"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#configs.device_clients.grip_encodefunc" title="Link to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">configs.device_clients.</span></span><span class="sig-name descname"><span class="pre">grip_encodefunc</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">req</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#configs.device_clients.grip_encodefunc" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="configs.device_clients.inputs2dict">
-<span class="sig-prename descclassname"><span class="pre">configs.device_clients.</span></span><span class="sig-name descname"><span class="pre">inputs2dict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">inputs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/configs/device_clients.html#inputs2dict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#configs.device_clients.inputs2dict" title="Link to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">configs.device_clients.</span></span><span class="sig-name descname"><span class="pre">inputs2dict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">inputs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#configs.device_clients.inputs2dict" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="configs.device_clients.lift_encode">
-<span class="sig-prename descclassname"><span class="pre">configs.device_clients.</span></span><span class="sig-name descname"><span class="pre">lift_encode</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">req</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/configs/device_clients.html#lift_encode"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#configs.device_clients.lift_encode" title="Link to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">configs.device_clients.</span></span><span class="sig-name descname"><span class="pre">lift_encode</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">req</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#configs.device_clients.lift_encode" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="configs.device_clients.move_angles_encodefunc">
-<span class="sig-prename descclassname"><span class="pre">configs.device_clients.</span></span><span class="sig-name descname"><span class="pre">move_angles_encodefunc</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">req</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/configs/device_clients.html#move_angles_encodefunc"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#configs.device_clients.move_angles_encodefunc" title="Link to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">configs.device_clients.</span></span><span class="sig-name descname"><span class="pre">move_angles_encodefunc</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">req</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#configs.device_clients.move_angles_encodefunc" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="configs.device_clients.movehead_encodefunc">
-<span class="sig-prename descclassname"><span class="pre">configs.device_clients.</span></span><span class="sig-name descname"><span class="pre">movehead_encodefunc</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">req</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/configs/device_clients.html#movehead_encodefunc"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#configs.device_clients.movehead_encodefunc" title="Link to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">configs.device_clients.</span></span><span class="sig-name descname"><span class="pre">movehead_encodefunc</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">req</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#configs.device_clients.movehead_encodefunc" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="configs.device_clients.robotpose_decodefunc">
-<span class="sig-prename descclassname"><span class="pre">configs.device_clients.</span></span><span class="sig-name descname"><span class="pre">robotpose_decodefunc</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">msg</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/configs/device_clients.html#robotpose_decodefunc"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#configs.device_clients.robotpose_decodefunc" title="Link to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">configs.device_clients.</span></span><span class="sig-name descname"><span class="pre">robotpose_decodefunc</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">msg</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#configs.device_clients.robotpose_decodefunc" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py function">
@@ -174,10 +145,7 @@
 
            </div>
           </div>
-          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="calibrattion.html" class="btn btn-neutral float-left" title="calibrattion module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="node_prompt.html" class="btn btn-neutral float-right" title="node_prompt module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
-    </div>
+          <footer>
 
   <hr/>
 

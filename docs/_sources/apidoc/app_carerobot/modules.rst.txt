@@ -1,16 +1,7 @@
-==============
 app_carerobot
-==============
+=============
 
-ROS2 nodes for Care Robot
-   
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 4
 
-   calibrattion
-   configs
-   node_prompt
-   node_skill_servers
-   node_taskmanager
-   skills
-   utils
+   app_carerobot

@@ -19,7 +19,7 @@
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="app_carerobot" href="../apidoc/app_carerobot/modules.html" />
+    <link rel="next" title="Examples" href="examples.html" />
     <link rel="prev" title="Getting Started" href="get_started.html" /> 
 </head>
 
@@ -47,13 +47,14 @@
 <li class="toctree-l1"><a class="reference internal" href="intro.html">Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="get_started.html">Getting Started</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">APIs Overview</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#ros2-nodes-implementation">ROS2 Nodes Implementation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#general-data-and-node-communication-implementation">General Data and Node Communication Implementation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#ros2-data-interfaces">ROS2 Data Interfaces</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#python-data-interfaces">Python Data Interfaces</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#python-recognition-function-implementation">Python Recognition Function Implementation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#app-carerobot">app_carerobot</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#pyconnect">pyconnect</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#rosinterfaces">rosinterfaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#pyinterfaces">pyinterfaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#pyrecognition">pyrecognition</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">Examples</a></li>
 </ul>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../apidoc/app_carerobot/modules.html">app_carerobot</a></li>
@@ -86,23 +87,19 @@
              
   <section id="apis-overview">
 <h1>APIs Overview<a class="headerlink" href="#apis-overview" title="Link to this heading"></a></h1>
-<section id="ros2-nodes-implementation">
-<h2>ROS2 Nodes Implementation<a class="headerlink" href="#ros2-nodes-implementation" title="Link to this heading"></a></h2>
-<p><strong>Git Repository: app_carerobot</strong></p>
-<p>Nodes:</p>
+<section id="app-carerobot">
+<h2>app_carerobot<a class="headerlink" href="#app-carerobot" title="Link to this heading"></a></h2>
+<p><strong>ROS2 Nodes Implementation</strong></p>
 <ul class="simple">
 <li><p>node_prompt: Captures user input (keyboard or voice, TBD) and RGB sensor image (optional). Creates and sends task plan to node_taskmanager.</p></li>
 <li><p>node_taskmanager: Manages skill client agents, assigns tasks to appropriate agents, and forwards jobs to corresponding servers.</p></li>
-</ul>
-<blockquote>
-<div><ul class="simple">
 <li><p>node_skill_servers: Receives requests from node_taskmanager and executes sequences on device servers.</p></li>
 <li><p>skills package: Contains all robot skills.</p></li>
 </ul>
-</div></blockquote>
 </section>
-<section id="general-data-and-node-communication-implementation">
-<h2>General Data and Node Communication Implementation<a class="headerlink" href="#general-data-and-node-communication-implementation" title="Link to this heading"></a></h2>
+<section id="pyconnect">
+<h2>pyconnect<a class="headerlink" href="#pyconnect" title="Link to this heading"></a></h2>
+<p><strong>General Data and Node Communication Implementation</strong></p>
 <p><strong>Purpose</strong>: Enables repeated communication between nodes and functionality PCs with easy ROS node setup and message logging.</p>
 <p><strong>Git Repository: pyconnect</strong></p>
 <p><strong>Components</strong></p>
@@ -112,20 +109,19 @@
 <li><p>llm: LLM client for OLLAMA and ChatGPT.</p></li>
 </ul>
 </section>
-<section id="ros2-data-interfaces">
-<h2>ROS2 Data Interfaces<a class="headerlink" href="#ros2-data-interfaces" title="Link to this heading"></a></h2>
-<p><strong>Git Repository: rosinterfaces</strong></p>
+<section id="rosinterfaces">
+<h2>rosinterfaces<a class="headerlink" href="#rosinterfaces" title="Link to this heading"></a></h2>
+<p><strong>ROS2 Data Interfaces</strong></p>
 <p><strong>Components</strong></p>
 </section>
-<section id="python-data-interfaces">
-<h2>Python Data Interfaces<a class="headerlink" href="#python-data-interfaces" title="Link to this heading"></a></h2>
+<section id="pyinterfaces">
+<h2>pyinterfaces<a class="headerlink" href="#pyinterfaces" title="Link to this heading"></a></h2>
 <p><strong>Purpose</strong>: Represents frequently used terms and utilities (e.g., instances, masks, boxes, grasp pose, place pose).</p>
-<p><strong>Git Repository: pyinterfaces</strong></p>
 </section>
-<section id="python-recognition-function-implementation">
-<h2>Python Recognition Function Implementation<a class="headerlink" href="#python-recognition-function-implementation" title="Link to this heading"></a></h2>
+<section id="pyrecognition">
+<h2>pyrecognition<a class="headerlink" href="#pyrecognition" title="Link to this heading"></a></h2>
+<p><strong>Python Recognition Function Implementation</strong></p>
 <p><strong>Purpose</strong>: Implements popular recognition functions (e.g., grasp detection, object detection, instance segmentation, VLM).</p>
-<p><strong>Git Repository: pyrecognition</strong></p>
 </section>
 </section>
 
@@ -134,7 +130,7 @@
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="get_started.html" class="btn btn-neutral float-left" title="Getting Started" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="../apidoc/app_carerobot/modules.html" class="btn btn-neutral float-right" title="app_carerobot" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="examples.html" class="btn btn-neutral float-right" title="Examples" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

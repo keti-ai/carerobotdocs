@@ -3,24 +3,24 @@ APIs Overview
 =============
 
 
-ROS2 Nodes Implementation
+app_carerobot
 ===================
 
-**Git Repository: app_carerobot**
-
-Nodes:
+**ROS2 Nodes Implementation**
 
 - node_prompt: Captures user input (keyboard or voice, TBD) and RGB sensor image (optional). Creates and sends task plan to node_taskmanager.
 
 - node_taskmanager: Manages skill client agents, assigns tasks to appropriate agents, and forwards jobs to corresponding servers.
 
- - node_skill_servers: Receives requests from node_taskmanager and executes sequences on device servers.
+- node_skill_servers: Receives requests from node_taskmanager and executes sequences on device servers.
 
- - skills package: Contains all robot skills.
+- skills package: Contains all robot skills.
 
 
-General Data and Node Communication Implementation
+pyconnect
 ==========================
+
+**General Data and Node Communication Implementation**
 
 **Purpose**: Enables repeated communication between nodes and functionality PCs with easy ROS node setup and message logging.
 
@@ -35,28 +35,25 @@ General Data and Node Communication Implementation
 - llm: LLM client for OLLAMA and ChatGPT.
 
 
-ROS2 Data Interfaces
+rosinterfaces
 ==========================
 
-**Git Repository: rosinterfaces**
+**ROS2 Data Interfaces**
 
 **Components**
 
-Python Data Interfaces
+pyinterfaces
 ==========================
 
 **Purpose**: Represents frequently used terms and utilities (e.g., instances, masks, boxes, grasp pose, place pose).
 
-**Git Repository: pyinterfaces**
 
-
-
-Python Recognition Function Implementation
+pyrecognition
 ==========================
 
-**Purpose**: Implements popular recognition functions (e.g., grasp detection, object detection, instance segmentation, VLM).
+**Python Recognition Function Implementation**
 
-**Git Repository: pyrecognition**
+**Purpose**: Implements popular recognition functions (e.g., grasp detection, object detection, instance segmentation, VLM).
 
 
 

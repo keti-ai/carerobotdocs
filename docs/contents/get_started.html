@@ -46,19 +46,27 @@
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="intro.html">Introduction</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Getting Started</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#gpu-driver-installation-host-pc">GPU Driver Installation (Host PC)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#docker-installation">Docker Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#host-pc-installation">Host PC Installation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#gpu-driver-installation">GPU Driver Installation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#dependencies-installation">Dependencies Installation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#docker-and-nvidia-docker-toolkit-installation">Docker  and nvidia docker toolkit Installation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#add-some-custom-useful-alias-optional">Add some custom useful alias (Optional)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#install-and-configure-ssh-and-ftp-server-optional">Install and configure SSH and FTP server (Optional)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#edge-and-control-pcs-container-installation">Edge and Control PCs Container Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#servere-pc-installation">Servere PC Installation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#system-execution">System Execution</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#robot-and-device-server-execution-in-edge-pc">Robot and Device Server Execution in Edge PC</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#ollama-server-execution-in-server-pc">Ollama Server Execution in Server PC</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#vlm-server-execution-in-server-pc">VLM Server Execution in Server PC</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#ros-node-execution-in-control-pc">ROS Node Execution in Control PC</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#edge-pc">Edge PC</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#server-pc">Server PC</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#control-pc">Control PC</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#configuration-files">Configuration Files</a></li>
 </ul>
 </li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="api_overview.html">APIs Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">Examples</a></li>
 </ul>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../apidoc/app_carerobot/modules.html">app_carerobot</a></li>
@@ -93,8 +101,10 @@
 <h1>Getting Started<a class="headerlink" href="#getting-started" title="Link to this heading"></a></h1>
 <p>This guide provides step-by-step instructions to set up the necessary environment for your project, including CUDA, Docker, dependencies, and system execution.</p>
 <p>—</p>
-<section id="gpu-driver-installation-host-pc">
-<h2>GPU Driver Installation (Host PC)<a class="headerlink" href="#gpu-driver-installation-host-pc" title="Link to this heading"></a></h2>
+<section id="host-pc-installation">
+<h2>Host PC Installation<a class="headerlink" href="#host-pc-installation" title="Link to this heading"></a></h2>
+<section id="gpu-driver-installation">
+<h3>GPU Driver Installation<a class="headerlink" href="#gpu-driver-installation" title="Link to this heading"></a></h3>
 <p><strong>Prerequisites:</strong>
 - Ubuntu version <strong>20.04 or later</strong> (22.04 recommended)</p>
 <p>Steps to Install CUDA Drivers:</p>
@@ -112,23 +122,25 @@ reboot
 </pre></div>
 </div>
 </li>
-<li><p>Install dependencies:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo<span class="w"> </span>update
-sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>terminator<span class="w"> </span>htop<span class="w"> </span>openssh-server<span class="w"> </span>vsftpd<span class="w">  </span>-y
+</ol>
+</section>
+<section id="dependencies-installation">
+<h3>Dependencies Installation<a class="headerlink" href="#dependencies-installation" title="Link to this heading"></a></h3>
+<blockquote>
+<div><div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo<span class="w"> </span>update
+sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>terminator<span class="w"> </span>htop<span class="w">  </span>-y
 sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>python3-dev<span class="w">  </span>python3-venv<span class="w"> </span>python-pip<span class="w"> </span>-y
 </pre></div>
 </div>
-</li>
-<li><p>Install docker</p></li>
-</ol>
+</div></blockquote>
+</section>
+<section id="docker-and-nvidia-docker-toolkit-installation">
+<h3>Docker  and nvidia docker toolkit Installation<a class="headerlink" href="#docker-and-nvidia-docker-toolkit-installation" title="Link to this heading"></a></h3>
 <p><a class="reference external" href="https://docs.docker.com/engine/install/ubuntu/">https://docs.docker.com/engine/install/ubuntu/</a></p>
-<ol class="arabic simple" start="6">
-<li><p>Install nvidia docker toolkit</p></li>
-</ol>
 <p><a class="reference external" href="https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/latest/install-guide.html">https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/latest/install-guide.html</a></p>
-<ol class="arabic simple" start="7">
-<li><p>Add some custom useful alias (Optional)</p></li>
-</ol>
+</section>
+<section id="add-some-custom-useful-alias-optional">
+<h3>Add some custom useful alias (Optional)<a class="headerlink" href="#add-some-custom-useful-alias-optional" title="Link to this heading"></a></h3>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># utils</span>
 <span class="nb">alias</span><span class="w"> </span><span class="nv">chown_keti</span><span class="o">=</span><span class="s1">&#39;sudo chown -R keti .&#39;</span>
 <span class="nb">alias</span><span class="w"> </span><span class="nv">sb</span><span class="o">=</span><span class="s1">&#39;source ~/.bashrc&#39;</span>
@@ -169,9 +181,11 @@ sudo<span class="w"> </span>docker<span class="w"> </span><span class="nb">exec<
 <span class="o">}</span>
 </pre></div>
 </div>
-<ol class="arabic simple" start="8">
-<li><p>Install and configure SSH and FTP server (Optional)</p></li>
-</ol>
+</section>
+<section id="install-and-configure-ssh-and-ftp-server-optional">
+<h3>Install and configure SSH and FTP server (Optional)<a class="headerlink" href="#install-and-configure-ssh-and-ftp-server-optional" title="Link to this heading"></a></h3>
+<blockquote>
+<div></div></blockquote>
 <p>Configure FTP</p>
 <blockquote>
 <div><div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/bin/bash</span>
@@ -220,8 +234,9 @@ ftp<span class="w"> </span><span class="m">0</span>.0.0.0
 </div>
 </div></blockquote>
 </section>
-<section id="docker-installation">
-<h2>Docker Installation<a class="headerlink" href="#docker-installation" title="Link to this heading"></a></h2>
+</section>
+<section id="edge-and-control-pcs-container-installation">
+<h2>Edge and Control PCs Container Installation<a class="headerlink" href="#edge-and-control-pcs-container-installation" title="Link to this heading"></a></h2>
 <ol class="arabic" start="0">
 <li><p>Git credential:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>config<span class="w"> </span>--global<span class="w"> </span>credential.helper<span class="w"> </span>store
@@ -231,7 +246,7 @@ ftp<span class="w"> </span><span class="m">0</span>.0.0.0
 </ol>
 <p>To set up a Docker containerized environment for your project, follow these steps:</p>
 <ol class="arabic simple">
-<li><p>Build containers on Edge and Control PCs</p></li>
+<li><p>Build containers</p></li>
 </ol>
 <ul>
 <li><p>Clone the Docker configuration repository:</p>
@@ -270,9 +285,11 @@ ftp<span class="w"> </span><span class="m">0</span>.0.0.0
 </div></blockquote>
 </li>
 </ul>
-<ol class="arabic" start="2">
-<li><p>Build recognition container (On Server PC)</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>dockers
+</section>
+<section id="servere-pc-installation">
+<h2>Servere PC Installation<a class="headerlink" href="#servere-pc-installation" title="Link to this heading"></a></h2>
+<blockquote>
+<div><div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>dockers
 ./build_recognition_container.sh<span class="w"> </span>&lt;SSH_PORT&gt;<span class="w"> </span>&lt;PORT_MAP&gt;<span class="w"> </span>&lt;SHARE_DIR&gt;<span class="w"> </span>&lt;IMAGE_NAME&gt;<span class="w"> </span>&lt;CONTAINER_NAME&gt;
 </pre></div>
 </div>
@@ -283,8 +300,7 @@ ftp<span class="w"> </span><span class="m">0</span>.0.0.0
 <li><p><cite>&lt;SSH_PORT&gt;</cite>: SSH port number        [default: 2202]</p></li>
 <li><p><cite>&lt;PORT_MAP&gt;</cite>: Additional port mappings [default: 8000-8099:8000-8099]</p></li>
 </ul>
-</li>
-</ol>
+</div></blockquote>
 <p>Clone the following repositories to set up the necessary dependencies:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/keti-ai/pyrecognition.git
 git<span class="w"> </span>clone<span class="w"> </span>https://github.com/keti-ai/pyconnect.git
@@ -319,33 +335,30 @@ colcon<span class="w"> </span>build<span class="w"> </span>--packages-select<spa
 </section>
 <section id="system-execution">
 <h2>System Execution<a class="headerlink" href="#system-execution" title="Link to this heading"></a></h2>
-<section id="robot-and-device-server-execution-in-edge-pc">
-<h3>Robot and Device Server Execution in Edge PC<a class="headerlink" href="#robot-and-device-server-execution-in-edge-pc" title="Link to this heading"></a></h3>
-<p>Start the various components required for the robot and sensors:</p>
+<section id="edge-pc">
+<h3>Edge PC<a class="headerlink" href="#edge-pc" title="Link to this heading"></a></h3>
+<p>Robot and Device Server Execution:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>robot<span class="w">   </span><span class="c1"># Initializes robot arm, elevator, head, etc.</span>
 femto<span class="w">   </span><span class="c1"># Runs the Femto camera</span>
 hand<span class="w">    </span><span class="c1"># Runs the wrist camera</span>
 </pre></div>
 </div>
 </section>
-<section id="ollama-server-execution-in-server-pc">
-<h3>Ollama Server Execution in Server PC<a class="headerlink" href="#ollama-server-execution-in-server-pc" title="Link to this heading"></a></h3>
-<p>To enter the running Ollama server’s container:</p>
+<section id="server-pc">
+<h3>Server PC<a class="headerlink" href="#server-pc" title="Link to this heading"></a></h3>
+<p>Ollama Server Execution:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo<span class="w"> </span>docker<span class="w"> </span>run<span class="w"> </span>-d<span class="w"> </span>--gpus<span class="o">=</span>all<span class="w"> </span>-v<span class="w"> </span>ollama:/root/.ollama<span class="w"> </span>-p<span class="w"> </span><span class="m">11434</span>:11434<span class="w"> </span>--name<span class="w"> </span>ollama<span class="w"> </span>ollama/ollama
 sudo<span class="w"> </span>docker<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-it<span class="w"> </span>ollama<span class="w"> </span>/bin/bash
 </pre></div>
 </div>
-</section>
-<section id="vlm-server-execution-in-server-pc">
-<h3>VLM Server Execution in Server PC<a class="headerlink" href="#vlm-server-execution-in-server-pc" title="Link to this heading"></a></h3>
-<p>Start the Vision-Language Model (VLM) server:</p>
+<p>VLM Server Execution:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python3<span class="w"> </span>-m<span class="w"> </span>pyrecognition.run_server<span class="w"> </span><span class="nv">server_type</span><span class="o">=</span>tcp<span class="w"> </span><span class="nv">port</span><span class="o">=</span><span class="m">8801</span><span class="w"> </span><span class="nv">detector</span><span class="o">=</span>groundedsam
 </pre></div>
 </div>
 </section>
-<section id="ros-node-execution-in-control-pc">
-<h3>ROS Node Execution in Control PC<a class="headerlink" href="#ros-node-execution-in-control-pc" title="Link to this heading"></a></h3>
-<p>Navigate to the ROS application directory and run the necessary nodes:</p>
+<section id="control-pc">
+<h3>Control PC<a class="headerlink" href="#control-pc" title="Link to this heading"></a></h3>
+<p>ROS Node Execution</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>app_carerobot
 python3<span class="w"> </span>node_prompt.py
 python3<span class="w"> </span>node_taskmanager.py

@@ -47,6 +47,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../../contents/intro.html">Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../contents/get_started.html">Getting Started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../contents/api_overview.html">APIs Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../contents/examples.html">Examples</a></li>
 </ul>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../app_carerobot/modules.html">app_carerobot</a></li>
@@ -106,33 +107,33 @@
 <span id="pyconnect-ros-action-client-module"></span><h2>pyconnect.ros.action_client module<a class="headerlink" href="#module-pyconnect.ros.action_client" title="Link to this heading"></a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="pyconnect.ros.action_client.CustomActionClient">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pyconnect.ros.action_client.</span></span><span class="sig-name descname"><span class="pre">CustomActionClient</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'action_client'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">action_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'send_data'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/pyconnect/ros/action_client.html#CustomActionClient"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyconnect.ros.action_client.CustomActionClient" title="Link to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pyconnect.ros.action_client.</span></span><span class="sig-name descname"><span class="pre">CustomActionClient</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'action_client'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">action_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'send_data'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyconnect.ros.action_client.CustomActionClient" title="Link to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Node</span></code></p>
 <dl class="py method">
 <dt class="sig sig-object py" id="pyconnect.ros.action_client.CustomActionClient.feedback_callback">
-<span class="sig-name descname"><span class="pre">feedback_callback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">feedback_msg</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/pyconnect/ros/action_client.html#CustomActionClient.feedback_callback"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyconnect.ros.action_client.CustomActionClient.feedback_callback" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">feedback_callback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">feedback_msg</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyconnect.ros.action_client.CustomActionClient.feedback_callback" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pyconnect.ros.action_client.CustomActionClient.goal_response_callback">
-<span class="sig-name descname"><span class="pre">goal_response_callback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">future</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/pyconnect/ros/action_client.html#CustomActionClient.goal_response_callback"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyconnect.ros.action_client.CustomActionClient.goal_response_callback" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">goal_response_callback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">future</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyconnect.ros.action_client.CustomActionClient.goal_response_callback" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pyconnect.ros.action_client.CustomActionClient.result_callback">
-<span class="sig-name descname"><span class="pre">result_callback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">future</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/pyconnect/ros/action_client.html#CustomActionClient.result_callback"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyconnect.ros.action_client.CustomActionClient.result_callback" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">result_callback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">future</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyconnect.ros.action_client.CustomActionClient.result_callback" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pyconnect.ros.action_client.CustomActionClient.send">
-<span class="sig-name descname"><span class="pre">send</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/pyconnect/ros/action_client.html#CustomActionClient.send"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyconnect.ros.action_client.CustomActionClient.send" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">send</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyconnect.ros.action_client.CustomActionClient.send" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="pyconnect.ros.action_client.main">
-<span class="sig-prename descclassname"><span class="pre">pyconnect.ros.action_client.</span></span><span class="sig-name descname"><span class="pre">main</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">args</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/pyconnect/ros/action_client.html#main"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyconnect.ros.action_client.main" title="Link to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">pyconnect.ros.action_client.</span></span><span class="sig-name descname"><span class="pre">main</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">args</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyconnect.ros.action_client.main" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 </section>
@@ -149,74 +150,84 @@
 <span id="pyconnect-ros-utils-module"></span><h2>pyconnect.ros.utils module<a class="headerlink" href="#module-pyconnect.ros.utils" title="Link to this heading"></a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="pyconnect.ros.utils.ShowRosCam">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pyconnect.ros.utils.</span></span><span class="sig-name descname"><span class="pre">ShowRosCam</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">agent</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/pyconnect/ros/utils.html#ShowRosCam"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyconnect.ros.utils.ShowRosCam" title="Link to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pyconnect.ros.utils.</span></span><span class="sig-name descname"><span class="pre">ShowRosCam</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">agent</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyconnect.ros.utils.ShowRosCam" title="Link to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <dl class="py method">
 <dt class="sig sig-object py" id="pyconnect.ros.utils.ShowRosCam.show">
-<span class="sig-name descname"><span class="pre">show</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/pyconnect/ros/utils.html#ShowRosCam.show"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyconnect.ros.utils.ShowRosCam.show" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">show</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyconnect.ros.utils.ShowRosCam.show" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pyconnect.ros.utils.ShowRosCam.start">
-<span class="sig-name descname"><span class="pre">start</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/pyconnect/ros/utils.html#ShowRosCam.start"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyconnect.ros.utils.ShowRosCam.start" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">start</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyconnect.ros.utils.ShowRosCam.start" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pyconnect.ros.utils.ShowRosCam.stop">
-<span class="sig-name descname"><span class="pre">stop</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/pyconnect/ros/utils.html#ShowRosCam.stop"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyconnect.ros.utils.ShowRosCam.stop" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">stop</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyconnect.ros.utils.ShowRosCam.stop" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 </dd></dl>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="pyconnect.ros.utils.SubLog">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pyconnect.ros.utils.</span></span><span class="sig-name descname"><span class="pre">SubLog</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">every</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/pyconnect/ros/utils.html#SubLog"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyconnect.ros.utils.SubLog" title="Link to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pyconnect.ros.utils.</span></span><span class="sig-name descname"><span class="pre">SubLog</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">every</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyconnect.ros.utils.SubLog" title="Link to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <dl class="py method">
 <dt class="sig sig-object py" id="pyconnect.ros.utils.SubLog.log">
-<span class="sig-name descname"><span class="pre">log</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/pyconnect/ros/utils.html#SubLog.log"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyconnect.ros.utils.SubLog.log" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">log</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyconnect.ros.utils.SubLog.log" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pyconnect.ros.utils.SubLog.start">
-<span class="sig-name descname"><span class="pre">start</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/pyconnect/ros/utils.html#SubLog.start"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyconnect.ros.utils.SubLog.start" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">start</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">log_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyconnect.ros.utils.SubLog.start" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="pyconnect.ros.utils.SubLog.stop">
-<span class="sig-name descname"><span class="pre">stop</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/pyconnect/ros/utils.html#SubLog.stop"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyconnect.ros.utils.SubLog.stop" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">stop</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pyconnect.ros.utils.SubLog.stop" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="pyconnect.ros.utils.default_srvstr_resfunc">
-<span class="sig-prename descclassname"><span class="pre">pyconnect.ros.utils.</span></span><span class="sig-name descname"><span class="pre">default_srvstr_resfunc</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">res</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_server</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/pyconnect/ros/utils.html#default_srvstr_resfunc"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyconnect.ros.utils.default_srvstr_resfunc" title="Link to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">pyconnect.ros.utils.</span></span><span class="sig-name descname"><span class="pre">default_srvstr_resfunc</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">res</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_server</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyconnect.ros.utils.default_srvstr_resfunc" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="pyconnect.ros.utils.default_srvstr_revfunc">
-<span class="sig-prename descclassname"><span class="pre">pyconnect.ros.utils.</span></span><span class="sig-name descname"><span class="pre">default_srvstr_revfunc</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">req</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_server</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/pyconnect/ros/utils.html#default_srvstr_revfunc"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyconnect.ros.utils.default_srvstr_revfunc" title="Link to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">pyconnect.ros.utils.</span></span><span class="sig-name descname"><span class="pre">default_srvstr_revfunc</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">req</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_server</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyconnect.ros.utils.default_srvstr_revfunc" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="pyconnect.ros.utils.default_strmsg_resfunc">
-<span class="sig-prename descclassname"><span class="pre">pyconnect.ros.utils.</span></span><span class="sig-name descname"><span class="pre">default_strmsg_resfunc</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/pyconnect/ros/utils.html#default_strmsg_resfunc"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyconnect.ros.utils.default_strmsg_resfunc" title="Link to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">pyconnect.ros.utils.</span></span><span class="sig-name descname"><span class="pre">default_strmsg_resfunc</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyconnect.ros.utils.default_strmsg_resfunc" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="pyconnect.ros.utils.default_strmsg_revfunc">
-<span class="sig-prename descclassname"><span class="pre">pyconnect.ros.utils.</span></span><span class="sig-name descname"><span class="pre">default_strmsg_revfunc</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">msg</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/pyconnect/ros/utils.html#default_strmsg_revfunc"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyconnect.ros.utils.default_strmsg_revfunc" title="Link to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">pyconnect.ros.utils.</span></span><span class="sig-name descname"><span class="pre">default_strmsg_revfunc</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">msg</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyconnect.ros.utils.default_strmsg_revfunc" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="pyconnect.ros.utils.find_last_session_log_dir">
-<span class="sig-prename descclassname"><span class="pre">pyconnect.ros.utils.</span></span><span class="sig-name descname"><span class="pre">find_last_session_log_dir</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">log_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'/media/keti/workdir/projects/pyconnect/logs/ros/node'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/pyconnect/ros/utils.html#find_last_session_log_dir"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyconnect.ros.utils.find_last_session_log_dir" title="Link to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">pyconnect.ros.utils.</span></span><span class="sig-name descname"><span class="pre">find_last_session_log_dir</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">log_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'/media/keti/workdir/projects/pyconnect/logs/ros/node'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyconnect.ros.utils.find_last_session_log_dir" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="pyconnect.ros.utils.get_states_from_trajectory">
-<span class="sig-prename descclassname"><span class="pre">pyconnect.ros.utils.</span></span><span class="sig-name descname"><span class="pre">get_states_from_trajectory</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">trajectory</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/pyconnect/ros/utils.html#get_states_from_trajectory"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pyconnect.ros.utils.get_states_from_trajectory" title="Link to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">pyconnect.ros.utils.</span></span><span class="sig-name descname"><span class="pre">get_states_from_trajectory</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">trajectory</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">log_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'/media/keti/workdir/projects/pyconnect/logs/ros/sub'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyconnect.ros.utils.get_states_from_trajectory" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pyconnect.ros.utils.node_add_agent_from_config">
+<span class="sig-prename descclassname"><span class="pre">pyconnect.ros.utils.</span></span><span class="sig-name descname"><span class="pre">node_add_agent_from_config</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">agent_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyconnect.ros.utils.node_add_agent_from_config" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pyconnect.ros.utils.node_add_agents_from_configs">
+<span class="sig-prename descclassname"><span class="pre">pyconnect.ros.utils.</span></span><span class="sig-name descname"><span class="pre">node_add_agents_from_configs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">configs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">agents_select</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pyconnect.ros.utils.node_add_agents_from_configs" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 </section>
