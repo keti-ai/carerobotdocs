@@ -57,10 +57,17 @@
 <li class="toctree-l2"><a class="reference internal" href="#edge-and-control-pcs-container-installation">Edge and Control PCs Container Installation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#servere-pc-installation">Servere PC Installation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#system-execution">System Execution</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#edge-pc">Edge PC</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#server-pc">Server PC</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#control-pc">Control PC</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#step-1-edge-pc-run-robot-and-device-server">Step 1. Edge PC: Run Robot and Device Server</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#step-2-server-pc-run-llm-vlm-servers">Step 2. Server PC: Run LLM/VLM Servers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#step-3-control-pc-run-control-nodes-in-different-terminal-window">Step 3. Control PC: Run Control Nodes in different Terminal Window</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#configuration-files">Configuration Files</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#examples">Examples</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#example-1-get-plan-from-user-s-prompt">Example 1: Get plan from user’s prompt</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#example-2-detect-an-object-using-structured-commnad">Example 2: Detect an object using structured commnad</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#example-3-detect-grasp-pose-of-an-object-using-structured-commnad">Example 3: Detect grasp pose of an object using structured commnad</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#example-4-detect-place-pose-of-an-object-using-structured-commnad">Example 4: Detect place pose of an object using structured commnad</a></li>
 </ul>
 </li>
 </ul>
@@ -335,17 +342,16 @@ colcon<span class="w"> </span>build<span class="w"> </span>--packages-select<spa
 </section>
 <section id="system-execution">
 <h2>System Execution<a class="headerlink" href="#system-execution" title="Link to this heading"></a></h2>
-<section id="edge-pc">
-<h3>Edge PC<a class="headerlink" href="#edge-pc" title="Link to this heading"></a></h3>
-<p>Robot and Device Server Execution:</p>
+<section id="step-1-edge-pc-run-robot-and-device-server">
+<h3>Step 1. Edge PC: Run Robot and Device Server<a class="headerlink" href="#step-1-edge-pc-run-robot-and-device-server" title="Link to this heading"></a></h3>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>robot<span class="w">   </span><span class="c1"># Initializes robot arm, elevator, head, etc.</span>
 femto<span class="w">   </span><span class="c1"># Runs the Femto camera</span>
 hand<span class="w">    </span><span class="c1"># Runs the wrist camera</span>
 </pre></div>
 </div>
 </section>
-<section id="server-pc">
-<h3>Server PC<a class="headerlink" href="#server-pc" title="Link to this heading"></a></h3>
+<section id="step-2-server-pc-run-llm-vlm-servers">
+<h3>Step 2. Server PC: Run LLM/VLM Servers<a class="headerlink" href="#step-2-server-pc-run-llm-vlm-servers" title="Link to this heading"></a></h3>
 <p>Ollama Server Execution:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo<span class="w"> </span>docker<span class="w"> </span>run<span class="w"> </span>-d<span class="w"> </span>--gpus<span class="o">=</span>all<span class="w"> </span>-v<span class="w"> </span>ollama:/root/.ollama<span class="w"> </span>-p<span class="w"> </span><span class="m">11434</span>:11434<span class="w"> </span>--name<span class="w"> </span>ollama<span class="w"> </span>ollama/ollama
 sudo<span class="w"> </span>docker<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-it<span class="w"> </span>ollama<span class="w"> </span>/bin/bash
@@ -356,19 +362,110 @@ sudo<span class="w"> </span>docker<span class="w"> </span><span class="nb">exec<
 </pre></div>
 </div>
 </section>
-<section id="control-pc">
-<h3>Control PC<a class="headerlink" href="#control-pc" title="Link to this heading"></a></h3>
-<p>ROS Node Execution</p>
+<section id="step-3-control-pc-run-control-nodes-in-different-terminal-window">
+<h3>Step 3. Control PC: Run Control Nodes in different Terminal Window<a class="headerlink" href="#step-3-control-pc-run-control-nodes-in-different-terminal-window" title="Link to this heading"></a></h3>
+<p>Terminal 1</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="w">     </span><span class="nb">cd</span><span class="w"> </span>app_carerobot
+<span class="w">     </span>python3<span class="w"> </span>node_prompt.py<span class="w"> </span><span class="nv">isplanned</span><span class="o">=</span>True
+
+-<span class="w"> </span>isplanned:
+<span class="w">     </span>True:<span class="w"> </span>send<span class="w"> </span>a<span class="w"> </span>sequence<span class="w"> </span>of<span class="w"> </span>strutured<span class="w"> </span>tasks,<span class="w"> </span>e.g.<span class="w"> </span><span class="o">(</span>find::cup,<span class="w"> </span>tray,<span class="w"> </span>pick::cup,<span class="w"> </span>place::tray<span class="o">)</span>
+<span class="w">     </span>False:<span class="w"> </span>send<span class="w"> </span>a<span class="w"> </span>daily<span class="w"> </span>command,<span class="w"> </span>e.g.<span class="w"> </span>place<span class="w"> </span>cup<span class="w"> </span>into<span class="w"> </span>tray
+</pre></div>
+</div>
+<p>Terminal 2</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>app_carerobot
-python3<span class="w"> </span>node_prompt.py
-python3<span class="w"> </span>node_taskmanager.py
 python3<span class="w"> </span>node_skill_servers.py
+</pre></div>
+</div>
+<p>Terminal 3</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>app_carerobot
+python3<span class="w"> </span>node_taskmanager.py
 </pre></div>
 </div>
 </section>
 <section id="configuration-files">
 <h3>Configuration Files<a class="headerlink" href="#configuration-files" title="Link to this heading"></a></h3>
 <p>For further configurations, refer to the <cite>app_carerobot.configs</cite> directory.</p>
+</section>
+</section>
+<section id="examples">
+<h2>Examples<a class="headerlink" href="#examples" title="Link to this heading"></a></h2>
+<section id="example-1-get-plan-from-user-s-prompt">
+<h3>Example 1: Get plan from user’s prompt<a class="headerlink" href="#example-1-get-plan-from-user-s-prompt" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p>Set <strong>isplanned=False</strong> when running about terminal 1 command</p></li>
+<li><p>Type a prompt in terminal 1, e.g.</p></li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>put<span class="w"> </span>yellow<span class="w"> </span>cup<span class="w">  </span>into<span class="w"> </span>wooden<span class="w"> </span>tray
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>The sequence of tasks will be showed in terminal 2</p></li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>find::yellow<span class="w"> </span>cup,<span class="w"> </span>wooden<span class="w"> </span>tray
+pick::yellow<span class="w"> </span>cup
+place::wooden<span class="w"> </span>tray
+</pre></div>
+</div>
+</section>
+<section id="example-2-detect-an-object-using-structured-commnad">
+<h3>Example 2: Detect an object using structured commnad<a class="headerlink" href="#example-2-detect-an-object-using-structured-commnad" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p>Set <strong>isplanned=True</strong> when running about terminal 1 command</p></li>
+<li><p>Type a prompt in terminal 1, e.g.</p></li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>detect::green<span class="w"> </span>cup
+</pre></div>
+</div>
+<figure class="align-center" id="id1">
+<a class="reference internal image-reference" href="../_images/fig_example2_input.png"><img alt="Alternative text" src="../_images/fig_example2_input.png" style="width: 500px;" />
+</a>
+<figcaption>
+<p><span class="caption-text">Input RGB.</span><a class="headerlink" href="#id1" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<figure class="align-center" id="id2">
+<a class="reference internal image-reference" href="../_images/fig_example2_output.png"><img alt="Alternative text" src="../_images/fig_example2_output.png" style="width: 500px;" />
+</a>
+<figcaption>
+<p><span class="caption-text">Detection Result.</span><a class="headerlink" href="#id2" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+</section>
+<section id="example-3-detect-grasp-pose-of-an-object-using-structured-commnad">
+<h3>Example 3: Detect grasp pose of an object using structured commnad<a class="headerlink" href="#example-3-detect-grasp-pose-of-an-object-using-structured-commnad" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p>Set <strong>isplanned=True</strong> when running about terminal 1 command</p></li>
+<li><p>Type a prompt in terminal 1, e.g.</p></li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>detect_grasp::green<span class="w"> </span>cup
+</pre></div>
+</div>
+<figure class="align-center" id="id3">
+<a class="reference internal image-reference" href="../_images/fig_example3_output.png"><img alt="Alternative text" src="../_images/fig_example3_output.png" style="width: 500px;" />
+</a>
+<figcaption>
+<p><span class="caption-text">Detection Result.</span><a class="headerlink" href="#id3" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+</section>
+<section id="example-4-detect-place-pose-of-an-object-using-structured-commnad">
+<h3>Example 4: Detect place pose of an object using structured commnad<a class="headerlink" href="#example-4-detect-place-pose-of-an-object-using-structured-commnad" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p>Set <strong>isplanned=True</strong> when running about terminal 1 command</p></li>
+<li><p>Type a prompt in terminal 1, e.g.</p></li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>detect_place::wooden<span class="w"> </span>dish
+</pre></div>
+</div>
+<figure class="align-center" id="id4">
+<a class="reference internal image-reference" href="../_images/fig_example4_output.png"><img alt="Alternative text" src="../_images/fig_example4_output.png" style="width: 500px;" />
+</a>
+<figcaption>
+<p><span class="caption-text">Detection Result.</span><a class="headerlink" href="#id4" title="Link to this image"></a></p>
+</figcaption>
+</figure>
 </section>
 </section>
 </section>

@@ -261,10 +261,8 @@ Install ROS Interfaces
 System Execution
 ===================
 
-Edge PC
+Step 1. Edge PC: Run Robot and Device Server
 -------------------------------------------
-
-Robot and Device Server Execution:
 
 .. code-block:: bash
 
@@ -272,7 +270,7 @@ Robot and Device Server Execution:
        femto   # Runs the Femto camera
        hand    # Runs the wrist camera
 
-Server PC
+Step 2. Server PC: Run LLM/VLM Servers
 ------------------------------------
 
 Ollama Server Execution:
@@ -289,20 +287,128 @@ VLM Server Execution:
 
        python3 -m pyrecognition.run_server server_type=tcp port=8801 detector=groundedsam
 
-Control PC
+Step 3. Control PC: Run Control Nodes in different Terminal Window
 --------------------------------
 
-ROS Node Execution
+Terminal 1
 
 .. code-block:: bash
 
        cd app_carerobot
-       python3 node_prompt.py
-       python3 node_taskmanager.py
+       python3 node_prompt.py isplanned=True 
+
+  - isplanned: 
+       True: send a sequence of strutured tasks, e.g. (find::cup, tray, pick::cup, place::tray)
+       False: send a daily command, e.g. place cup into tray
+
+Terminal 2
+
+.. code-block:: bash
+
+       cd app_carerobot
        python3 node_skill_servers.py
-       
+
+Terminal 3
+
+.. code-block:: bash
+
+       cd app_carerobot
+       python3 node_taskmanager.py
 
 Configuration Files
 ----------------------
 
 For further configurations, refer to the `app_carerobot.configs` directory.
+
+
+Examples
+===================
+
+Example 1: Get plan from user's prompt
+------------------
+
+- Set **isplanned=False** when running about terminal 1 command
+
+- Type a prompt in terminal 1, e.g.
+
+.. code-block:: bash
+
+       put yellow cup  into wooden tray
+
+- The sequence of tasks will be showed in terminal 2
+
+.. code-block:: bash
+
+       find::yellow cup, wooden tray
+       pick::yellow cup
+       place::wooden tray
+
+
+Example 2: Detect an object using structured commnad
+------------------------
+
+- Set **isplanned=True** when running about terminal 1 command
+
+
+- Type a prompt in terminal 1, e.g.
+
+.. code-block:: bash
+
+       detect::green cup
+
+.. figure:: images/fig_example2_input.png
+   :alt: Alternative text
+   :width: 500px
+   :align: center
+
+   Input RGB.
+
+.. figure:: images/fig_example2_output.png
+   :alt: Alternative text
+   :width: 500px
+   :align: center
+
+   Detection Result.
+
+Example 3: Detect grasp pose of an object using structured commnad
+------------------------
+
+- Set **isplanned=True** when running about terminal 1 command
+
+
+- Type a prompt in terminal 1, e.g.
+
+.. code-block:: bash
+
+       detect_grasp::green cup
+
+.. figure:: images/fig_example3_output.png
+   :alt: Alternative text
+   :width: 500px
+   :align: center
+
+   Detection Result.
+
+Example 4: Detect place pose of an object using structured commnad
+------------------------
+
+- Set **isplanned=True** when running about terminal 1 command
+
+
+- Type a prompt in terminal 1, e.g.
+
+.. code-block:: bash
+
+       detect_place::wooden dish
+
+.. figure:: images/fig_example4_output.png
+   :alt: Alternative text
+   :width: 500px
+   :align: center
+
+   Detection Result.
+
+
+
+
+
