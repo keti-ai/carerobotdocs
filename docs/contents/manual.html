@@ -1,0 +1,402 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Manual &mdash; Care Robot 1.0.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=8d563738"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Examples" href="examples.html" />
+    <link rel="prev" title="Installation" href="get_started.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Care Robot
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="intro.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="get_started.html">Installation</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Manual</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#device-control">Device Control</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#enable-robot-motion">Enable robot motion</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#set-mode">Set mode</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#set-state">Set state</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#clean-error">Clean error</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#move-joint">Move joint</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#move-relative">Move relative</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#lift-arm">Lift arm</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#grip-control">Grip control</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#move-head">Move head</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#device-state">Device State</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#skill-control">Skill Control</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#init-robot">Init robot</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#init-pick">Init pick</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#detect-object">Detect Object</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#find-object">Find Object</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#pick-object">Pick Object</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#place-object">Place object</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#approach-object">Approach object</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">Examples</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../apidoc/carerobotapp/modules.html">carerobotapp</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Care Robot</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Manual</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/contents/manual.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="manual">
+<span id="examples"></span><h1>Manual<a class="headerlink" href="#manual" title="Link to this heading"></a></h1>
+<p>This section list commands used to control robot</p>
+<p>Refer to DEVICE_CLIENT_CONFIGS in <a class="reference internal" href="../apidoc/carerobotapp/carerobotapp.configs.html#device-configs"><span class="std std-ref">carerobotapp.configs.device_clients module</span></a> for more details.</p>
+<p>[CLIK  TO SOURCE]</p>
+<section id="device-control">
+<h2>Device Control<a class="headerlink" href="#device-control" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p>Example code for one time sending device control request</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">pyconnect.ros.custom_node</span><span class="w"> </span><span class="kn">import</span> <span class="n">CustomNode</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">rosinterfaces.srv</span><span class="w"> </span><span class="kn">import</span> <span class="n">SendStringData</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pyconnect.ros.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">node_add_agents_from_configs</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">carerobotapp.configs.device_clients</span><span class="w"> </span><span class="kn">import</span> <span class="n">DEVICE_CLIENT_CONFIGS</span>
+
+
+<span class="n">node</span> <span class="o">=</span> <span class="n">CustomNode</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;device_control&#39;</span><span class="p">)</span>
+<span class="n">node</span> <span class="o">=</span> <span class="n">node_add_agents_from_configs</span><span class="p">(</span><span class="n">node</span><span class="o">=</span><span class="n">node</span><span class="p">,</span> <span class="n">configs</span><span class="o">=</span><span class="n">DEVICE_CLIENT_CONFIGS</span><span class="p">)</span>
+<span class="n">node</span><span class="o">.</span><span class="n">spin</span><span class="p">(</span><span class="n">run_thread</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="n">node</span><span class="o">.</span><span class="n">agents</span><span class="p">[</span><span class="n">agent_name</span><span class="p">]</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
+</pre></div>
+</div>
+<section id="enable-robot-motion">
+<h3>Enable robot motion<a class="headerlink" href="#enable-robot-motion" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p>Agent name: /xarm/motion_enable</p></li>
+<li><p>Request format</p></li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>enable_motion::
+</pre></div>
+</div>
+</section>
+<section id="set-mode">
+<h3>Set mode<a class="headerlink" href="#set-mode" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p>Agent name: /xarm/set_mode</p></li>
+<li><p>Request format</p></li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>set_mode::0
+</pre></div>
+</div>
+</section>
+<section id="set-state">
+<h3>Set state<a class="headerlink" href="#set-state" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p>Agent name: /xarm/set_state</p></li>
+<li><p>Request format</p></li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>set_state::0
+</pre></div>
+</div>
+</section>
+<section id="clean-error">
+<h3>Clean error<a class="headerlink" href="#clean-error" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p>Agent name: /xarm/clean_error</p></li>
+<li><p>Request format</p></li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>clean_error::
+</pre></div>
+</div>
+</section>
+<section id="move-joint">
+<h3>Move joint<a class="headerlink" href="#move-joint" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p>Agent name: /xarm/set_servo_angle</p></li>
+<li><p>Request format</p></li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>move_angles::joint_angle0,joint_angle1,joint_angle2,joint_angle3,joint_angle4,joint_angle5,joint_angle6
+</pre></div>
+</div>
+<dl class="simple">
+<dt>Notes:</dt><dd><ul class="simple">
+<li><p>joint angles in [radians]</p></li>
+<li><p>move_angles::home: move to predefined HOME_JOINT</p></li>
+<li><p>move_angles::ready: move to predefined READY_JOINT</p></li>
+</ul>
+</dd>
+</dl>
+</section>
+<section id="move-relative">
+<h3>Move relative<a class="headerlink" href="#move-relative" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p>Agent name: /xarm/set_position,</p></li>
+<li><p>Request format</p></li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>arm_dmove::dx<span class="o">=</span>dx,dy<span class="o">=</span>dy,dz<span class="o">=</span>dz,drx<span class="o">=</span>drx,dry<span class="o">=</span>dry,dz<span class="o">=</span>drz
+</pre></div>
+</div>
+<dl class="simple">
+<dt>Notes:</dt><dd><ul class="simple">
+<li><p>dx, dy, dz in [mm], drx, dry, drz in [degrees]</p></li>
+<li><p>arm_dmove::dx=dx: move for x-axis only</p></li>
+</ul>
+</dd>
+</dl>
+</section>
+<section id="lift-arm">
+<h3>Lift arm<a class="headerlink" href="#lift-arm" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p>Agent name: /elevation/set_position</p></li>
+<li><p>Request format</p></li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>lift::position
+</pre></div>
+</div>
+<dl class="simple">
+<dt>Notes:</dt><dd><ul class="simple">
+<li><p>position in [mm]</p></li>
+</ul>
+</dd>
+</dl>
+</section>
+<section id="grip-control">
+<h3>Grip control<a class="headerlink" href="#grip-control" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p>Agent name: /gripper/command</p></li>
+<li><p>Request format</p></li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>grip::position
+</pre></div>
+</div>
+<dl class="simple">
+<dt>Notes:</dt><dd><ul class="simple">
+<li><p>position in range [0,1000]</p></li>
+<li><p>grip::open = grip::1000</p></li>
+<li><p>grip::close = grip::0</p></li>
+</ul>
+</dd>
+</dl>
+</section>
+<section id="move-head">
+<h3>Move head<a class="headerlink" href="#move-head" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p>Agent name: /head/pose_command</p></li>
+<li><p>Request format</p></li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>move_head::ry<span class="o">=</span>ry,rz<span class="o">=</span>rz
+</pre></div>
+</div>
+<dl class="simple">
+<dt>Notes:</dt><dd><ul class="simple">
+<li><p>ry, rz in [degrees]</p></li>
+<li><p>ry &lt; 0: look down</p></li>
+</ul>
+</dd>
+</dl>
+</section>
+</section>
+<section id="device-state">
+<h2>Device State<a class="headerlink" href="#device-state" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p>Example code for getting device state</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">pyconnect.ros.custom_node</span><span class="w"> </span><span class="kn">import</span> <span class="n">CustomNode</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">rosinterfaces.srv</span><span class="w"> </span><span class="kn">import</span> <span class="n">SendStringData</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pyconnect.ros.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">node_add_agents_from_configs</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">carerobotapp.configs.device_clients</span><span class="w"> </span><span class="kn">import</span> <span class="n">DEVICE_CLIENT_CONFIGS</span>
+
+
+<span class="n">node</span> <span class="o">=</span> <span class="n">CustomNode</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;device_control&#39;</span><span class="p">)</span>
+<span class="n">node</span> <span class="o">=</span> <span class="n">node_add_agents_from_configs</span><span class="p">(</span><span class="n">node</span><span class="o">=</span><span class="n">node</span><span class="p">,</span> <span class="n">configs</span><span class="o">=</span><span class="n">DEVICE_CLIENT_CONFIGS</span><span class="p">)</span>
+<span class="n">node</span><span class="o">.</span><span class="n">spin</span><span class="p">(</span><span class="n">run_thread</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+       <span class="n">rev_data</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">agents</span><span class="p">[</span><span class="n">agent_name</span><span class="p">]</span><span class="o">.</span><span class="n">rev_data</span>
+       <span class="k">if</span> <span class="n">rev_data</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+              <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+              <span class="k">continue</span>
+       <span class="nb">print</span><span class="p">(</span><span class="n">rev_data</span><span class="p">)</span>
+       <span class="k">break</span>
+</pre></div>
+</div>
+</section>
+<section id="skill-control">
+<h2>Skill Control<a class="headerlink" href="#skill-control" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p>To run skill control, system need to be executed as descired in <a class="reference internal" href="get_started.html#system-exec"><span class="std std-ref">System Execution</span></a></p></li>
+</ul>
+<section id="init-robot">
+<h3>Init robot<a class="headerlink" href="#init-robot" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p>Request format</p></li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>init_robot::
+</pre></div>
+</div>
+</section>
+<section id="init-pick">
+<h3>Init pick<a class="headerlink" href="#init-pick" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p>Request format</p></li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>init_pick::
+</pre></div>
+</div>
+</section>
+<section id="detect-object">
+<h3>Detect Object<a class="headerlink" href="#detect-object" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p>Request format</p></li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>detect::caption
+</pre></div>
+</div>
+<dl class="simple">
+<dt>Notes:</dt><dd><ul class="simple">
+<li><p>caption: in format ‘object_name1, object_name2, ….’</p></li>
+</ul>
+</dd>
+</dl>
+</section>
+<section id="find-object">
+<h3>Find Object<a class="headerlink" href="#find-object" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p>Request format</p></li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>find::caption
+</pre></div>
+</div>
+</section>
+<section id="pick-object">
+<h3>Pick Object<a class="headerlink" href="#pick-object" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p>Request format</p></li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pick::object_name
+</pre></div>
+</div>
+<dl class="simple">
+<dt>Notes:</dt><dd><ul class="simple">
+<li><p>Pick request should be appear after a detect or find function</p></li>
+<li><p>example: find::cupnpick::cup</p></li>
+</ul>
+</dd>
+</dl>
+</section>
+<section id="place-object">
+<h3>Place object<a class="headerlink" href="#place-object" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p>Request format</p></li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>place::object_name
+</pre></div>
+</div>
+</section>
+<section id="approach-object">
+<h3>Approach object<a class="headerlink" href="#approach-object" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p>Request format</p></li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>arm_approach::object_name
+</pre></div>
+</div>
+<p>Arm back</p>
+<ul class="simple">
+<li><p>Request format</p></li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>arm_back::
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="get_started.html" class="btn btn-neutral float-left" title="Installation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="examples.html" class="btn btn-neutral float-right" title="Examples" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Trung Bui.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

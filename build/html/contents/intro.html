@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Introduction &mdash; Care Robot 1.0.0 documentation</title>
+  <title>Overview &mdash; Care Robot 1.0.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
 
@@ -19,7 +19,7 @@
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Getting Started" href="get_started.html" />
+    <link rel="next" title="Installation" href="get_started.html" />
     <link rel="prev" title="Welcome to Care Robot’s Documentation" href="../index.html" /> 
 </head>
 
@@ -44,18 +44,18 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current">
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Introduction</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#test-bed">Test bed</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#ros-based-system">ROS-based System</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Overview</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#introduction">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#system-overview">System Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#sdk-overview">SDK Overview</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="get_started.html">Getting Started</a></li>
-<li class="toctree-l1"><a class="reference internal" href="api_overview.html">APIs Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="get_started.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="manual.html">Manual</a></li>
 <li class="toctree-l1"><a class="reference internal" href="examples.html">Examples</a></li>
 </ul>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../apidoc/app_carerobot/modules.html">app_carerobot</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../apidoc/pyconnect/modules.html">pyconnect</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../apidoc/carerobotapp/modules.html">carerobotapp</a></li>
 </ul>
 
         </div>
@@ -72,7 +72,7 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
-      <li class="breadcrumb-item active">Introduction</li>
+      <li class="breadcrumb-item active">Overview</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../_sources/contents/intro.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -82,20 +82,23 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="introduction">
-<h1>Introduction<a class="headerlink" href="#introduction" title="Link to this heading"></a></h1>
-<section id="test-bed">
-<h2>Test bed<a class="headerlink" href="#test-bed" title="Link to this heading"></a></h2>
+  <section id="overview">
+<h1>Overview<a class="headerlink" href="#overview" title="Link to this heading"></a></h1>
+<section id="introduction">
+<h2>Introduction<a class="headerlink" href="#introduction" title="Link to this heading"></a></h2>
+<p>This work develops a Mobile Assistive Robotic System (MARS) designed to assist people with disabilities by performing daily tasks such as retrieving objects and helping meal. MARS uses ROS2 framework to connect
+a 7-DOF robotic arm, hybrid gripper, RGB-depth cameras, and a large language model-based planner, enabling intergration of vision-based recognition, skill affordance, and natural language task planning.
+Through real-world experiments in cluttered environments, MARS provides a promising solution for autonomous assistive robots in dynamic home settings.</p>
 <figure class="align-center" id="id1">
 <a class="reference internal image-reference" href="../_images/fig_testbed.png"><img alt="Alternative text" src="../_images/fig_testbed.png" style="width: 600px;" />
 </a>
 <figcaption>
-<p><span class="caption-text">Care Robot testbed.</span><a class="headerlink" href="#id1" title="Link to this image"></a></p>
+<p><span class="caption-text">Real-world use of a mobile assistive robot. (a) 7-DOF robotic arm on a two-wheeled base. (b) Sweeping water. (c) Picking and placing items.</span><a class="headerlink" href="#id1" title="Link to this image"></a></p>
 </figcaption>
 </figure>
 </section>
-<section id="ros-based-system">
-<h2>ROS-based System<a class="headerlink" href="#ros-based-system" title="Link to this heading"></a></h2>
+<section id="system-overview">
+<h2>System Overview<a class="headerlink" href="#system-overview" title="Link to this heading"></a></h2>
 <figure class="align-center" id="id2">
 <a class="reference internal image-reference" href="../_images/fig_carerobot_overview.png"><img alt="Alternative text" src="../_images/fig_carerobot_overview.png" style="width: 600px;" />
 </a>
@@ -103,6 +106,41 @@
 <p><span class="caption-text">Care Robot testbed.</span><a class="headerlink" href="#id2" title="Link to this image"></a></p>
 </figcaption>
 </figure>
+<p>To ensure modularity and seamless integration of various functionalities, the robot operates within a ROS2-based framework, as shown in the figure.
+The system includes:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><strong>Human-Robot Interaction (HRI) Module</strong>: Permitting natural language communication, allowing users requesting and receiving updated feedback via text or voice input.</p></li>
+<li><p><strong>Task Planning Module</strong>: Powered by a large language model (LLM), this module interprets text and voice commands into structured execution plans.</p></li>
+<li><p><strong>Task Manager</strong>: Determines the appropriate execution strategy and coordinates with the perception and manipulation modules, assigning tasks to their corresponding execution modules.</p></li>
+<li><p><strong>Perception Module</strong>: Utilizing advanced vision-language models (VLMs), such as Grounding DINO and FastSAM, for object detection, segmentation, and affordance-based grasping.</p></li>
+<li><p><strong>Robot Manipulation Module</strong>: Performing movement, grasping, and placement, enabling efficient object handling and assistance.</p></li>
+<li><p><strong>External Computing Unit</strong>: A powerful device running resource-intensive VLM/LLM functions (e.g., Grounding DINO, FastSAM, and LLM) as a TCP/IP server, providing real-time outputs in response to requests from the task planner and perception modules.</p></li>
+<li><p><strong>Depth Camera System</strong>: Two RGB-depth cameras provide visual perception, with the head camera used for scene understanding and the wrist camera for fine-grained object interaction.</p></li>
+</ul>
+</div></blockquote>
+</section>
+<section id="sdk-overview">
+<h2>SDK Overview<a class="headerlink" href="#sdk-overview" title="Link to this heading"></a></h2>
+<ol class="arabic simple">
+<li><p>Installation: see the <a class="reference internal" href="get_started.html#install"><span class="std std-ref">Installation</span></a> section for more details.</p></li>
+<li><p>Task-based packages</p></li>
+</ol>
+<p>To reduce the complexity and time consumming while repeatdly coding  callback function or handle different kinds of connections,
+we developed task-based pakages that aids the easy implementation of the system. The packages inludes:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>pyconnect: Enables repeated communication between nodes and functionality PCs with easy ROS node setup and message logging.</p></li>
+<li><p>pyrecognition: Implements popular recognition functions (e.g., grasp detection, object detection, instance segmentation, VLM)</p></li>
+<li><p>carerobotapp: ROS2 Nodes Implementation</p></li>
+<li><p>pyinterfaces: Represents frequently used terms and utilities (e.g., instances, masks, boxes, grasp pose, place pose)</p></li>
+<li><p>rosinterfaces: ROS2 Data Interfaces</p></li>
+</ul>
+</div></blockquote>
+<ol class="arabic simple" start="3">
+<li><p>Manual: see the <span class="xref std std-ref">manual</span> section for more details.</p></li>
+<li><p>Examples: see the <a class="reference internal" href="manual.html#examples"><span class="std std-ref">Manual</span></a> section for more details.</p></li>
+</ol>
 </section>
 </section>
 
@@ -111,7 +149,7 @@
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="../index.html" class="btn btn-neutral float-left" title="Welcome to Care Robot’s Documentation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="get_started.html" class="btn btn-neutral float-right" title="Getting Started" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="get_started.html" class="btn btn-neutral float-right" title="Installation" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

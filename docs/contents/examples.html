@@ -19,8 +19,8 @@
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="app_carerobot" href="../apidoc/app_carerobot/modules.html" />
-    <link rel="prev" title="APIs Overview" href="api_overview.html" /> 
+    <link rel="next" title="carerobotapp" href="../apidoc/carerobotapp/modules.html" />
+    <link rel="prev" title="Manual" href="manual.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -44,19 +44,22 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="intro.html">Introduction</a></li>
-<li class="toctree-l1"><a class="reference internal" href="get_started.html">Getting Started</a></li>
-<li class="toctree-l1"><a class="reference internal" href="api_overview.html">APIs Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="intro.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="get_started.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="manual.html">Manual</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Examples</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#topic-pub-sub">Topic Pub/Sub</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#image-sub">Image Sub</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#service-client-server">Service Client/Server</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#get-plan-from-user-s-prompt">Get plan from user’s prompt</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#detect-an-object-using-structured-commnad">Detect an object using structured commnad</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#detect-grasp-pose-of-an-object-using-structured-commnad">Detect grasp pose of an object using structured commnad</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#detect-place-pose-of-an-object-using-structured-commnad">Detect place pose of an object using structured commnad</a></li>
 </ul>
 </li>
 </ul>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../apidoc/app_carerobot/modules.html">app_carerobot</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../apidoc/pyconnect/modules.html">pyconnect</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../apidoc/carerobotapp/modules.html">carerobotapp</a></li>
 </ul>
 
         </div>
@@ -84,7 +87,7 @@
            <div itemprop="articleBody">
              
   <section id="examples">
-<h1>Examples<a class="headerlink" href="#examples" title="Link to this heading"></a></h1>
+<span id="id1"></span><h1>Examples<a class="headerlink" href="#examples" title="Link to this heading"></a></h1>
 <ul class="simple">
 <li><p>Each ROS node contains multiple functional agents, each performing specific tasks.</p></li>
 <li><dl class="simple">
@@ -194,14 +197,90 @@
 </pre></div>
 </div>
 </section>
+<section id="get-plan-from-user-s-prompt">
+<h2>Get plan from user’s prompt<a class="headerlink" href="#get-plan-from-user-s-prompt" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p>Set <strong>isplanned=False</strong> when running about terminal 1 command</p></li>
+<li><p>Type a prompt in terminal 1, e.g.</p></li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>put<span class="w"> </span>yellow<span class="w"> </span>cup<span class="w">  </span>into<span class="w"> </span>wooden<span class="w"> </span>tray
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>The sequence of tasks will be showed in terminal 2</p></li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>find::yellow<span class="w"> </span>cup,<span class="w"> </span>wooden<span class="w"> </span>tray
+pick::yellow<span class="w"> </span>cup
+place::wooden<span class="w"> </span>tray
+</pre></div>
+</div>
+</section>
+<section id="detect-an-object-using-structured-commnad">
+<h2>Detect an object using structured commnad<a class="headerlink" href="#detect-an-object-using-structured-commnad" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p>Set <strong>isplanned=True</strong> when running about terminal 1 command</p></li>
+<li><p>Type a prompt in terminal 1, e.g.</p></li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>detect::green<span class="w"> </span>cup
+</pre></div>
+</div>
+<figure class="align-center" id="id2">
+<a class="reference internal image-reference" href="../_images/fig_example2_input.png"><img alt="Alternative text" src="../_images/fig_example2_input.png" style="width: 500px;" />
+</a>
+<figcaption>
+<p><span class="caption-text">Input RGB.</span><a class="headerlink" href="#id2" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<figure class="align-center" id="id3">
+<a class="reference internal image-reference" href="../_images/fig_example2_output.png"><img alt="Alternative text" src="../_images/fig_example2_output.png" style="width: 500px;" />
+</a>
+<figcaption>
+<p><span class="caption-text">Detection Result.</span><a class="headerlink" href="#id3" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+</section>
+<section id="detect-grasp-pose-of-an-object-using-structured-commnad">
+<h2>Detect grasp pose of an object using structured commnad<a class="headerlink" href="#detect-grasp-pose-of-an-object-using-structured-commnad" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p>Set <strong>isplanned=True</strong> when running about terminal 1 command</p></li>
+<li><p>Type a prompt in terminal 1, e.g.</p></li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>detect_grasp::green<span class="w"> </span>cup
+</pre></div>
+</div>
+<figure class="align-center" id="id4">
+<a class="reference internal image-reference" href="../_images/fig_example3_output.png"><img alt="Alternative text" src="../_images/fig_example3_output.png" style="width: 500px;" />
+</a>
+<figcaption>
+<p><span class="caption-text">Detection Result.</span><a class="headerlink" href="#id4" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+</section>
+<section id="detect-place-pose-of-an-object-using-structured-commnad">
+<h2>Detect place pose of an object using structured commnad<a class="headerlink" href="#detect-place-pose-of-an-object-using-structured-commnad" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p>Set <strong>isplanned=True</strong> when running about terminal 1 command</p></li>
+<li><p>Type a prompt in terminal 1, e.g.</p></li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>detect_place::wooden<span class="w"> </span>dish
+</pre></div>
+</div>
+<figure class="align-center" id="id5">
+<a class="reference internal image-reference" href="../_images/fig_example4_output.png"><img alt="Alternative text" src="../_images/fig_example4_output.png" style="width: 500px;" />
+</a>
+<figcaption>
+<p><span class="caption-text">Detection Result.</span><a class="headerlink" href="#id5" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+</section>
 </section>
 
 
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="api_overview.html" class="btn btn-neutral float-left" title="APIs Overview" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="../apidoc/app_carerobot/modules.html" class="btn btn-neutral float-right" title="app_carerobot" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="manual.html" class="btn btn-neutral float-left" title="Manual" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../apidoc/carerobotapp/modules.html" class="btn btn-neutral float-right" title="carerobotapp" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

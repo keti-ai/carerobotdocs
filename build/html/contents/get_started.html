@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Getting Started &mdash; Care Robot 1.0.0 documentation</title>
+  <title>Installation &mdash; Care Robot 1.0.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
 
@@ -19,8 +19,8 @@
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="APIs Overview" href="api_overview.html" />
-    <link rel="prev" title="Introduction" href="intro.html" /> 
+    <link rel="next" title="Manual" href="manual.html" />
+    <link rel="prev" title="Overview" href="intro.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -44,8 +44,8 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="intro.html">Introduction</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Getting Started</a><ul>
+<li class="toctree-l1"><a class="reference internal" href="intro.html">Overview</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Installation</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#host-pc-installation">Host PC Installation</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#gpu-driver-installation">GPU Driver Installation</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#dependencies-installation">Dependencies Installation</a></li>
@@ -63,21 +63,13 @@
 <li class="toctree-l3"><a class="reference internal" href="#configuration-files">Configuration Files</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#examples">Examples</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#example-1-get-plan-from-user-s-prompt">Example 1: Get plan from user’s prompt</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#example-2-detect-an-object-using-structured-commnad">Example 2: Detect an object using structured commnad</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#example-3-detect-grasp-pose-of-an-object-using-structured-commnad">Example 3: Detect grasp pose of an object using structured commnad</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#example-4-detect-place-pose-of-an-object-using-structured-commnad">Example 4: Detect place pose of an object using structured commnad</a></li>
 </ul>
 </li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="api_overview.html">APIs Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="manual.html">Manual</a></li>
 <li class="toctree-l1"><a class="reference internal" href="examples.html">Examples</a></li>
 </ul>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../apidoc/app_carerobot/modules.html">app_carerobot</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../apidoc/pyconnect/modules.html">pyconnect</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../apidoc/carerobotapp/modules.html">carerobotapp</a></li>
 </ul>
 
         </div>
@@ -94,7 +86,7 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
-      <li class="breadcrumb-item active">Getting Started</li>
+      <li class="breadcrumb-item active">Installation</li>
       <li class="wy-breadcrumbs-aside">
             <a href="../_sources/contents/get_started.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -104,8 +96,8 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="getting-started">
-<h1>Getting Started<a class="headerlink" href="#getting-started" title="Link to this heading"></a></h1>
+  <section id="installation">
+<span id="install"></span><h1>Installation<a class="headerlink" href="#installation" title="Link to this heading"></a></h1>
 <p>This guide provides step-by-step instructions to set up the necessary environment for your project, including CUDA, Docker, dependencies, and system execution.</p>
 <p>—</p>
 <section id="host-pc-installation">
@@ -309,23 +301,20 @@ ftp<span class="w"> </span><span class="m">0</span>.0.0.0
 </ul>
 </div></blockquote>
 <p>Clone the following repositories to set up the necessary dependencies:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/keti-ai/pyrecognition.git
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/keti-ai/carerobotapp.git
+git<span class="w"> </span>clone<span class="w"> </span>https://github.com/keti-ai/pyrecognition.git
 git<span class="w"> </span>clone<span class="w"> </span>https://github.com/keti-ai/pyconnect.git
 git<span class="w"> </span>clone<span class="w"> </span>https://github.com/keti-ai/pyinterfaces.git
 git<span class="w"> </span>clone<span class="w"> </span>https://github.com/keti-ai/rosinterfaces.git
 </pre></div>
 </div>
 <p>Install the repositories as editable Python packages:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span>pyrecognition
-pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span>pyconnect
-pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span>pyinterfaces
-</pre></div>
-</div>
 <p>Install ROS Interfaces</p>
 <ul>
 <li><p>Create a symbolic link to <cite>rosinterfaces</cite> inside the ROS2 workspace:</p>
 <blockquote>
-<div><div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>ln<span class="w"> </span>-s<span class="w"> </span>rosinterfaces<span class="w"> </span>~/ros2_ws/src
+<div><div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>~/ros2_ws/src
+ln<span class="w"> </span>-s<span class="w"> </span><span class="nv">$ROSINTERFACES_PATH</span><span class="w"> </span>.
 </pre></div>
 </div>
 </div></blockquote>
@@ -341,7 +330,7 @@ colcon<span class="w"> </span>build<span class="w"> </span>--packages-select<spa
 </ul>
 </section>
 <section id="system-execution">
-<h2>System Execution<a class="headerlink" href="#system-execution" title="Link to this heading"></a></h2>
+<span id="system-exec"></span><h2>System Execution<a class="headerlink" href="#system-execution" title="Link to this heading"></a></h2>
 <section id="step-1-edge-pc-run-robot-and-device-server">
 <h3>Step 1. Edge PC: Run Robot and Device Server<a class="headerlink" href="#step-1-edge-pc-run-robot-and-device-server" title="Link to this heading"></a></h3>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>robot<span class="w">   </span><span class="c1"># Initializes robot arm, elevator, head, etc.</span>
@@ -365,8 +354,7 @@ sudo<span class="w"> </span>docker<span class="w"> </span><span class="nb">exec<
 <section id="step-3-control-pc-run-control-nodes-in-different-terminal-window">
 <h3>Step 3. Control PC: Run Control Nodes in different Terminal Window<a class="headerlink" href="#step-3-control-pc-run-control-nodes-in-different-terminal-window" title="Link to this heading"></a></h3>
 <p>Terminal 1</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="w">     </span><span class="nb">cd</span><span class="w"> </span>app_carerobot
-<span class="w">     </span>python3<span class="w"> </span>node_prompt.py<span class="w"> </span><span class="nv">isplanned</span><span class="o">=</span>True
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="w">     </span>python3<span class="w"> </span>-m<span class="w"> </span>carerobot.node_prompt<span class="w"> </span><span class="nv">isplanned</span><span class="o">=</span>True
 
 -<span class="w"> </span>isplanned:
 <span class="w">     </span>True:<span class="w"> </span>send<span class="w"> </span>a<span class="w"> </span>sequence<span class="w"> </span>of<span class="w"> </span>strutured<span class="w"> </span>tasks,<span class="w"> </span>e.g.<span class="w"> </span><span class="o">(</span>find::cup,<span class="w"> </span>tray,<span class="w"> </span>pick::cup,<span class="w"> </span>place::tray<span class="o">)</span>
@@ -374,98 +362,17 @@ sudo<span class="w"> </span>docker<span class="w"> </span><span class="nb">exec<
 </pre></div>
 </div>
 <p>Terminal 2</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>app_carerobot
-python3<span class="w"> </span>node_skill_servers.py
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python3<span class="w"> </span>-m<span class="w"> </span>carerobot.node_skill_servers
 </pre></div>
 </div>
 <p>Terminal 3</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>app_carerobot
-python3<span class="w"> </span>node_taskmanager.py
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python3<span class="w"> </span>-m<span class="w"> </span>carerobot.node_taskmanager
 </pre></div>
 </div>
 </section>
 <section id="configuration-files">
 <h3>Configuration Files<a class="headerlink" href="#configuration-files" title="Link to this heading"></a></h3>
-<p>For further configurations, refer to the <cite>app_carerobot.configs</cite> directory.</p>
-</section>
-</section>
-<section id="examples">
-<h2>Examples<a class="headerlink" href="#examples" title="Link to this heading"></a></h2>
-<section id="example-1-get-plan-from-user-s-prompt">
-<h3>Example 1: Get plan from user’s prompt<a class="headerlink" href="#example-1-get-plan-from-user-s-prompt" title="Link to this heading"></a></h3>
-<ul class="simple">
-<li><p>Set <strong>isplanned=False</strong> when running about terminal 1 command</p></li>
-<li><p>Type a prompt in terminal 1, e.g.</p></li>
-</ul>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>put<span class="w"> </span>yellow<span class="w"> </span>cup<span class="w">  </span>into<span class="w"> </span>wooden<span class="w"> </span>tray
-</pre></div>
-</div>
-<ul class="simple">
-<li><p>The sequence of tasks will be showed in terminal 2</p></li>
-</ul>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>find::yellow<span class="w"> </span>cup,<span class="w"> </span>wooden<span class="w"> </span>tray
-pick::yellow<span class="w"> </span>cup
-place::wooden<span class="w"> </span>tray
-</pre></div>
-</div>
-</section>
-<section id="example-2-detect-an-object-using-structured-commnad">
-<h3>Example 2: Detect an object using structured commnad<a class="headerlink" href="#example-2-detect-an-object-using-structured-commnad" title="Link to this heading"></a></h3>
-<ul class="simple">
-<li><p>Set <strong>isplanned=True</strong> when running about terminal 1 command</p></li>
-<li><p>Type a prompt in terminal 1, e.g.</p></li>
-</ul>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>detect::green<span class="w"> </span>cup
-</pre></div>
-</div>
-<figure class="align-center" id="id1">
-<a class="reference internal image-reference" href="../_images/fig_example2_input.png"><img alt="Alternative text" src="../_images/fig_example2_input.png" style="width: 500px;" />
-</a>
-<figcaption>
-<p><span class="caption-text">Input RGB.</span><a class="headerlink" href="#id1" title="Link to this image"></a></p>
-</figcaption>
-</figure>
-<figure class="align-center" id="id2">
-<a class="reference internal image-reference" href="../_images/fig_example2_output.png"><img alt="Alternative text" src="../_images/fig_example2_output.png" style="width: 500px;" />
-</a>
-<figcaption>
-<p><span class="caption-text">Detection Result.</span><a class="headerlink" href="#id2" title="Link to this image"></a></p>
-</figcaption>
-</figure>
-</section>
-<section id="example-3-detect-grasp-pose-of-an-object-using-structured-commnad">
-<h3>Example 3: Detect grasp pose of an object using structured commnad<a class="headerlink" href="#example-3-detect-grasp-pose-of-an-object-using-structured-commnad" title="Link to this heading"></a></h3>
-<ul class="simple">
-<li><p>Set <strong>isplanned=True</strong> when running about terminal 1 command</p></li>
-<li><p>Type a prompt in terminal 1, e.g.</p></li>
-</ul>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>detect_grasp::green<span class="w"> </span>cup
-</pre></div>
-</div>
-<figure class="align-center" id="id3">
-<a class="reference internal image-reference" href="../_images/fig_example3_output.png"><img alt="Alternative text" src="../_images/fig_example3_output.png" style="width: 500px;" />
-</a>
-<figcaption>
-<p><span class="caption-text">Detection Result.</span><a class="headerlink" href="#id3" title="Link to this image"></a></p>
-</figcaption>
-</figure>
-</section>
-<section id="example-4-detect-place-pose-of-an-object-using-structured-commnad">
-<h3>Example 4: Detect place pose of an object using structured commnad<a class="headerlink" href="#example-4-detect-place-pose-of-an-object-using-structured-commnad" title="Link to this heading"></a></h3>
-<ul class="simple">
-<li><p>Set <strong>isplanned=True</strong> when running about terminal 1 command</p></li>
-<li><p>Type a prompt in terminal 1, e.g.</p></li>
-</ul>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>detect_place::wooden<span class="w"> </span>dish
-</pre></div>
-</div>
-<figure class="align-center" id="id4">
-<a class="reference internal image-reference" href="../_images/fig_example4_output.png"><img alt="Alternative text" src="../_images/fig_example4_output.png" style="width: 500px;" />
-</a>
-<figcaption>
-<p><span class="caption-text">Detection Result.</span><a class="headerlink" href="#id4" title="Link to this image"></a></p>
-</figcaption>
-</figure>
+<p>For further configurations, refer to the <cite>carerobotapp.configs</cite> directory.</p>
 </section>
 </section>
 </section>
@@ -474,8 +381,8 @@ place::wooden<span class="w"> </span>tray
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="intro.html" class="btn btn-neutral float-left" title="Introduction" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="api_overview.html" class="btn btn-neutral float-right" title="APIs Overview" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="intro.html" class="btn btn-neutral float-left" title="Overview" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="manual.html" class="btn btn-neutral float-right" title="Manual" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

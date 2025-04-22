@@ -1,3 +1,4 @@
+.. _examples:
 =============
 Examples
 =============
@@ -13,7 +14,7 @@ Examples
 
 
 Topic Pub/Sub
------------------
+=============
 
 
 .. code-block:: python
@@ -46,7 +47,7 @@ Spin subscriber and return a response
 
 
 Image Sub
------------------
+=============
 
 .. code-block:: python
 
@@ -89,7 +90,7 @@ Retrieve data
 
 
 Service Client/Server
------------------
+=============
 
 .. code-block:: python
 
@@ -127,6 +128,91 @@ Client periodically send to server
               rev_data = client_node.agents['send_data'].rev_data
               time.sleep(2)
 
+
+
+Get plan from user's prompt
+=============
+
+- Set **isplanned=False** when running about terminal 1 command
+
+- Type a prompt in terminal 1, e.g.
+
+.. code-block:: bash
+
+       put yellow cup  into wooden tray
+
+- The sequence of tasks will be showed in terminal 2
+
+.. code-block:: bash
+
+       find::yellow cup, wooden tray
+       pick::yellow cup
+       place::wooden tray
+
+
+Detect an object using structured commnad
+=============
+
+- Set **isplanned=True** when running about terminal 1 command
+
+
+- Type a prompt in terminal 1, e.g.
+
+.. code-block:: bash
+
+       detect::green cup
+
+.. figure:: images/fig_example2_input.png
+   :alt: Alternative text
+   :width: 500px
+   :align: center
+
+   Input RGB.
+
+.. figure:: images/fig_example2_output.png
+   :alt: Alternative text
+   :width: 500px
+   :align: center
+
+   Detection Result.
+
+Detect grasp pose of an object using structured commnad
+=============
+
+- Set **isplanned=True** when running about terminal 1 command
+
+
+- Type a prompt in terminal 1, e.g.
+
+.. code-block:: bash
+
+       detect_grasp::green cup
+
+.. figure:: images/fig_example3_output.png
+   :alt: Alternative text
+   :width: 500px
+   :align: center
+
+   Detection Result.
+
+Detect place pose of an object using structured commnad
+=============
+
+- Set **isplanned=True** when running about terminal 1 command
+
+
+- Type a prompt in terminal 1, e.g.
+
+.. code-block:: bash
+
+       detect_place::wooden dish
+
+.. figure:: images/fig_example4_output.png
+   :alt: Alternative text
+   :width: 500px
+   :align: center
+
+   Detection Result.
 
 
 

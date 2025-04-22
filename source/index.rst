@@ -11,19 +11,17 @@ This is the documentation for the care robot project.
    :caption: Contents:
 
    contents/intro
-   contents/get_started
-   contents/api_overview
-   contents/examples
-   
+   contents/get_started   
+   contents/manual
+   contents/examples 
 
+.. _api_reference:
 API Reference
 =============
 .. toctree::
    :maxdepth: 2
 
-   apidoc/app_carerobot/modules
-   apidoc/pyconnect/modules
-   
+   apidoc/carerobotapp/modules   
 
    
 

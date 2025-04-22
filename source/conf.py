@@ -20,12 +20,22 @@ sys.path.insert(0, '/media/keti/workdir/projects/pyconnect')
 
 extensions = [
     'sphinx.ext.autodoc',  # For auto-generating docs from code
-    # 'sphinx.ext.viewcode', # Links to source code
+    'sphinx.ext.viewcode', # Links to source code
     'sphinx.ext.napoleon', # Supports Google/NumPy docstring styles
 ]
 
 templates_path = ['_templates']
 exclude_patterns = []
+
+
+autodoc_default_options = {
+    'members': True,
+    'undoc-members': True,
+    'private-members': False,
+    'special-members': '__init__',
+    'show-inheritance': True,
+}
+
 
 
 

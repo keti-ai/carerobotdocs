@@ -1,5 +1,6 @@
+.. _install:
 =============
-Getting Started
+Installation
 =============
 
 This guide provides step-by-step instructions to set up the necessary environment for your project, including CUDA, Docker, dependencies, and system execution.
@@ -227,6 +228,7 @@ Clone the following repositories to set up the necessary dependencies:
 
 .. code-block:: bash
 
+       git clone https://github.com/keti-ai/carerobotapp.git
        git clone https://github.com/keti-ai/pyrecognition.git
        git clone https://github.com/keti-ai/pyconnect.git
        git clone https://github.com/keti-ai/pyinterfaces.git
@@ -237,7 +239,7 @@ Clone the following repositories to set up the necessary dependencies:
 Install the repositories as editable Python packages:
 
 .. code-block:: bash
-
+       pip install -e carerobotapp
        pip install -e pyrecognition
        pip install -e pyconnect
        pip install -e pyinterfaces
@@ -247,8 +249,9 @@ Install ROS Interfaces
 - Create a symbolic link to `rosinterfaces` inside the ROS2 workspace:
 
    .. code-block:: bash
-
-       ln -s rosinterfaces ~/ros2_ws/src
+       
+       cd ~/ros2_ws/src
+       ln -s $ROSINTERFACES_PATH .
 
 - Build the ROS package:
 
@@ -257,6 +260,7 @@ Install ROS Interfaces
        cd ~/ros2_ws
        colcon build --packages-select rosinterfaces
 
+.. _system_exec:
 
 System Execution
 ===================
@@ -294,8 +298,7 @@ Terminal 1
 
 .. code-block:: bash
 
-       cd app_carerobot
-       python3 node_prompt.py isplanned=True 
+       python3 -m carerobot.node_prompt isplanned=True 
 
   - isplanned: 
        True: send a sequence of strutured tasks, e.g. (find::cup, tray, pick::cup, place::tray)
@@ -305,108 +308,21 @@ Terminal 2
 
 .. code-block:: bash
 
-       cd app_carerobot
-       python3 node_skill_servers.py
+       python3 -m carerobot.node_skill_servers
 
 Terminal 3
 
 .. code-block:: bash
 
-       cd app_carerobot
-       python3 node_taskmanager.py
+       python3 -m carerobot.node_taskmanager
 
 Configuration Files
 ----------------------
 
-For further configurations, refer to the `app_carerobot.configs` directory.
+For further configurations, refer to the `carerobotapp.configs` directory.
 
 
-Examples
-===================
 
-Example 1: Get plan from user's prompt
-------------------
-
-- Set **isplanned=False** when running about terminal 1 command
-
-- Type a prompt in terminal 1, e.g.
-
-.. code-block:: bash
-
-       put yellow cup  into wooden tray
-
-- The sequence of tasks will be showed in terminal 2
-
-.. code-block:: bash
-
-       find::yellow cup, wooden tray
-       pick::yellow cup
-       place::wooden tray
-
-
-Example 2: Detect an object using structured commnad
-------------------------
-
-- Set **isplanned=True** when running about terminal 1 command
-
-
-- Type a prompt in terminal 1, e.g.
-
-.. code-block:: bash
-
-       detect::green cup
-
-.. figure:: images/fig_example2_input.png
-   :alt: Alternative text
-   :width: 500px
-   :align: center
-
-   Input RGB.
-
-.. figure:: images/fig_example2_output.png
-   :alt: Alternative text
-   :width: 500px
-   :align: center
-
-   Detection Result.
-
-Example 3: Detect grasp pose of an object using structured commnad
-------------------------
-
-- Set **isplanned=True** when running about terminal 1 command
-
-
-- Type a prompt in terminal 1, e.g.
-
-.. code-block:: bash
-
-       detect_grasp::green cup
-
-.. figure:: images/fig_example3_output.png
-   :alt: Alternative text
-   :width: 500px
-   :align: center
-
-   Detection Result.
-
-Example 4: Detect place pose of an object using structured commnad
-------------------------
-
-- Set **isplanned=True** when running about terminal 1 command
-
-
-- Type a prompt in terminal 1, e.g.
-
-.. code-block:: bash
-
-       detect_place::wooden dish
-
-.. figure:: images/fig_example4_output.png
-   :alt: Alternative text
-   :width: 500px
-   :align: center
-
-   Detection Result.
 
 
 
