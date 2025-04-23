@@ -150,7 +150,7 @@ Get plan from user's prompt
        place::wooden tray
 
 
-Detect an object using structured commnad
+Detect an object using structured command
 =============
 
 - Set **isplanned=True** when running about terminal 1 command
@@ -176,7 +176,7 @@ Detect an object using structured commnad
 
    Detection Result.
 
-Detect grasp pose of an object using structured commnad
+Detect grasp pose of an object using structured command
 =============
 
 - Set **isplanned=True** when running about terminal 1 command
