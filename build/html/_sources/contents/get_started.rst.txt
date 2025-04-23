@@ -239,6 +239,7 @@ Clone the following repositories to set up the necessary dependencies:
 Install the repositories as editable Python packages:
 
 .. code-block:: bash
+
        pip install -e carerobotapp
        pip install -e pyrecognition
        pip install -e pyconnect
