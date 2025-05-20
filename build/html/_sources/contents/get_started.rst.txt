@@ -87,14 +87,24 @@ Add some custom useful alias (Optional)
        gitpush() {
        git add . .gitignore && git commit -m "$@" && git push
        }
-       runa() {
-       container_name="$1"  # First argument is the container name
-       shift 1              # Remove the first two arguments, leaving only additional script arguments
-       
-       xhost +
-       sudo docker start "$container_name"
-       sudo docker exec -it "$container_name" /bin/bash -c \
-       "source ~/.bashrc && source /opt/ros/humble/setup.bash && source ~/ros2_ws/install/setup.bash && $@"
+       rund() {
+              local container_name="$1"
+              local ros_domain_id="$2"
+              shift 2
+
+              # Allow local GUI access
+              xhost +local:
+
+              # Start the container
+              sudo docker start "$container_name"
+
+              # Execute the command inside the container
+              sudo docker exec -it "$container_name" bash -c "
+              source ~/.bashrc
+              source /opt/ros/humble/setup.bash
+              source ~/ros2_ws/install/setup.bash
+              export ROS_DOMAIN_ID=$ros_domain_id
+              $*"
        }
 
 
