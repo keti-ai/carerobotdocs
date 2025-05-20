@@ -79,14 +79,15 @@ Add some custom useful alias (Optional)
 
        #functions
        dockerexec() {
-       xhost local: & sudo docker start "$@" & sudo docker exec -it "$@" /bin/bash
+              xhost local: & sudo docker start "$@" & sudo docker exec -it "$@" /bin/bash
        }
        dockerrm() {
-       sudo docker stop "$@" && sudo docker rm "$@"
+              sudo docker stop "$@" && sudo docker rm "$@"
        }
        gitpush() {
-       git add . .gitignore && git commit -m "$@" && git push
-       }
+              local date_str=$(date +%Y%m%d)
+              git add . .gitignore && git commit -m "$date_str - $*" && git push
+              }
        rund() {
               local container_name="$1"
               local ros_domain_id="$2"
