@@ -102,11 +102,11 @@ Move relative
 
 .. code-block:: bash
 
-       arm_dmove::dx=dx,dy=dy,dz=dz,drx=drx,dry=dry,dz=drz
+       dmove::dx=dx,dy=dy,dz=dz,drx=drx,dry=dry,dz=drz
 
 Notes:
        - dx, dy, dz in [mm], drx, dry, drz in [degrees]
-       - arm_dmove::dx=dx: move for x-axis only
+       - dmove::dx=dx: move for x-axis only
 
 
 Lift arm
@@ -259,7 +259,7 @@ Approach object
 
 .. code-block:: bash
 
-       arm_approach::object_name
+       approach::object_name
 
 
 Arm back

@@ -299,7 +299,7 @@ Terminal 1
 
 .. code-block:: bash
 
-       python3 -m carerobot.node_prompt isplanned=True 
+       python3 -m carerobotapp.node_prompt isplanned=True 
 
   - isplanned: 
        True: send a sequence of strutured tasks, e.g. (find::cup, tray, pick::cup, place::tray)
@@ -309,13 +309,7 @@ Terminal 2
 
 .. code-block:: bash
 
-       python3 -m carerobot.node_skill_servers
-
-Terminal 3
-
-.. code-block:: bash
-
-       python3 -m carerobot.node_taskmanager
+       python3 -m carerobotapp.node_taskmanager
 
 Configuration Files
 ----------------------

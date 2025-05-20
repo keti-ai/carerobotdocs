@@ -103,8 +103,8 @@
 <section id="module-carerobotapp.skills.arm">
 <span id="carerobotapp-skills-arm-module"></span><h2>carerobotapp.skills.arm module<a class="headerlink" href="#module-carerobotapp.skills.arm" title="Link to this heading"></a></h2>
 <dl class="py function">
-<dt class="sig sig-object py" id="carerobotapp.skills.arm.arm_approach">
-<span class="sig-prename descclassname"><span class="pre">carerobotapp.skills.arm.</span></span><span class="sig-name descname"><span class="pre">arm_approach</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">device_mode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/carerobotapp/skills/arm.html#arm_approach"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#carerobotapp.skills.arm.arm_approach" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="carerobotapp.skills.arm.approach">
+<span class="sig-prename descclassname"><span class="pre">carerobotapp.skills.arm.</span></span><span class="sig-name descname"><span class="pre">approach</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/carerobotapp/skills/arm.html#approach"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#carerobotapp.skills.arm.approach" title="Link to this definition"></a></dt>
 <dd><p>Move the robot arm to approach an object.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -136,41 +136,9 @@
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="carerobotapp.skills.arm.arm_move">
-<span class="sig-prename descclassname"><span class="pre">carerobotapp.skills.arm.</span></span><span class="sig-name descname"><span class="pre">arm_move</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">device_mode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/carerobotapp/skills/arm.html#arm_move"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#carerobotapp.skills.arm.arm_move" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="carerobotapp.skills.arm.move">
+<span class="sig-prename descclassname"><span class="pre">carerobotapp.skills.arm.</span></span><span class="sig-name descname"><span class="pre">move</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/carerobotapp/skills/arm.html#move"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#carerobotapp.skills.arm.move" title="Link to this definition"></a></dt>
 <dd></dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="carerobotapp.skills.arm.dlift">
-<span class="sig-prename descclassname"><span class="pre">carerobotapp.skills.arm.</span></span><span class="sig-name descname"><span class="pre">dlift</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">device_mode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/carerobotapp/skills/arm.html#dlift"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#carerobotapp.skills.arm.dlift" title="Link to this definition"></a></dt>
-<dd><p>Lift the robot arm by a specified distance.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>node</strong> (<em>-</em>) – The ROS node with lift-related agents.</p></li>
-<li><p><strong>data</strong> (<em>-</em>) – Task data, including ‘inputs’ key with format ‘lift::distance’.</p></li>
-<li><p><strong>device_mode</strong> (<em>-</em>) – Mode suffix for agent names. Defaults to ‘’.</p></li>
-<li><p><strong>**kwargs</strong> (<em>-</em>) – <p>Additional keyword arguments (unused).</p>
-</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>Result with ‘isdone’ (bool) indicating success or failure.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><ul class="simple">
-<li><p>dict</p></li>
-</ul>
-</p>
-</dd>
-<dt class="field-even">Raises<span class="colon">:</span></dt>
-<dd class="field-even"><ul class="simple">
-<li><p><strong>- KeyError</strong> – If ‘inputs’ or agent data is missing.</p></li>
-<li><p><strong>- ValueError</strong> – If task format is invalid.</p></li>
-</ul>
-</dd>
-</dl>
-</dd></dl>
 
 </section>
 <section id="module-carerobotapp.skills.calibrattion">
@@ -330,7 +298,7 @@
 <span id="carerobotapp-skills-pick-module"></span><h2>carerobotapp.skills.pick module<a class="headerlink" href="#module-carerobotapp.skills.pick" title="Link to this heading"></a></h2>
 <dl class="py function">
 <dt class="sig sig-object py" id="carerobotapp.skills.pick.pick">
-<span class="sig-prename descclassname"><span class="pre">carerobotapp.skills.pick.</span></span><span class="sig-name descname"><span class="pre">pick</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">device_mode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/carerobotapp/skills/pick.html#pick"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#carerobotapp.skills.pick.pick" title="Link to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">carerobotapp.skills.pick.</span></span><span class="sig-name descname"><span class="pre">pick</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/carerobotapp/skills/pick.html#pick"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#carerobotapp.skills.pick.pick" title="Link to this definition"></a></dt>
 <dd><p>Pick an object using the robot arm and gripper.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -366,7 +334,7 @@
 <span id="carerobotapp-skills-place-module"></span><h2>carerobotapp.skills.place module<a class="headerlink" href="#module-carerobotapp.skills.place" title="Link to this heading"></a></h2>
 <dl class="py function">
 <dt class="sig sig-object py" id="carerobotapp.skills.place.place">
-<span class="sig-prename descclassname"><span class="pre">carerobotapp.skills.place.</span></span><span class="sig-name descname"><span class="pre">place</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">device_mode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/carerobotapp/skills/place.html#place"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#carerobotapp.skills.place.place" title="Link to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">carerobotapp.skills.place.</span></span><span class="sig-name descname"><span class="pre">place</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/carerobotapp/skills/place.html#place"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#carerobotapp.skills.place.place" title="Link to this definition"></a></dt>
 <dd><p>Place an object using the robot arm and gripper.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -402,7 +370,7 @@
 <span id="carerobotapp-skills-recognition-module"></span><h2>carerobotapp.skills.recognition module<a class="headerlink" href="#module-carerobotapp.skills.recognition" title="Link to this heading"></a></h2>
 <dl class="py function">
 <dt class="sig sig-object py" id="carerobotapp.skills.recognition.detect">
-<span class="sig-prename descclassname"><span class="pre">carerobotapp.skills.recognition.</span></span><span class="sig-name descname"><span class="pre">detect</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show_mode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">device_mode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">camera</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'femto'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/carerobotapp/skills/recognition.html#detect"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#carerobotapp.skills.recognition.detect" title="Link to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">carerobotapp.skills.recognition.</span></span><span class="sig-name descname"><span class="pre">detect</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show_mode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">device_mode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">camera</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'femto'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/carerobotapp/skills/recognition.html#detect"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#carerobotapp.skills.recognition.detect" title="Link to this definition"></a></dt>
 <dd><p>Detect objects using camera data.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -495,7 +463,7 @@
 
 <dl class="py function">
 <dt class="sig sig-object py" id="carerobotapp.skills.recognition.find">
-<span class="sig-prename descclassname"><span class="pre">carerobotapp.skills.recognition.</span></span><span class="sig-name descname"><span class="pre">find</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show_mode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">device_mode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/carerobotapp/skills/recognition.html#find"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#carerobotapp.skills.recognition.find" title="Link to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">carerobotapp.skills.recognition.</span></span><span class="sig-name descname"><span class="pre">find</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show_mode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">device_mode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/carerobotapp/skills/recognition.html#find"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#carerobotapp.skills.recognition.find" title="Link to this definition"></a></dt>
 <dd><p>Find objects by scanning with head movement.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -550,6 +518,37 @@
 </dd>
 <dt class="field-even">Raises<span class="colon">:</span></dt>
 <dd class="field-even"><p><strong>- KeyError</strong> – If agent data is missing.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="carerobotapp.skills.recognition.test_detector">
+<span class="sig-prename descclassname"><span class="pre">carerobotapp.skills.recognition.</span></span><span class="sig-name descname"><span class="pre">test_detector</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">node</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show_mode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">device_mode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">camera</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'femto'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">detector</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'groundedsam'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/carerobotapp/skills/recognition.html#test_detector"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#carerobotapp.skills.recognition.test_detector" title="Link to this definition"></a></dt>
+<dd><p>Detect objects using camera data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>node</strong> (<em>-</em>) – The ROS node with camera and result agents.</p></li>
+<li><p><strong>data</strong> (<em>-</em>) – Task data with ‘inputs’ (format ‘detect::obj_name’).</p></li>
+<li><p><strong>show_mode</strong> (<em>-</em>) – Mode suffix for show agents. Defaults to ‘’.</p></li>
+<li><p><strong>device_mode</strong> (<em>-</em>) – Mode suffix for device agents. Defaults to ‘’.</p></li>
+<li><p><strong>camera</strong> (<em>-</em>) – Camera type from CONFIGS. Defaults to CONFIGS[‘camera’].</p></li>
+<li><p><strong>**kwargs</strong> (<em>-</em>) – <p>Additional keyword arguments (unused).</p>
+</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Result with ‘isdone’ (bool), ‘ins’ (dict of object info), and ‘head_state’.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><ul class="simple">
+<li><p>dict</p></li>
+</ul>
+</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>- KeyError</strong> – If agent data or ‘inputs’ format is invalid.</p>
 </dd>
 </dl>
 </dd></dl>
