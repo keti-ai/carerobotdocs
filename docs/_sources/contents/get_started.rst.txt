@@ -193,7 +193,7 @@ To set up a Docker containerized environment for your project, follow these step
 
    .. code-block:: bash
 
-       ./build_image.sh <UBUNTU_VERSION> <CUDA_VERSION> <ROS_DISTRO>
+       ./build_image.sh --ubuntu=<UBUNTU_VERSION> --cuda=<CUDA_VERSION> --ros=<ROS_DISTRO>
 
    Replace `<UBUNTU_VERSION>`, `<CUDA_VERSION>`, and `<ROS_DISTRO>` with your specific environment settings.
 
@@ -201,7 +201,7 @@ To set up a Docker containerized environment for your project, follow these step
    
    - Ubuntu20.04, 22.04 (default)
 
-   - CUDA 11.1.1, 11.7.1(default), 12.1.0, 12.4.1, 12.6.3
+   - CUDA 11.1.1, 11.7.1, 12.1.0, 12.4.1, 12.6.3(default)
 
    - ROS2: foxy, humble (default)
    
@@ -210,13 +210,10 @@ To set up a Docker containerized environment for your project, follow these step
 
    .. code-block:: bash
 
-       ./build_container.sh <UBUNTU_VERSION> <CUDA_VERSION> <ROS_DISTRO> <CONTAINER_NAME> <SHARE_DIR> <SSH_PORT> <PORT_MAP>
+       ./build_container.sh --ubuntu=<UBUNTU_VERSION> --cuda=<CUDA_VERSION> --ros=<ROS_DISTRO> --name=<CONTAINER_NAME> --share-dir=<SHARE_DIR>
 
-   - `<CONTAINER_NAME>`: Name of the container [default: kcare]
-   - `<SHARE_DIR>`: Shared directory path [default: /media/keti/workdir/projects]
-   - `<SSH_PORT>`: SSH port number        [default: 2222]
-   - `<PORT_MAP>`: Additional port mappings [default: 8000-8099:8000-8099]
-
+   - `<CONTAINER_NAME>`: Name of the container [default: name of ubuntu and cuda version , e.g u22cu12]
+   - `<SHARE_DIR>`: Shared directory path [default: None, no sahred folder]
 
 Servere PC Installation
 ===================
@@ -224,13 +221,9 @@ Servere PC Installation
    .. code-block:: bash
        
        cd dockers
-       ./build_recognition_container.sh <SSH_PORT> <PORT_MAP> <SHARE_DIR> <IMAGE_NAME> <CONTAINER_NAME>
+       ./build_recognition_container.sh  --share-dir=<SHARE_DIR>
    
-   - `<IMAGE_NAME_NAME>`: Name of the image [default: mtbui2010/ubuntu22:cuda11.7-recognition]
-   - `<CONTAINER_NAME>`: Name of the container [default: reg_u22cu11]
-   - `<SHARE_DIR>`: Shared directory path [default: /media/keti/workdir/projects]
-   - `<SSH_PORT>`: SSH port number        [default: 2202]
-   - `<PORT_MAP>`: Additional port mappings [default: 8000-8099:8000-8099]
+   - `<SHARE_DIR>`: Shared directory path [default: None, no sahred folder]
 
        
 
@@ -244,6 +237,7 @@ Clone the following repositories to set up the necessary dependencies:
        git clone https://github.com/keti-ai/pyconnect.git
        git clone https://github.com/keti-ai/pyinterfaces.git
        git clone https://github.com/keti-ai/rosinterfaces.git
+       git clone https://github.com/keti-ai/pysensor.git
 
 
 
@@ -255,6 +249,7 @@ Install the repositories as editable Python packages:
        pip install -e pyrecognition
        pip install -e pyconnect
        pip install -e pyinterfaces
+       pip install -e pysensor
 
 Install ROS Interfaces
 
@@ -301,7 +296,7 @@ VLM Server Execution:
 
 .. code-block:: bash
 
-       python3 -m pyrecognition.run_server server_type=tcp port=8801 detector=groundedsam
+       python3 -m pyrecognition.run_server server_type=tcp port=8805 detector=vlms
 
 Step 3. Control PC: Run Control Nodes in different Terminal Window
 --------------------------------
@@ -310,17 +305,20 @@ Terminal 1
 
 .. code-block:: bash
 
-       python3 -m carerobotapp.node_prompt isplanned=True 
+       python3 -m carerobotapp.node_prompt
 
-  - isplanned: 
-       True: send a sequence of strutured tasks, e.g. (find::cup, tray, pick::cup, place::tray)
-       False: send a daily command, e.g. place cup into tray
 
 Terminal 2
 
 .. code-block:: bash
 
        python3 -m carerobotapp.node_taskmanager
+
+Terminal 3
+
+.. code-block:: bash
+
+       python3 -m carerobotapp.node_skill_servers
 
 Configuration Files
 ----------------------

@@ -47,29 +47,14 @@
 <li class="toctree-l1"><a class="reference internal" href="intro.html">Overview</a></li>
 <li class="toctree-l1"><a class="reference internal" href="get_started.html">Installation</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Manual</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#device-control">Device Control</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#enable-robot-motion">Enable robot motion</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#set-mode">Set mode</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#set-state">Set state</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#clean-error">Clean error</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#move-joint">Move joint</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#move-relative">Move relative</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#lift-arm">Lift arm</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#grip-control">Grip control</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#move-head">Move head</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="#device-state">Device State</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#skill-control">Skill Control</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#init-robot">Init robot</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#init-pick">Init pick</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#detect-object">Detect Object</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#find-object">Find Object</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#pick-object">Pick Object</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#place-object">Place object</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#approach-object">Approach object</a></li>
-</ul>
-</li>
+<li class="toctree-l2"><a class="reference internal" href="#how-to-use">How to use</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#init-arm">Init Arm</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#arm-control">Arm Control</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#gripper-litf-head-mobile-control">Gripper / Litf/ Head / Mobile Control</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#recognition-skills">Recognition Skills</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#approach-skills">Approach Skills</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#pick-skills">Pick Skills</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#place-skills">Place Skills</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="examples.html">Examples</a></li>
@@ -107,264 +92,540 @@
 <p>This section list commands used to control robot</p>
 <p>Refer to DEVICE_CLIENT_CONFIGS in <a class="reference internal" href="../apidoc/carerobotapp/carerobotapp.configs.html#device-configs"><span class="std std-ref">carerobotapp.configs.device_clients module</span></a> for more details.</p>
 <p>[CLIK  TO SOURCE]</p>
-<section id="device-control">
-<h2>Device Control<a class="headerlink" href="#device-control" title="Link to this heading"></a></h2>
-<ul class="simple">
-<li><p>Example code for one time sending device control request</p></li>
+<section id="how-to-use">
+<h2>How to use<a class="headerlink" href="#how-to-use" title="Link to this heading"></a></h2>
+<ol class="arabic simple">
+<li><p>Make new skill</p></li>
+</ol>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="n">carerobotapp</span><span class="o">/</span><span class="n">skills</span>
+<span class="n">touch</span> <span class="n">new_skill</span><span class="o">.</span><span class="n">py</span>
+
+<span class="c1"># add new_skill to SKILL_LISTS  in carerobotapp.configs.tasks</span>
+</pre></div>
+</div>
+<ol class="arabic simple" start="2">
+<li><p>Execute new skill</p></li>
+</ol>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Run in 3 different terminals</span>
+<span class="n">python3</span> <span class="o">-</span><span class="n">m</span> <span class="n">carerobotapp</span><span class="o">.</span><span class="n">node_prompt</span>
+<span class="n">python3</span> <span class="o">-</span><span class="n">m</span> <span class="n">carerobotapp</span><span class="o">.</span><span class="n">node_taskmanager</span>
+<span class="n">python3</span> <span class="o">-</span><span class="n">m</span> <span class="n">carerobotapp</span><span class="o">.</span><span class="n">node_skill_servers</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># input in node_prompt running window</span>
+<span class="n">new_skill</span><span class="p">::[</span><span class="n">INPUTS</span><span class="p">]</span>
+</pre></div>
+</div>
+</section>
+<section id="init-arm">
+<h2>Init Arm<a class="headerlink" href="#init-arm" title="Link to this heading"></a></h2>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Fuction</p></th>
+<th class="head"><p>Prompt Use</p></th>
+<th class="head"><p>Dev Use</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Clear  error</p></td>
+<td><p>clear_error:</p></td>
+<td><p>node.agents[‘clean_error’].send({})</p></td>
+</tr>
+<tr class="row-odd"><td><p>Enable motion</p></td>
+<td><p>enable_motion:</p></td>
+<td><p>node.agents[‘enable_motion’].send({‘inputs’:0})</p></td>
+</tr>
+<tr class="row-even"><td><p>Set mode</p></td>
+<td><p>set_mode::[INT]</p></td>
+<td><p>node.agents[‘set_mode’].send({‘inputs’:[INT]})</p></td>
+</tr>
+<tr class="row-odd"><td><p>Set state</p></td>
+<td><p>set_state::[INT]</p></td>
+<td><p>node.agents[‘set_state’].send({‘inputs’:[INT]})</p></td>
+</tr>
+<tr class="row-even"><td><p>Init Arm</p></td>
+<td><p>init_arm:</p></td>
+<td><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">carerobotapp.skills.goto_ready</span><span class="w"> </span><span class="kn">import</span> <span class="n">init_arm</span>
+<span class="n">init_arm</span><span class="p">(</span><span class="n">node</span><span class="o">=</span><span class="n">node</span><span class="p">)</span>
+</pre></div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="arm-control">
+<h2>Arm Control<a class="headerlink" href="#arm-control" title="Link to this heading"></a></h2>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Fuction</p></th>
+<th class="head"><p>Usage</p></th>
+<th class="head"><p>Inputs</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Fuction</p></td>
+<td><p>Usage</p></td>
+<td><p>Inputs</p></td>
+</tr>
+<tr class="row-odd"><td><p>Arm movel</p></td>
+<td><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># PROMPT USE</span>
+<span class="n">movel</span><span class="p">::[</span><span class="n">INPUTS</span><span class="p">]</span>
+<span class="n">example</span><span class="p">:</span> <span class="n">movel</span><span class="p">::</span><span class="n">x</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mi">700</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># DEV USE</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">carerobotapp.skills.arm</span><span class="w"> </span><span class="kn">import</span> <span class="n">movel</span>
+<span class="n">movel</span><span class="p">(</span><span class="n">node</span><span class="o">=</span><span class="n">node</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mi">700</span><span class="p">)</span>
+</pre></div>
+</div>
+</td>
+<td><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span>
+   <span class="p">[</span><span class="n">Default</span><span class="p">:</span> <span class="n">Current</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">]</span>
+<span class="n">dx</span><span class="p">,</span> <span class="n">dy</span><span class="p">,</span> <span class="n">dz</span>
+   <span class="p">[</span><span class="n">Default</span><span class="p">:</span> <span class="mi">0</span><span class="p">]</span>
+<span class="n">wait</span>
+   <span class="p">[</span><span class="n">Default</span><span class="p">:</span> <span class="kc">True</span><span class="p">]</span>
+
+<span class="n">Predefined</span> <span class="n">locations</span><span class="p">:</span>
+   <span class="n">afterpnp</span><span class="p">:</span>
+       <span class="n">location</span> <span class="n">afetr</span> <span class="n">picking</span> <span class="ow">or</span> <span class="n">placing</span>
+</pre></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>Arm movej</p></td>
+<td><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># PROMPT USE</span>
+<span class="n">movej</span><span class="p">::[</span><span class="n">INPUTS</span><span class="p">]</span>
+<span class="n">example</span><span class="p">:</span> <span class="n">movej</span><span class="p">::</span><span class="n">fold</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># DEV USE</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">carerobotapp.skills.arm</span><span class="w"> </span><span class="kn">import</span> <span class="n">movej</span>
+<span class="n">movej</span><span class="p">(</span><span class="n">node</span><span class="o">=</span><span class="n">node</span><span class="p">,</span>  <span class="n">inputs</span><span class="o">=</span><span class="s1">&#39;fold&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</td>
+<td><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">r0</span><span class="p">,</span> <span class="n">r1</span><span class="p">,</span> <span class="n">r2</span><span class="p">,</span> <span class="n">r3</span><span class="p">,</span> <span class="n">r4</span><span class="p">,</span> <span class="n">r5</span><span class="p">,</span> <span class="n">r6</span>
+   <span class="p">[</span><span class="n">Default</span><span class="p">:</span> <span class="n">Current</span> <span class="n">joints</span><span class="p">]</span>
+<span class="n">dr0</span><span class="p">,</span> <span class="n">dr1</span><span class="p">,</span> <span class="n">dr2</span><span class="p">,</span> <span class="n">dr3</span><span class="p">,</span> <span class="n">dr4</span><span class="p">,</span> <span class="n">dr5</span><span class="p">,</span> <span class="n">dr6</span>
+   <span class="p">[</span><span class="n">Default</span><span class="p">:</span> <span class="mi">0</span><span class="p">]</span>
+<span class="n">wait</span>
+   <span class="p">[</span><span class="n">Default</span><span class="p">:</span> <span class="kc">True</span><span class="p">]</span>
+
+<span class="n">Predefined</span> <span class="n">locations</span><span class="p">:</span>
+   <span class="n">home</span><span class="p">:</span> <span class="n">home</span> <span class="n">pose</span>
+   <span class="n">ready</span><span class="p">:</span> <span class="n">ready</span> <span class="n">pose</span>
+   <span class="n">give</span><span class="p">:</span> <span class="n">give</span> <span class="n">me</span> <span class="n">pose</span>
+   <span class="n">fold</span><span class="p">:</span> <span class="n">arm</span> <span class="n">fold</span>
+   <span class="n">unfold</span><span class="p">:</span> <span class="n">arm</span> <span class="n">unfod</span>
+</pre></div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>Move tool</p></td>
+<td><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># PROMPT USE</span>
+<span class="n">movet</span><span class="p">::[</span><span class="n">INPUTS</span><span class="p">]</span>
+<span class="n">example</span><span class="p">:</span> <span class="n">movet</span><span class="p">::</span><span class="n">dz</span><span class="o">=</span><span class="mi">100</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># DEV USE</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">carerobotapp.skills.arm</span><span class="w"> </span><span class="kn">import</span> <span class="n">movel</span>
+<span class="n">movet</span><span class="p">(</span><span class="n">node</span><span class="o">=</span><span class="n">node</span><span class="p">,</span> <span class="n">dz</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+</pre></div>
+</div>
+</td>
+<td><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">dx</span><span class="p">,</span> <span class="n">dy</span><span class="p">,</span> <span class="n">dz</span>
+   <span class="p">[</span><span class="n">Default</span><span class="p">:</span> <span class="mi">0</span><span class="p">]</span>
+<span class="n">wait</span>
+   <span class="p">[</span><span class="n">Default</span><span class="p">:</span> <span class="kc">True</span><span class="p">]</span>
+</pre></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>Movel + movet</p></td>
+<td><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># PROMPT USE</span>
+<span class="n">movelf</span><span class="p">::[</span><span class="n">INPUTS</span><span class="p">]</span>
+<span class="n">example</span><span class="p">:</span> <span class="n">movelf</span><span class="p">::</span><span class="n">x</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span> <span class="n">rx</span><span class="o">=-</span><span class="mi">135</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># DEV USE</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">carerobotapp.skills.arm</span><span class="w"> </span><span class="kn">import</span> <span class="n">movelf</span>
+<span class="n">movelf</span><span class="p">(</span><span class="n">node</span><span class="o">=</span><span class="n">node</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span> <span class="n">rx</span><span class="o">=-</span><span class="mi">135</span><span class="p">)</span>
+</pre></div>
+</div>
+</td>
+<td><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span>
+   <span class="p">[</span><span class="n">Default</span><span class="p">:</span> <span class="n">Current</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">]</span>
+<span class="n">dx</span><span class="p">,</span> <span class="n">dy</span><span class="p">,</span> <span class="n">dz</span>
+   <span class="p">[</span><span class="n">Default</span><span class="p">:</span> <span class="mi">0</span><span class="p">]</span>
+<span class="n">rx</span><span class="p">,</span> <span class="n">ry</span><span class="p">,</span> <span class="n">rz</span><span class="p">:</span> <span class="n">Roll</span><span class="p">,</span> <span class="n">Pitch</span><span class="p">,</span> <span class="n">Yaw</span>
+   <span class="p">[</span><span class="n">Default</span><span class="p">:</span> <span class="n">Current</span> <span class="n">angles</span><span class="p">]</span>
+<span class="n">drx</span><span class="p">,</span> <span class="n">dry</span><span class="p">,</span> <span class="n">drz</span><span class="p">:</span>
+   <span class="p">[</span><span class="n">Default</span><span class="p">:</span> <span class="mi">0</span><span class="p">]</span>
+<span class="n">wait</span>
+   <span class="p">[</span><span class="n">Default</span><span class="p">:</span> <span class="kc">True</span><span class="p">]</span>
+</pre></div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="gripper-litf-head-mobile-control">
+<h2>Gripper / Litf/ Head / Mobile Control<a class="headerlink" href="#gripper-litf-head-mobile-control" title="Link to this heading"></a></h2>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Fuction</p></th>
+<th class="head"><p>Usage</p></th>
+<th class="head"><p>Inputs</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Grip</p></td>
+<td><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># PROMPT USE</span>
+<span class="n">grip</span><span class="p">::[</span><span class="n">INT</span><span class="p">]</span>
+<span class="n">example</span><span class="p">:</span> <span class="n">grip</span><span class="p">::</span><span class="mi">200</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># DEV USE</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">carerobotapp.skills.grip</span><span class="w"> </span><span class="kn">import</span> <span class="n">grip</span>
+<span class="n">grip</span><span class="p">(</span><span class="n">node</span><span class="o">=</span><span class="n">node</span><span class="p">,</span> <span class="n">inputs</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
+</pre></div>
+</div>
+</td>
+<td><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">inputs</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1000</span><span class="p">]</span>
+
+<span class="n">Predefined</span> <span class="n">locations</span><span class="p">:</span>
+   <span class="nb">open</span><span class="p">:</span>
+       <span class="n">inputs</span><span class="o">=</span><span class="mi">1000</span>
+   <span class="n">close</span><span class="p">:</span>
+       <span class="n">inputs</span><span class="o">=</span><span class="mi">0</span>
+</pre></div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>Lift</p></td>
+<td><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># PROMPT USE</span>
+<span class="n">lift</span><span class="p">::[</span><span class="n">INT</span><span class="p">]</span>
+<span class="n">example</span><span class="p">:</span> <span class="n">lift</span><span class="p">::</span><span class="mi">200</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># DEV USE</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">carerobotapp.skills.grip</span><span class="w"> </span><span class="kn">import</span> <span class="n">grip</span>
+<span class="n">lift</span><span class="p">(</span><span class="n">node</span><span class="o">=</span><span class="n">node</span><span class="p">,</span> <span class="n">inputs</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
+</pre></div>
+</div>
+</td>
+<td><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">inputs</span> <span class="p">[</span><span class="mi">115</span><span class="p">,</span> <span class="mi">650</span><span class="p">]</span>
+
+<span class="n">Predefined</span> <span class="n">locations</span><span class="p">:</span>
+   <span class="n">lowest</span><span class="p">:</span>
+       <span class="n">inputs</span><span class="o">=</span><span class="mi">115</span>
+   <span class="n">highest</span><span class="p">:</span>
+       <span class="n">inputs</span><span class="o">=</span><span class="mi">650</span>
+</pre></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><p>Head</p></td>
+<td><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># PROMPT USE</span>
+<span class="n">moveh</span><span class="p">::[</span><span class="n">INPUTS</span><span class="p">]</span>
+<span class="n">example</span><span class="p">:</span> <span class="n">moveh</span><span class="p">::</span><span class="n">left</span><span class="p">,</span> <span class="n">straight</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># DEV USE</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">carerobotapp.skills.head</span><span class="w"> </span><span class="kn">import</span> <span class="n">moveh</span>
+<span class="n">moveh</span><span class="p">(</span><span class="n">node</span><span class="o">=</span><span class="n">node</span><span class="p">,</span> <span class="n">inputs</span><span class="o">=</span><span class="s1">&#39;left, straight&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</td>
+<td><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">inputs</span><span class="p">:</span>
+   <span class="n">ry</span><span class="p">,</span> <span class="n">rz</span> <span class="p">[</span><span class="n">deg</span><span class="p">]</span>
+       <span class="p">[</span><span class="n">Default</span><span class="p">:</span> <span class="n">current</span> <span class="n">angle</span><span class="p">]</span>
+
+<span class="n">Predefined</span> <span class="n">locations</span><span class="p">:</span>
+   <span class="n">front</span><span class="p">:</span> <span class="n">rz</span><span class="o">=</span><span class="mi">0</span>
+   <span class="n">lefet</span><span class="p">:</span> <span class="n">rz</span><span class="o">=-</span><span class="mi">90</span>
+   <span class="n">right</span><span class="p">:</span> <span class="n">rz</span><span class="o">=</span><span class="mi">90</span>
+   <span class="n">straight</span><span class="p">:</span> <span class="n">ry</span><span class="o">=-</span><span class="mi">25</span>
+   <span class="n">up</span><span class="p">:</span> <span class="n">ry</span><span class="o">=</span><span class="mi">0</span>
+   <span class="n">down</span><span class="p">:</span> <span class="n">ry</span><span class="o">=-</span><span class="mi">50</span>
+</pre></div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>Mobile move</p></td>
+<td><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># PROMPT USE</span>
+<span class="n">move</span><span class="p">::[</span><span class="n">INPUTS</span><span class="p">]</span>
+<span class="n">example</span><span class="p">:</span> <span class="n">move</span><span class="p">::</span><span class="n">desk</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># DEV USE</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">carerobotapp.skills.mobile</span><span class="w"> </span><span class="kn">import</span> <span class="n">move</span>
+<span class="n">move</span><span class="p">(</span><span class="n">node</span><span class="o">=</span><span class="n">node</span><span class="p">,</span> <span class="n">inputs</span><span class="o">=</span><span class="s1">&#39;desk&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</td>
+<td><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">offset_x</span><span class="p">,</span> <span class="n">offset_y</span> <span class="p">[</span><span class="n">mm</span><span class="p">]</span>
+   <span class="p">[</span><span class="n">Default</span><span class="p">:</span> <span class="ow">in</span> <span class="n">ENV</span> <span class="n">meta</span><span class="p">]</span>
+<span class="n">offset_yaw</span> <span class="p">[</span><span class="n">deg</span><span class="p">]</span>
+   <span class="p">[</span><span class="n">Default</span><span class="p">:</span> <span class="ow">in</span> <span class="n">ENV</span> <span class="n">meta</span><span class="p">]</span>
+</pre></div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="recognition-skills">
+<h2>Recognition Skills<a class="headerlink" href="#recognition-skills" title="Link to this heading"></a></h2>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Fuction</p></th>
+<th class="head"><p>Usage</p></th>
+<th class="head"><p>Inputs</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Find</p></td>
+<td><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># PROMPT USE</span>
+<span class="n">find</span><span class="p">::[</span><span class="n">INPUTS</span><span class="p">]</span>
+<span class="n">example</span><span class="p">:</span> <span class="n">find</span><span class="p">::</span><span class="n">banana</span><span class="nd">@desk</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># DEV USE</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">carerobotapp.skills.recognition</span><span class="w"> </span><span class="kn">import</span> <span class="n">find</span>
+<span class="n">find</span><span class="p">(</span><span class="n">node</span><span class="o">=</span><span class="n">node</span><span class="p">,</span> <span class="n">inputs</span><span class="o">=</span><span class="s1">&#39;banana@desk&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</td>
+<td><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">inputs</span> <span class="p">[</span><span class="n">caption</span><span class="nd">@location</span><span class="p">]</span>
+   <span class="n">e</span><span class="o">.</span><span class="n">g</span><span class="p">:</span> <span class="n">yellow</span> <span class="n">cup</span><span class="nd">@desk</span>
+       <span class="o">.</span> <span class="k">if</span> <span class="n">no</span> <span class="n">location</span><span class="p">:</span>
+          <span class="n">find</span> <span class="n">at</span> <span class="n">current</span> <span class="n">loc</span>
+       <span class="o">.</span> <span class="k">else</span><span class="p">:</span>
+          <span class="n">move</span> <span class="n">to</span> <span class="n">loc</span> <span class="n">first</span>
+<span class="n">detector</span><span class="p">:</span>
+   <span class="p">[</span><span class="n">Default</span><span class="p">:</span> <span class="n">groudingdino</span><span class="p">]</span>
+   <span class="p">[</span><span class="n">groudingdino</span><span class="p">,</span> <span class="n">fastsam</span><span class="p">,</span>
+   <span class="n">Groundedsam</span><span class="p">,</span> <span class="n">groundedsam_grasp</span><span class="p">]</span>
+<span class="n">camera</span><span class="p">:</span>
+   <span class="p">[</span><span class="n">Default</span><span class="p">:</span> <span class="n">head</span><span class="p">]</span>
+   <span class="p">[</span><span class="n">head</span><span class="p">,</span> <span class="n">rs_raw</span><span class="p">]</span>
+<span class="n">once</span><span class="p">:</span>
+   <span class="p">[</span><span class="n">Default</span><span class="p">:</span> <span class="kc">True</span><span class="p">]</span>
+   <span class="kc">True</span><span class="p">:</span>
+     <span class="n">Find</span> <span class="n">at</span> <span class="n">loc</span> <span class="n">only</span>
+   <span class="kc">False</span><span class="p">:</span>
+     <span class="n">Search</span> <span class="nb">all</span> <span class="n">loc</span> <span class="ow">in</span> <span class="n">ENV</span>
+</pre></div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><p>Find_arm</p></td>
+<td><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># PROMPT USE</span>
+<span class="n">find_arm</span><span class="p">::[</span><span class="n">INPUTS</span><span class="p">]</span>
+<span class="n">example</span><span class="p">:</span> <span class="n">find_arm</span><span class="p">::</span><span class="n">banana</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># DEV USE</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">carerobotapp.skills.recognition</span><span class="w"> </span><span class="kn">import</span> <span class="n">find_arm</span>
+<span class="n">find_arm</span><span class="p">(</span><span class="n">node</span><span class="o">=</span><span class="n">node</span><span class="p">,</span> <span class="n">inputs</span><span class="o">=</span><span class="s1">&#39;banana&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</td>
+<td><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">inputs</span> <span class="p">[</span><span class="n">caption</span><span class="p">]</span>
+
+<span class="n">detector</span><span class="p">:</span>
+   <span class="p">[</span><span class="n">Default</span><span class="p">:</span> <span class="n">groundedsam_grasp</span><span class="p">]</span>
+   <span class="p">[</span><span class="n">groudingdino</span><span class="p">,</span> <span class="n">fastsam</span><span class="p">,</span>
+   <span class="n">groundedsam</span><span class="p">,</span> <span class="n">groundedsam_grasp</span><span class="p">]</span>
+<span class="n">camera</span><span class="p">:</span>
+   <span class="p">[</span><span class="n">Default</span><span class="p">:</span> <span class="n">rs_raw</span><span class="p">]</span>
+   <span class="p">[</span><span class="n">head</span><span class="p">,</span> <span class="n">rs_raw</span><span class="p">]</span>
+</pre></div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="approach-skills">
+<h2>Approach Skills<a class="headerlink" href="#approach-skills" title="Link to this heading"></a></h2>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Fuction</p></th>
+<th class="head"><p>Usage</p></th>
+<th class="head"><p>Inputs</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><ul class="simple">
+<li><p>Approach_close</p></li>
+<li><p>Approach</p></li>
 </ul>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">pyconnect.ros.custom_node</span><span class="w"> </span><span class="kn">import</span> <span class="n">CustomNode</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">rosinterfaces.srv</span><span class="w"> </span><span class="kn">import</span> <span class="n">SendStringData</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">pyconnect.ros.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">node_add_agents_from_configs</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">carerobotapp.configs.device_clients</span><span class="w"> </span><span class="kn">import</span> <span class="n">DEVICE_CLIENT_CONFIGS</span>
+</td>
+<td><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># PROMPT USE</span>
+<span class="n">approach_close</span><span class="p">::[</span><span class="n">INPUTS</span><span class="p">]</span>
+
+<span class="n">example</span> <span class="mi">1</span><span class="p">:</span>
+   <span class="n">approach_close</span><span class="p">::</span><span class="n">banana</span><span class="nd">@desk</span>
+
+<span class="n">example</span> <span class="mi">2</span><span class="p">:</span>
+   <span class="n">find</span><span class="p">::</span><span class="n">banana</span><span class="nd">@desk</span>
+   <span class="n">approach_close</span><span class="p">::</span><span class="n">banana</span>
+
+<span class="n">example</span> <span class="mi">3</span><span class="p">:</span>
+   <span class="n">approach_close</span><span class="p">::[</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="n">z</span><span class="p">,</span><span class="n">wrist_angle</span><span class="p">]</span>
+
+<span class="n">example</span> <span class="mi">4</span><span class="p">:</span>
+   <span class="n">approach_close</span><span class="p">::</span><span class="n">desk</span><span class="nd">@living_room</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># DEV USE</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">carerobotapp.skills.approach</span><span class="w"> </span><span class="kn">import</span> <span class="n">approach_close</span>
+<span class="n">approach_close</span><span class="p">(</span><span class="n">node</span><span class="o">=</span><span class="n">node</span><span class="p">,</span> <span class="n">inputs</span><span class="o">=</span><span class="s1">&#39;banana@desk&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</td>
+<td><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">inputs</span>
+   <span class="p">[</span><span class="n">caption</span><span class="p">,</span> <span class="n">location</span><span class="p">,</span>
+   <span class="n">caption</span><span class="nd">@location</span><span class="p">,</span> <span class="n">pose_3d</span><span class="p">]</span>
+       <span class="o">.</span> <span class="k">if</span> <span class="n">no</span> <span class="n">location</span><span class="p">:</span>
+          <span class="n">find</span> <span class="n">at</span> <span class="n">current</span> <span class="n">loc</span>
+       <span class="o">.</span> <span class="k">else</span><span class="p">:</span>
+          <span class="n">move</span> <span class="n">to</span> <span class="n">loc</span> <span class="n">first</span>
+
+       <span class="o">.</span> <span class="k">if</span> <span class="n">caption</span><span class="p">:</span>
+           <span class="n">find</span> <span class="p">[</span><span class="n">caption</span><span class="p">]</span> <span class="n">first</span>
+         <span class="k">else</span><span class="p">:</span>
+           <span class="n">move</span> <span class="n">to</span> <span class="n">location</span>
+           <span class="n">approach</span> <span class="n">to</span> <span class="n">placepose</span>
+
+       <span class="o">.</span> <span class="k">if</span> <span class="n">pose_3d</span><span class="p">:</span>
+          <span class="n">approach</span> <span class="n">to</span> <span class="n">pose_3d</span>
 
 
-<span class="n">node</span> <span class="o">=</span> <span class="n">CustomNode</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;device_control&#39;</span><span class="p">)</span>
-<span class="n">node</span> <span class="o">=</span> <span class="n">node_add_agents_from_configs</span><span class="p">(</span><span class="n">node</span><span class="o">=</span><span class="n">node</span><span class="p">,</span> <span class="n">configs</span><span class="o">=</span><span class="n">DEVICE_CLIENT_CONFIGS</span><span class="p">)</span>
-<span class="n">node</span><span class="o">.</span><span class="n">spin</span><span class="p">(</span><span class="n">run_thread</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">init_pose_fixed</span>
+   <span class="p">[</span><span class="n">Defalt</span><span class="p">:</span> <span class="kc">False</span><span class="p">]</span>
 
-<span class="n">node</span><span class="o">.</span><span class="n">agents</span><span class="p">[</span><span class="n">agent_name</span><span class="p">]</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
+<span class="n">All</span> <span class="n">find</span> <span class="nb">input</span> <span class="n">params</span>
 </pre></div>
 </div>
-<section id="enable-robot-motion">
-<h3>Enable robot motion<a class="headerlink" href="#enable-robot-motion" title="Link to this heading"></a></h3>
-<ul class="simple">
-<li><p>Agent name: /xarm/motion_enable</p></li>
-<li><p>Request format</p></li>
-</ul>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>enable_motion::
-</pre></div>
-</div>
+</td>
+</tr>
+</tbody>
+</table>
 </section>
-<section id="set-mode">
-<h3>Set mode<a class="headerlink" href="#set-mode" title="Link to this heading"></a></h3>
-<ul class="simple">
-<li><p>Agent name: /xarm/set_mode</p></li>
-<li><p>Request format</p></li>
-</ul>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>set_mode::0
-</pre></div>
-</div>
-</section>
-<section id="set-state">
-<h3>Set state<a class="headerlink" href="#set-state" title="Link to this heading"></a></h3>
-<ul class="simple">
-<li><p>Agent name: /xarm/set_state</p></li>
-<li><p>Request format</p></li>
-</ul>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>set_state::0
-</pre></div>
-</div>
-</section>
-<section id="clean-error">
-<h3>Clean error<a class="headerlink" href="#clean-error" title="Link to this heading"></a></h3>
-<ul class="simple">
-<li><p>Agent name: /xarm/clean_error</p></li>
-<li><p>Request format</p></li>
-</ul>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>clean_error::
-</pre></div>
-</div>
-</section>
-<section id="move-joint">
-<h3>Move joint<a class="headerlink" href="#move-joint" title="Link to this heading"></a></h3>
-<ul class="simple">
-<li><p>Agent name: /xarm/set_servo_angle</p></li>
-<li><p>Request format</p></li>
-</ul>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>move_angles::joint_angle0,joint_angle1,joint_angle2,joint_angle3,joint_angle4,joint_angle5,joint_angle6
-</pre></div>
-</div>
-<dl class="simple">
-<dt>Notes:</dt><dd><ul class="simple">
-<li><p>joint angles in [radians]</p></li>
-<li><p>move_angles::home: move to predefined HOME_JOINT</p></li>
-<li><p>move_angles::ready: move to predefined READY_JOINT</p></li>
-</ul>
-</dd>
-</dl>
-</section>
-<section id="move-relative">
-<h3>Move relative<a class="headerlink" href="#move-relative" title="Link to this heading"></a></h3>
-<ul class="simple">
-<li><p>Agent name: /xarm/set_position,</p></li>
-<li><p>Request format</p></li>
-</ul>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>dmove::dx<span class="o">=</span>dx,dy<span class="o">=</span>dy,dz<span class="o">=</span>dz,drx<span class="o">=</span>drx,dry<span class="o">=</span>dry,dz<span class="o">=</span>drz
-</pre></div>
-</div>
-<dl class="simple">
-<dt>Notes:</dt><dd><ul class="simple">
-<li><p>dx, dy, dz in [mm], drx, dry, drz in [degrees]</p></li>
-<li><p>dmove::dx=dx: move for x-axis only</p></li>
-</ul>
-</dd>
-</dl>
-</section>
-<section id="lift-arm">
-<h3>Lift arm<a class="headerlink" href="#lift-arm" title="Link to this heading"></a></h3>
-<ul class="simple">
-<li><p>Agent name: /elevation/set_position</p></li>
-<li><p>Request format</p></li>
-</ul>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>lift::position
-</pre></div>
-</div>
-<dl class="simple">
-<dt>Notes:</dt><dd><ul class="simple">
-<li><p>position in [mm]</p></li>
-</ul>
-</dd>
-</dl>
-</section>
-<section id="grip-control">
-<h3>Grip control<a class="headerlink" href="#grip-control" title="Link to this heading"></a></h3>
-<ul class="simple">
-<li><p>Agent name: /gripper/command</p></li>
-<li><p>Request format</p></li>
-</ul>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>grip::position
-</pre></div>
-</div>
-<dl class="simple">
-<dt>Notes:</dt><dd><ul class="simple">
-<li><p>position in range [0,1000]</p></li>
-<li><p>grip::open = grip::1000</p></li>
-<li><p>grip::close = grip::0</p></li>
-</ul>
-</dd>
-</dl>
-</section>
-<section id="move-head">
-<h3>Move head<a class="headerlink" href="#move-head" title="Link to this heading"></a></h3>
-<ul class="simple">
-<li><p>Agent name: /head/pose_command</p></li>
-<li><p>Request format</p></li>
-</ul>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>move_head::ry<span class="o">=</span>ry,rz<span class="o">=</span>rz
-</pre></div>
-</div>
-<dl class="simple">
-<dt>Notes:</dt><dd><ul class="simple">
-<li><p>ry, rz in [degrees]</p></li>
-<li><p>ry &lt; 0: look down</p></li>
-</ul>
-</dd>
-</dl>
-</section>
-</section>
-<section id="device-state">
-<h2>Device State<a class="headerlink" href="#device-state" title="Link to this heading"></a></h2>
-<ul class="simple">
-<li><p>Example code for getting device state</p></li>
-</ul>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">pyconnect.ros.custom_node</span><span class="w"> </span><span class="kn">import</span> <span class="n">CustomNode</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">rosinterfaces.srv</span><span class="w"> </span><span class="kn">import</span> <span class="n">SendStringData</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">pyconnect.ros.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">node_add_agents_from_configs</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">carerobotapp.configs.device_clients</span><span class="w"> </span><span class="kn">import</span> <span class="n">DEVICE_CLIENT_CONFIGS</span>
+<section id="pick-skills">
+<h2>Pick Skills<a class="headerlink" href="#pick-skills" title="Link to this heading"></a></h2>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Fuction</p></th>
+<th class="head"><p>Usage</p></th>
+<th class="head"><p>Inputs</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Pick</p></td>
+<td><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># PROMPT USE</span>
+<span class="n">pick</span><span class="p">::[</span><span class="n">INPUTS</span><span class="p">]</span>
 
+<span class="n">example</span> <span class="mi">1</span><span class="p">:</span>
+   <span class="n">pick</span><span class="p">::</span><span class="n">banana</span><span class="nd">@desk</span>
 
-<span class="n">node</span> <span class="o">=</span> <span class="n">CustomNode</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;device_control&#39;</span><span class="p">)</span>
-<span class="n">node</span> <span class="o">=</span> <span class="n">node_add_agents_from_configs</span><span class="p">(</span><span class="n">node</span><span class="o">=</span><span class="n">node</span><span class="p">,</span> <span class="n">configs</span><span class="o">=</span><span class="n">DEVICE_CLIENT_CONFIGS</span><span class="p">)</span>
-<span class="n">node</span><span class="o">.</span><span class="n">spin</span><span class="p">(</span><span class="n">run_thread</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">example</span> <span class="mi">2</span><span class="p">:</span>
+   <span class="n">find</span><span class="p">::</span><span class="n">banana</span><span class="nd">@desk</span>
+   <span class="n">pick</span><span class="p">::</span><span class="n">banana</span>
 
-<span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
-       <span class="n">rev_data</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">agents</span><span class="p">[</span><span class="n">agent_name</span><span class="p">]</span><span class="o">.</span><span class="n">rev_data</span>
-       <span class="k">if</span> <span class="n">rev_data</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-              <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-              <span class="k">continue</span>
-       <span class="nb">print</span><span class="p">(</span><span class="n">rev_data</span><span class="p">)</span>
-       <span class="k">break</span>
+<span class="n">example</span> <span class="mi">3</span><span class="p">:</span>
+   <span class="n">pick</span><span class="p">::[</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="n">z</span><span class="p">,</span><span class="n">wrist_angle</span><span class="p">]</span>
 </pre></div>
 </div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># DEV USE</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">carerobotapp.skills.pick</span><span class="w"> </span><span class="kn">import</span> <span class="n">pick</span>
+<span class="n">pick</span><span class="p">(</span><span class="n">node</span><span class="o">=</span><span class="n">node</span><span class="p">,</span> <span class="n">inputs</span><span class="o">=</span><span class="s1">&#39;banana@desk&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</td>
+<td><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">inputs</span>
+   <span class="p">[</span><span class="n">caption</span><span class="p">,</span> <span class="n">location</span><span class="p">,</span>
+   <span class="n">caption</span><span class="nd">@location</span><span class="p">,</span> <span class="n">pose_3d</span><span class="p">]</span>
+       <span class="o">.</span> <span class="k">if</span> <span class="n">no</span> <span class="n">location</span><span class="p">:</span>
+          <span class="n">find</span> <span class="n">at</span> <span class="n">current</span> <span class="n">loc</span>
+       <span class="o">.</span> <span class="k">else</span><span class="p">:</span>
+          <span class="n">approach</span> <span class="n">to</span> <span class="n">loc</span> <span class="n">first</span>
+
+<span class="n">init_pose_fixed</span>
+   <span class="p">[</span><span class="n">Defalt</span><span class="p">:</span> <span class="kc">True</span><span class="p">]</span>
+
+<span class="n">All</span> <span class="n">find</span> <span class="nb">input</span> <span class="n">params</span>
+</pre></div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
 </section>
-<section id="skill-control">
-<h2>Skill Control<a class="headerlink" href="#skill-control" title="Link to this heading"></a></h2>
-<ul class="simple">
-<li><p>To run skill control, system need to be executed as descired in <a class="reference internal" href="get_started.html#system-exec"><span class="std std-ref">System Execution</span></a></p></li>
-</ul>
-<section id="init-robot">
-<h3>Init robot<a class="headerlink" href="#init-robot" title="Link to this heading"></a></h3>
-<ul class="simple">
-<li><p>Request format</p></li>
-</ul>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>init_robot::
+<section id="place-skills">
+<h2>Place Skills<a class="headerlink" href="#place-skills" title="Link to this heading"></a></h2>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Fuction</p></th>
+<th class="head"><p>Usage</p></th>
+<th class="head"><p>Inputs</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Place</p></td>
+<td><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># PROMPT USE</span>
+<span class="n">place</span><span class="p">::[</span><span class="n">INPUTS</span><span class="p">]</span>
+
+<span class="n">example</span> <span class="mi">1</span><span class="p">:</span>
+   <span class="n">place</span><span class="p">::</span><span class="n">banana</span><span class="nd">@shelf</span><span class="o">&gt;&gt;</span><span class="n">desk</span><span class="nd">@living_room</span>
+
+<span class="n">example</span> <span class="mi">2</span><span class="p">:</span>
+   <span class="n">pick</span><span class="p">::</span><span class="n">banana</span><span class="nd">@shelf@kitchen</span>
+   <span class="n">place</span><span class="p">::</span><span class="n">wooden_dish</span><span class="nd">@desk@living_room</span>
+
+<span class="n">example</span> <span class="mi">3</span><span class="p">:</span>
+   <span class="n">place</span><span class="p">::[</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="n">z</span><span class="p">,</span><span class="n">wrist_angle</span><span class="p">]</span>
+
+<span class="n">example</span> <span class="mi">4</span><span class="p">:</span>
+   <span class="n">place</span><span class="p">::</span><span class="n">desk</span><span class="nd">@living_room</span>
 </pre></div>
 </div>
-</section>
-<section id="init-pick">
-<h3>Init pick<a class="headerlink" href="#init-pick" title="Link to this heading"></a></h3>
-<ul class="simple">
-<li><p>Request format</p></li>
-</ul>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>init_pick::
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># DEV USE</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">carerobotapp.skills.place</span><span class="w"> </span><span class="kn">import</span> <span class="n">place</span>
+<span class="n">place</span><span class="p">(</span><span class="n">node</span><span class="o">=</span><span class="n">node</span><span class="p">,</span> <span class="n">inputs</span><span class="o">=</span><span class="s1">&#39;banana@desk&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
-</section>
-<section id="detect-object">
-<h3>Detect Object<a class="headerlink" href="#detect-object" title="Link to this heading"></a></h3>
-<ul class="simple">
-<li><p>Request format</p></li>
-</ul>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>detect::caption
+</td>
+<td><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">inputs</span>
+   <span class="p">[</span><span class="n">caption</span><span class="p">,</span> <span class="n">location</span><span class="p">,</span>
+   <span class="n">caption</span><span class="nd">@location</span><span class="p">,</span> <span class="n">pose_3d</span><span class="p">]</span>
+       <span class="o">.</span> <span class="k">if</span> <span class="n">no</span> <span class="n">location</span><span class="p">:</span>
+          <span class="n">find</span> <span class="n">at</span> <span class="n">current</span> <span class="n">loc</span>
+       <span class="o">.</span> <span class="k">else</span><span class="p">:</span>
+          <span class="n">move</span> <span class="n">to</span> <span class="n">loc</span> <span class="n">first</span>
+
+       <span class="o">.</span> <span class="k">if</span> <span class="n">caption</span><span class="p">:</span>
+           <span class="n">find</span> <span class="p">[</span><span class="n">caption</span><span class="p">]</span> <span class="n">first</span>
+         <span class="k">else</span><span class="p">:</span>
+           <span class="n">move</span> <span class="n">to</span> <span class="n">location</span>
+           <span class="n">approach</span> <span class="n">to</span> <span class="n">placepose</span>
+
+       <span class="o">.</span> <span class="k">if</span> <span class="n">pose_3d</span><span class="p">:</span>
+          <span class="n">approach</span> <span class="n">to</span> <span class="n">pose_3d</span>
+
+<span class="n">All</span> <span class="n">approach</span> <span class="nb">input</span> <span class="n">params</span>
 </pre></div>
 </div>
-<dl class="simple">
-<dt>Notes:</dt><dd><ul class="simple">
-<li><p>caption: in format ‘object_name1, object_name2, ….’</p></li>
-</ul>
-</dd>
-</dl>
-</section>
-<section id="find-object">
-<h3>Find Object<a class="headerlink" href="#find-object" title="Link to this heading"></a></h3>
-<ul class="simple">
-<li><p>Request format</p></li>
-</ul>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>find::caption
-</pre></div>
-</div>
-</section>
-<section id="pick-object">
-<h3>Pick Object<a class="headerlink" href="#pick-object" title="Link to this heading"></a></h3>
-<ul class="simple">
-<li><p>Request format</p></li>
-</ul>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pick::object_name
-</pre></div>
-</div>
-<dl class="simple">
-<dt>Notes:</dt><dd><ul class="simple">
-<li><p>Pick request should be appear after a detect or find function</p></li>
-<li><p>example: find::cupnpick::cup</p></li>
-</ul>
-</dd>
-</dl>
-</section>
-<section id="place-object">
-<h3>Place object<a class="headerlink" href="#place-object" title="Link to this heading"></a></h3>
-<ul class="simple">
-<li><p>Request format</p></li>
-</ul>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>place::object_name
-</pre></div>
-</div>
-</section>
-<section id="approach-object">
-<h3>Approach object<a class="headerlink" href="#approach-object" title="Link to this heading"></a></h3>
-<ul class="simple">
-<li><p>Request format</p></li>
-</ul>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>approach::object_name
-</pre></div>
-</div>
-<p>Arm back</p>
-<ul class="simple">
-<li><p>Request format</p></li>
-</ul>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>arm_back::
-</pre></div>
-</div>
-</section>
+</td>
+</tr>
+</tbody>
+</table>
 </section>
 </section>
 

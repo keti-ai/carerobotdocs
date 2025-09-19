@@ -269,28 +269,26 @@ ftp<span class="w"> </span><span class="m">0</span>.0.0.0
 </li>
 <li><p>Build the Docker image with the required specifications:</p>
 <blockquote>
-<div><div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./build_image.sh<span class="w"> </span>&lt;UBUNTU_VERSION&gt;<span class="w"> </span>&lt;CUDA_VERSION&gt;<span class="w"> </span>&lt;ROS_DISTRO&gt;
+<div><div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./build_image.sh<span class="w"> </span>--ubuntu<span class="o">=</span>&lt;UBUNTU_VERSION&gt;<span class="w"> </span>--cuda<span class="o">=</span>&lt;CUDA_VERSION&gt;<span class="w"> </span>--ros<span class="o">=</span>&lt;ROS_DISTRO&gt;
 </pre></div>
 </div>
 <p>Replace <cite>&lt;UBUNTU_VERSION&gt;</cite>, <cite>&lt;CUDA_VERSION&gt;</cite>, and <cite>&lt;ROS_DISTRO&gt;</cite> with your specific environment settings.</p>
 <p>Support versions:</p>
 <ul class="simple">
 <li><p>Ubuntu20.04, 22.04 (default)</p></li>
-<li><p>CUDA 11.1.1, 11.7.1(default), 12.1.0, 12.4.1, 12.6.3</p></li>
+<li><p>CUDA 11.1.1, 11.7.1, 12.1.0, 12.4.1, 12.6.3(default)</p></li>
 <li><p>ROS2: foxy, humble (default)</p></li>
 </ul>
 </div></blockquote>
 </li>
 <li><p>Create and run a Docker container:</p>
 <blockquote>
-<div><div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./build_container.sh<span class="w"> </span>&lt;UBUNTU_VERSION&gt;<span class="w"> </span>&lt;CUDA_VERSION&gt;<span class="w"> </span>&lt;ROS_DISTRO&gt;<span class="w"> </span>&lt;CONTAINER_NAME&gt;<span class="w"> </span>&lt;SHARE_DIR&gt;<span class="w"> </span>&lt;SSH_PORT&gt;<span class="w"> </span>&lt;PORT_MAP&gt;
+<div><div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./build_container.sh<span class="w"> </span>--ubuntu<span class="o">=</span>&lt;UBUNTU_VERSION&gt;<span class="w"> </span>--cuda<span class="o">=</span>&lt;CUDA_VERSION&gt;<span class="w"> </span>--ros<span class="o">=</span>&lt;ROS_DISTRO&gt;<span class="w"> </span>--name<span class="o">=</span>&lt;CONTAINER_NAME&gt;<span class="w"> </span>--share-dir<span class="o">=</span>&lt;SHARE_DIR&gt;
 </pre></div>
 </div>
 <ul class="simple">
-<li><p><cite>&lt;CONTAINER_NAME&gt;</cite>: Name of the container [default: kcare]</p></li>
-<li><p><cite>&lt;SHARE_DIR&gt;</cite>: Shared directory path [default: /media/keti/workdir/projects]</p></li>
-<li><p><cite>&lt;SSH_PORT&gt;</cite>: SSH port number        [default: 2222]</p></li>
-<li><p><cite>&lt;PORT_MAP&gt;</cite>: Additional port mappings [default: 8000-8099:8000-8099]</p></li>
+<li><p><cite>&lt;CONTAINER_NAME&gt;</cite>: Name of the container [default: name of ubuntu and cuda version , e.g u22cu12]</p></li>
+<li><p><cite>&lt;SHARE_DIR&gt;</cite>: Shared directory path [default: None, no sahred folder]</p></li>
 </ul>
 </div></blockquote>
 </li>
@@ -300,15 +298,11 @@ ftp<span class="w"> </span><span class="m">0</span>.0.0.0
 <h2>Servere PC Installation<a class="headerlink" href="#servere-pc-installation" title="Link to this heading"></a></h2>
 <blockquote>
 <div><div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>dockers
-./build_recognition_container.sh<span class="w"> </span>&lt;SSH_PORT&gt;<span class="w"> </span>&lt;PORT_MAP&gt;<span class="w"> </span>&lt;SHARE_DIR&gt;<span class="w"> </span>&lt;IMAGE_NAME&gt;<span class="w"> </span>&lt;CONTAINER_NAME&gt;
+./build_recognition_container.sh<span class="w">  </span>--share-dir<span class="o">=</span>&lt;SHARE_DIR&gt;
 </pre></div>
 </div>
 <ul class="simple">
-<li><p><cite>&lt;IMAGE_NAME_NAME&gt;</cite>: Name of the image [default: mtbui2010/ubuntu22:cuda11.7-recognition]</p></li>
-<li><p><cite>&lt;CONTAINER_NAME&gt;</cite>: Name of the container [default: reg_u22cu11]</p></li>
-<li><p><cite>&lt;SHARE_DIR&gt;</cite>: Shared directory path [default: /media/keti/workdir/projects]</p></li>
-<li><p><cite>&lt;SSH_PORT&gt;</cite>: SSH port number        [default: 2202]</p></li>
-<li><p><cite>&lt;PORT_MAP&gt;</cite>: Additional port mappings [default: 8000-8099:8000-8099]</p></li>
+<li><p><cite>&lt;SHARE_DIR&gt;</cite>: Shared directory path [default: None, no sahred folder]</p></li>
 </ul>
 </div></blockquote>
 <p>Clone the following repositories to set up the necessary dependencies:</p>
@@ -317,6 +311,7 @@ git<span class="w"> </span>clone<span class="w"> </span>https://github.com/keti-
 git<span class="w"> </span>clone<span class="w"> </span>https://github.com/keti-ai/pyconnect.git
 git<span class="w"> </span>clone<span class="w"> </span>https://github.com/keti-ai/pyinterfaces.git
 git<span class="w"> </span>clone<span class="w"> </span>https://github.com/keti-ai/rosinterfaces.git
+git<span class="w"> </span>clone<span class="w"> </span>https://github.com/keti-ai/pysensor.git
 </pre></div>
 </div>
 <p>Install the repositories as editable Python packages:</p>
@@ -324,6 +319,7 @@ git<span class="w"> </span>clone<span class="w"> </span>https://github.com/keti-
 pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span>pyrecognition
 pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span>pyconnect
 pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span>pyinterfaces
+pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span>pysensor
 </pre></div>
 </div>
 <p>Install ROS Interfaces</p>
@@ -364,22 +360,22 @@ sudo<span class="w"> </span>docker<span class="w"> </span><span class="nb">exec<
 </pre></div>
 </div>
 <p>VLM Server Execution:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python3<span class="w"> </span>-m<span class="w"> </span>pyrecognition.run_server<span class="w"> </span><span class="nv">server_type</span><span class="o">=</span>tcp<span class="w"> </span><span class="nv">port</span><span class="o">=</span><span class="m">8801</span><span class="w"> </span><span class="nv">detector</span><span class="o">=</span>groundedsam
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python3<span class="w"> </span>-m<span class="w"> </span>pyrecognition.run_server<span class="w"> </span><span class="nv">server_type</span><span class="o">=</span>tcp<span class="w"> </span><span class="nv">port</span><span class="o">=</span><span class="m">8805</span><span class="w"> </span><span class="nv">detector</span><span class="o">=</span>vlms
 </pre></div>
 </div>
 </section>
 <section id="step-3-control-pc-run-control-nodes-in-different-terminal-window">
 <h3>Step 3. Control PC: Run Control Nodes in different Terminal Window<a class="headerlink" href="#step-3-control-pc-run-control-nodes-in-different-terminal-window" title="Link to this heading"></a></h3>
 <p>Terminal 1</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="w">     </span>python3<span class="w"> </span>-m<span class="w"> </span>carerobotapp.node_prompt<span class="w"> </span><span class="nv">isplanned</span><span class="o">=</span>True
-
--<span class="w"> </span>isplanned:
-<span class="w">     </span>True:<span class="w"> </span>send<span class="w"> </span>a<span class="w"> </span>sequence<span class="w"> </span>of<span class="w"> </span>strutured<span class="w"> </span>tasks,<span class="w"> </span>e.g.<span class="w"> </span><span class="o">(</span>find::cup,<span class="w"> </span>tray,<span class="w"> </span>pick::cup,<span class="w"> </span>place::tray<span class="o">)</span>
-<span class="w">     </span>False:<span class="w"> </span>send<span class="w"> </span>a<span class="w"> </span>daily<span class="w"> </span>command,<span class="w"> </span>e.g.<span class="w"> </span>place<span class="w"> </span>cup<span class="w"> </span>into<span class="w"> </span>tray
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python3<span class="w"> </span>-m<span class="w"> </span>carerobotapp.node_prompt
 </pre></div>
 </div>
 <p>Terminal 2</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python3<span class="w"> </span>-m<span class="w"> </span>carerobotapp.node_taskmanager
+</pre></div>
+</div>
+<p>Terminal 3</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python3<span class="w"> </span>-m<span class="w"> </span>carerobotapp.node_skill_servers
 </pre></div>
 </div>
 </section>
