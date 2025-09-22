@@ -237,7 +237,7 @@ Clone the following repositories to set up the necessary dependencies:
        git clone https://github.com/keti-ai/pyconnect.git
        git clone https://github.com/keti-ai/pyinterfaces.git
        git clone https://github.com/keti-ai/rosinterfaces.git
-       git clone https://github.com/keti-ai/pysensor.git
+       git clone https://github.com/keti-ai/pydevice.git
 
 
 
@@ -249,7 +249,7 @@ Install the repositories as editable Python packages:
        pip install -e pyrecognition
        pip install -e pyconnect
        pip install -e pyinterfaces
-       pip install -e pysensor
+       pip install -e pydevice
 
 Install ROS Interfaces
 

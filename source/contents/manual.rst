@@ -12,14 +12,62 @@ Refer to DEVICE_CLIENT_CONFIGS in :ref:`device_configs` for more details.
 How to use
 --------------------
 
-1. Make new skill
+1. Create a new project and customize configs
+   
+   - Customize your required devive clients similar with `DEVICES <https://github.com/keti-ai/carerobotapp/tree/main/carerobotapp/configs/devices>`_.
+
+   - Customize your robot similar with `ROBOT <https://github.com/keti-ai/carerobotapp/tree/main/carerobotapp/configs/domain_10>`_.
+
+   - Customize your tasks similar with `TASKS <https://github.com/keti-ai/carerobotapp/tree/main/carerobotapp/configs/tasks>`_.
+
+2. Create node_prompt, node_taskmanager, node_skill_servers, node_observe(Optional)
 
 .. code-block:: python
 
-       cd carerobotapp/skills
-       touch new_skill.py
+      from pyconnect.ros.node_prompt import run_prompt_node, get_prompt_cfg
+      from carerobotapp.configs.tasks import PROMPT_CONFIGS
 
-       # add new_skill to SKILL_LISTS  in carerobotapp.configs.tasks
+      cfg = get_prompt_cfg(**PROMPT_CONFIGS)
+      run_prompt_node(cfg=cfg)
+
+.. code-block:: python
+
+      from pyconnect.ros.node_taskmanager import run_task_manager_node
+      from pyconnect.utils import parse_keys_values, path2module
+      from pyconnect.ros.node_prompt import get_prompt_cfg
+      from pyconnect.ros.get_configs import get_prompt_cfg, get_observation_cfg 
+      from carerobotapp.configs.tasks import PROMPT_CONFIGS, SKILL_CONFIGS, DEVICE_CLIENT_CONFIGS, OBSERVATION_NODE_CONFIGS, LLM_SERVES
+
+      """Main entry point to initialize and run the ManagerNode."""
+      prompt_cfg = get_prompt_cfg(**PROMPT_CONFIGS)
+      observe_cfg = get_observation_cfg(**OBSERVATION_NODE_CONFIGS)
+      llm_cfg = LLM_SERVES['llama']
+      llm_cfg['name'] = 'llama'
+      run_task_manager_node(prompt_cfg=prompt_cfg, observe_cfg=observe_cfg, llm_cfg=llm_cfg, skill_cfgs=SKILL_CONFIGS, device_cfgs=DEVICE_CLIENT_CONFIGS)
+
+.. code-block:: python
+
+      
+      from pyconnect.ros.node_skill_servers import run_skill_servers
+      from carerobotapp.configs.tasks import DEVICE_CLIENT_CONFIGS, SKILL_CONFIGS, RobotParam
+
+      run_skill_servers(device_cfgs=DEVICE_CLIENT_CONFIGS, skill_cfgs=SKILL_CONFIGS, robot_params=RobotParam)
+
+.. code-block:: python
+
+      from pyconnect.ros.node_observe import run_observe_node
+      from pyconnect.ros.get_configs import get_observation_cfg
+      from carerobotapp.configs.tasks import OBSERVATION_NODE_CONFIGS
+
+      run_observe_node(cfg=get_observation_cfg(**OBSERVATION_NODE_CONFIGS))
+
+3. Make new skill
+
+.. code-block:: python
+
+      touch new_skill.py
+
+      # add new_skill to SKILL_LISTS  in your own tasks config file
 
 .. code-block:: python
        # in skills/new_skill.py
@@ -30,7 +78,7 @@ How to use
                return ret
            YOUR_CODE_HERE
 
-2. Execute new skill
+4. Execute new skill
 
 .. code-block:: python
 

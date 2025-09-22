@@ -95,15 +95,58 @@
 <section id="how-to-use">
 <h2>How to use<a class="headerlink" href="#how-to-use" title="Link to this heading"></a></h2>
 <ol class="arabic simple">
-<li><p>Make new skill</p></li>
+<li><p>Create a new project and customize configs</p>
+<ul class="simple">
+<li><p>Customize your required devive clients similar with <a class="reference external" href="https://github.com/keti-ai/carerobotapp/tree/main/carerobotapp/configs/devices">DEVICES</a>.</p></li>
+<li><p>Customize your robot similar with <a class="reference external" href="https://github.com/keti-ai/carerobotapp/tree/main/carerobotapp/configs/domain_10">ROBOT</a>.</p></li>
+<li><p>Customize your tasks similar with <a class="reference external" href="https://github.com/keti-ai/carerobotapp/tree/main/carerobotapp/configs/tasks">TASKS</a>.</p></li>
+</ul>
+</li>
+<li><p>Create node_prompt, node_taskmanager, node_skill_servers, node_observe(Optional)</p></li>
 </ol>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="n">carerobotapp</span><span class="o">/</span><span class="n">skills</span>
-<span class="n">touch</span> <span class="n">new_skill</span><span class="o">.</span><span class="n">py</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">pyconnect.ros.node_prompt</span><span class="w"> </span><span class="kn">import</span> <span class="n">run_prompt_node</span><span class="p">,</span> <span class="n">get_prompt_cfg</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">carerobotapp.configs.tasks</span><span class="w"> </span><span class="kn">import</span> <span class="n">PROMPT_CONFIGS</span>
 
-<span class="c1"># add new_skill to SKILL_LISTS  in carerobotapp.configs.tasks</span>
+<span class="n">cfg</span> <span class="o">=</span> <span class="n">get_prompt_cfg</span><span class="p">(</span><span class="o">**</span><span class="n">PROMPT_CONFIGS</span><span class="p">)</span>
+<span class="n">run_prompt_node</span><span class="p">(</span><span class="n">cfg</span><span class="o">=</span><span class="n">cfg</span><span class="p">)</span>
 </pre></div>
 </div>
-<ol class="arabic simple" start="2">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">pyconnect.ros.node_taskmanager</span><span class="w"> </span><span class="kn">import</span> <span class="n">run_task_manager_node</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pyconnect.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">parse_keys_values</span><span class="p">,</span> <span class="n">path2module</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pyconnect.ros.node_prompt</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_prompt_cfg</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pyconnect.ros.get_configs</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_prompt_cfg</span><span class="p">,</span> <span class="n">get_observation_cfg</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">carerobotapp.configs.tasks</span><span class="w"> </span><span class="kn">import</span> <span class="n">PROMPT_CONFIGS</span><span class="p">,</span> <span class="n">SKILL_CONFIGS</span><span class="p">,</span> <span class="n">DEVICE_CLIENT_CONFIGS</span><span class="p">,</span> <span class="n">OBSERVATION_NODE_CONFIGS</span><span class="p">,</span> <span class="n">LLM_SERVES</span>
+
+<span class="sd">&quot;&quot;&quot;Main entry point to initialize and run the ManagerNode.&quot;&quot;&quot;</span>
+<span class="n">prompt_cfg</span> <span class="o">=</span> <span class="n">get_prompt_cfg</span><span class="p">(</span><span class="o">**</span><span class="n">PROMPT_CONFIGS</span><span class="p">)</span>
+<span class="n">observe_cfg</span> <span class="o">=</span> <span class="n">get_observation_cfg</span><span class="p">(</span><span class="o">**</span><span class="n">OBSERVATION_NODE_CONFIGS</span><span class="p">)</span>
+<span class="n">llm_cfg</span> <span class="o">=</span> <span class="n">LLM_SERVES</span><span class="p">[</span><span class="s1">&#39;llama&#39;</span><span class="p">]</span>
+<span class="n">llm_cfg</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;llama&#39;</span>
+<span class="n">run_task_manager_node</span><span class="p">(</span><span class="n">prompt_cfg</span><span class="o">=</span><span class="n">prompt_cfg</span><span class="p">,</span> <span class="n">observe_cfg</span><span class="o">=</span><span class="n">observe_cfg</span><span class="p">,</span> <span class="n">llm_cfg</span><span class="o">=</span><span class="n">llm_cfg</span><span class="p">,</span> <span class="n">skill_cfgs</span><span class="o">=</span><span class="n">SKILL_CONFIGS</span><span class="p">,</span> <span class="n">device_cfgs</span><span class="o">=</span><span class="n">DEVICE_CLIENT_CONFIGS</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">pyconnect.ros.node_skill_servers</span><span class="w"> </span><span class="kn">import</span> <span class="n">run_skill_servers</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">carerobotapp.configs.tasks</span><span class="w"> </span><span class="kn">import</span> <span class="n">DEVICE_CLIENT_CONFIGS</span><span class="p">,</span> <span class="n">SKILL_CONFIGS</span><span class="p">,</span> <span class="n">RobotParam</span>
+
+<span class="n">run_skill_servers</span><span class="p">(</span><span class="n">device_cfgs</span><span class="o">=</span><span class="n">DEVICE_CLIENT_CONFIGS</span><span class="p">,</span> <span class="n">skill_cfgs</span><span class="o">=</span><span class="n">SKILL_CONFIGS</span><span class="p">,</span> <span class="n">robot_params</span><span class="o">=</span><span class="n">RobotParam</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">pyconnect.ros.node_observe</span><span class="w"> </span><span class="kn">import</span> <span class="n">run_observe_node</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pyconnect.ros.get_configs</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_observation_cfg</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">carerobotapp.configs.tasks</span><span class="w"> </span><span class="kn">import</span> <span class="n">OBSERVATION_NODE_CONFIGS</span>
+
+<span class="n">run_observe_node</span><span class="p">(</span><span class="n">cfg</span><span class="o">=</span><span class="n">get_observation_cfg</span><span class="p">(</span><span class="o">**</span><span class="n">OBSERVATION_NODE_CONFIGS</span><span class="p">))</span>
+</pre></div>
+</div>
+<ol class="arabic simple" start="3">
+<li><p>Make new skill</p></li>
+</ol>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">touch</span> <span class="n">new_skill</span><span class="o">.</span><span class="n">py</span>
+
+<span class="c1"># add new_skill to SKILL_LISTS  in your own tasks config file</span>
+</pre></div>
+</div>
+<ol class="arabic simple" start="4">
 <li><p>Execute new skill</p></li>
 </ol>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Run in 3 different terminals</span>
