@@ -47,6 +47,19 @@
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Overview</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#introduction">Introduction</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#system-overview">System Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#system-details">System Details</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#frontend">Frontend</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#webrtc-bridge-server">WebRTC Bridge Server</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#task-manager">Task Manager</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#llm-based-task-planning">LLM-based Task Planning</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#skill-controller">Skill controller</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#skill-workflow">Skill Workflow</a></li>
+</ul>
+</li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="#sdk-overview">SDK Overview</a></li>
 </ul>
 </li>
@@ -86,9 +99,7 @@
 <h1>Overview<a class="headerlink" href="#overview" title="Link to this heading"></a></h1>
 <section id="introduction">
 <h2>Introduction<a class="headerlink" href="#introduction" title="Link to this heading"></a></h2>
-<p>This work develops a Mobile Assistive Robotic System (MARS) designed to assist people with disabilities by performing daily tasks such as retrieving objects and helping meal. MARS uses ROS2 framework to connect
-a 7-DOF robotic arm, hybrid gripper, RGB-depth cameras, and a large language model-based planner, enabling intergration of vision-based recognition, skill affordance, and natural language task planning.
-Through real-world experiments in cluttered environments, MARS provides a promising solution for autonomous assistive robots in dynamic home settings.</p>
+<p>This work develops a Mobile Assistive Robotic System (MARS) designed to assist people with disabilities by performing daily tasks such as retrieving objects and helping with meals. MARS uses the ROS2 framework to connect a 7-DOF robotic arm, hybrid gripper, RGB-depth cameras, and a large language model-based planner, enabling integration of vision-based recognition, skill affordance, and natural language task planning. Through real-world experiments in cluttered environments, MARS provides a promising solution for autonomous assistive robots in dynamic home settings.</p>
 <figure class="align-center" id="id1">
 <a class="reference internal image-reference" href="../_images/fig_testbed.png"><img alt="Alternative text" src="../_images/fig_testbed.png" style="width: 600px;" />
 </a>
@@ -99,26 +110,175 @@ Through real-world experiments in cluttered environments, MARS provides a promis
 </section>
 <section id="system-overview">
 <h2>System Overview<a class="headerlink" href="#system-overview" title="Link to this heading"></a></h2>
-<figure class="align-center" id="id2">
+<figure class="align-center">
 <a class="reference internal image-reference" href="../_images/fig_carerobot_overview.png"><img alt="Alternative text" src="../_images/fig_carerobot_overview.png" style="width: 600px;" />
 </a>
-<figcaption>
-<p><span class="caption-text">Care Robot testbed.</span><a class="headerlink" href="#id2" title="Link to this image"></a></p>
-</figcaption>
 </figure>
-<p>To ensure modularity and seamless integration of various functionalities, the robot operates within a ROS2-based framework, as shown in the figure.
-The system includes:</p>
+<p>To ensure modularity and seamless integration of various functionalities, the robot operates within a ROS2-based framework,
+as shown in the figure. The system includes:</p>
 <blockquote>
 <div><ul class="simple">
-<li><p><strong>Human-Robot Interaction (HRI) Module</strong>: Permitting natural language communication, allowing users requesting and receiving updated feedback via text or voice input.</p></li>
-<li><p><strong>Task Planning Module</strong>: Powered by a large language model (LLM), this module interprets text and voice commands into structured execution plans.</p></li>
-<li><p><strong>Task Manager</strong>: Determines the appropriate execution strategy and coordinates with the perception and manipulation modules, assigning tasks to their corresponding execution modules.</p></li>
-<li><p><strong>Perception Module</strong>: Utilizing advanced vision-language models (VLMs), such as Grounding DINO and FastSAM, for object detection, segmentation, and affordance-based grasping.</p></li>
-<li><p><strong>Robot Manipulation Module</strong>: Performing movement, grasping, and placement, enabling efficient object handling and assistance.</p></li>
-<li><p><strong>External Computing Unit</strong>: A powerful device running resource-intensive VLM/LLM functions (e.g., Grounding DINO, FastSAM, and LLM) as a TCP/IP server, providing real-time outputs in response to requests from the task planner and perception modules.</p></li>
-<li><p><strong>Depth Camera System</strong>: Two RGB-depth cameras provide visual perception, with the head camera used for scene understanding and the wrist camera for fine-grained object interaction.</p></li>
+<li><p><strong>Frontend</strong>: or user interaction, comprising</p>
+<ul>
+<li><p><strong>input</strong> modalities (microphone for voice commands, text input, and pre-defined commands) and</p></li>
+<li><p><strong>output</strong> modalities (display for visual feedback and speaker for audio responses).</p></li>
+</ul>
+</li>
+<li><p><strong>main processor</strong>: in the core backend, featuring</p>
+<ul>
+<li><p>a <strong>WebRTC bridge server</strong> for real-time communication and remote access,</p></li>
+<li><p>a <strong>Task Manager</strong> that decomposes high-level natural language prompts into sequences of requests, handles confirmations and feedback loops, and orchestrates task execution using LLM/VLM reasoning,</p></li>
+<li><p>and a <strong>Skill Controller</strong> that manages and executes primitive skills by sending requests to specialized hardware controllers</p></li>
+</ul>
+</li>
+<li><p><strong>external computing unit</strong>: for offloading computationally intensive tasks, including</p>
+<ul>
+<li><p>a <strong>voice recognition server</strong> for speech-to-text processing and</p></li>
+<li><p><strong>LLM/VLM servers</strong> for advanced multimodal planning and perception</p></li>
+</ul>
+</li>
+<li><p><strong>hardware controller</strong>: layer that interfaces directly with the robot’s actuators and sensors,encompassing arm control servers for</p>
+<ul>
+<li><p>manipulating the 7-DOF arm and gripper,</p></li>
+<li><p>mobile control servers for navigation,</p></li>
+<li><p>head control servers for orientation,</p></li>
+<li><p>elevator control servers (potentially for vertical reach adjustment),</p></li>
+<li><p>and sensor data publishers for real-time feedback from RGB-depth cameras and other sensors.</p></li>
+</ul>
+</li>
 </ul>
 </div></blockquote>
+<p>This modular architecture divides responsibilities between frontend user interface, backend task orchestration, external AI processing, and low-level hardware control. It enables robust, scalable integration of natural language understanding, vision-based affordance detection, and precise robotic execution in assistive scenarios.</p>
+</section>
+<section id="system-details">
+<h2>System Details<a class="headerlink" href="#system-details" title="Link to this heading"></a></h2>
+<section id="frontend">
+<h3>Frontend<a class="headerlink" href="#frontend" title="Link to this heading"></a></h3>
+<figure class="align-center">
+<a class="reference internal image-reference" href="../_images/fig_frontend.png"><img alt="Alternative text" src="../_images/fig_frontend.png" style="width: 600px;" />
+</a>
+</figure>
+<p>The frontend of the system features a user-friendly graphical user interface (GUI) implemented in HTML with integrated WebRTC technology, ensuring cross-platform compatibility and seamless operation on desktops, tablets, and mobile devices. This design prioritizes accessibility for both sighted and blind users by emphasizing voice-based interaction alongside visual elements.
+The interface includes:</p>
+<ul class="simple">
+<li><p><strong>buttons</strong> for predefined commands to facilitate quick task selection,</p></li>
+<li><p>a prominent <strong>image display</strong> area for verifying object recognition results and providing visual confirmation of the robot’s perception,</p></li>
+<li><p>a scrolling <strong>message log</strong> to show real-time feedback and status updates from the backend,</p></li>
+<li><p>and <strong>text areas</strong> for entering free-form natural language prompts.</p></li>
+<li><p>Additionally, a prominent <strong>microphone icon</strong> allows users to initiate voice recording with a single click or tap, stop recording with another click to automatically send the audio to the backend for processing, and receive spoken responses from the robot’s speaker.</p></li>
+</ul>
+<p>This voice-centric approach is particularly beneficial for blind users, who may find precise screen touching challenging; they can simply speak directly to the robot or to their paired mobile device to issue commands, with the system providing auditory feedback and confirmations, thereby enabling intuitive and hands-free control in assistive scenarios.</p>
+</section>
+<section id="webrtc-bridge-server">
+<h3>WebRTC Bridge Server<a class="headerlink" href="#webrtc-bridge-server" title="Link to this heading"></a></h3>
+<figure class="align-center">
+<a class="reference internal image-reference" href="../_images/fig_webrtc_bridge.png"><img alt="Alternative text" src="../_images/fig_webrtc_bridge.png" style="width: 600px;" />
+</a>
+</figure>
+<p>The WebRTC Bridge Server serves as a critical communication hub that enables seamless, real-time bidirectional interaction between the client-side frontend (running on mobile devices, tablets, or desktops) and the ROS2-based backend task manager on the robot.
+As illustrated in the figure, it consists of two primary interfaces:</p>
+<ul class="simple">
+<li><p>a <strong>WebRTC Interface</strong> for client connectivity and</p></li>
+<li><p>a <strong>ROS2 Interface</strong> for integration with the robotic system.</p></li>
+</ul>
+<p>On the client side, the bridge handles incoming prompts (voice or text commands) via</p>
+<ul class="simple">
+<li><p>a <strong>Callback mechanism</strong>,</p></li>
+<li><p><strong>broadcasts</strong> messages (such as status updates, feedback, or spoken responses) to the client,</p></li>
+<li><p>and manages <strong>confirmation loops</strong> by sending Confirm Requests to the client and receiving Confirm Responses.</p></li>
+</ul>
+<p>On the ROS2 side, it exposes</p>
+<ul class="simple">
+<li><p>a <strong>Prompt Publisher</strong> to forward user prompts to the Task Manager,</p></li>
+<li><p>an <strong>Observe Subscriber</strong> to receive ongoing messages and feedback,</p></li>
+<li><p>and a <strong>Confirm Service Server</strong> to handle synchronous confirmation requests and responses during task execution.</p></li>
+</ul>
+<p>This design allows low-latency, secure WebRTC-based remote access over the internet while translating web-friendly protocols into native ROS2 topics and services, ensuring that users—particularly those with disabilities—can reliably control and monitor the assistive robot from any device without direct physical access to the robot’s local network.</p>
+</section>
+<section id="task-manager">
+<h3>Task Manager<a class="headerlink" href="#task-manager" title="Link to this heading"></a></h3>
+<figure class="align-center">
+<a class="reference internal image-reference" href="../_images/fig_task_manager.png"><img alt="Alternative text" src="../_images/fig_task_manager.png" style="width: 600px;" />
+</a>
+</figure>
+<p>The Task Manager is the central orchestration component of the robotic system,
+responsible for translating high-level natural language user prompts into executable sequences of low-level robotic skills.</p>
+<ul class="simple">
+<li><p>As depicted in the figure, it begins by subscribing to incoming <strong>prompts</strong> from the WebRTC Bridge Server <strong>via a Prompt Subscriber</strong>.</p></li>
+<li><p>Upon receiving a prompt, the <strong>Task Manager invokes the external LLM/VLM-based Task Planning</strong> module, which decomposes the user intent into a structured task plan and generates a sequence of skill requests.</p></li>
+<li><p>To ensure safe and transparent operation—particularly important in assistive scenarios—the Task Manager incorporates an interactive confirmation loop: it sends Confirm Requests to the user through a <strong>Confirm Service Client</strong>, awaits Confirm Responses, and, if the user selects “Terminate” or “Skip,” aborts or bypasses the current step accordingly.</p></li>
+<li><p>When the user chooses to continue or when no confirmation is required, the Task Manager proceeds by dispatching a sequence of skill requests to the Skill Servers via dedicated <strong>Skill Clients</strong>.</p></li>
+<li><p>It concurrently collects sequences of responses and feedback from executed skills, which can be fed back into the LLM/VLM for replanning or error recovery if necessary.</p></li>
+</ul>
+<p>This closed-loop design enables robust, user-supervised task execution while leveraging advanced multimodal reasoning for complex,
+long-horizon assistive tasks in unstructured home environments.</p>
+<section id="llm-based-task-planning">
+<h4>LLM-based Task Planning<a class="headerlink" href="#llm-based-task-planning" title="Link to this heading"></a></h4>
+<figure class="align-center">
+<a class="reference internal image-reference" href="../_images/fig_llm_task_plan.png"><img alt="Alternative text" src="../_images/fig_llm_task_plan.png" style="width: 600px;" />
+</a>
+</figure>
+<p>The LLM/VLM-based Task Planning module serves as the intelligent reasoning core that bridges high-level natural language user commands with executable robotic actions. As shown in the figure, it receives structured prompts from the Task Manager containing the user’s intent (e.g., “Give me remote control on the bed”) along with a description of the robot’s available primitive skills—pick, place, move, find, and inform—which define the system’s capabilities for grasping, positioning, navigation, object detection, and environmental reporting. Leveraging multimodal large language (and optionally vision-language) models hosted on an external computing unit, the module decomposes the command into a feasible sequence of skill invocations, outputting a structured program that specifies action_types (e.g., place), target_objects (e.g., remote control), target_locations (e.g., bed), and destination_locations (e.g., the user’s position, denoted as “me”). This structured output enables the Task Manager to generate a precise sequence of skill requests while incorporating contextual understanding, such as resolving ambiguous references (e.g., “me” as the user’s current location) and handling multi-object or multi-step tasks (as illustrated in the example of delivering both a phone and door key). By grounding planning in the robot’s defined skill affordances, the LLM ensures safe, interpretable, and adaptable task execution tailored to dynamic assistive scenarios in home environments.</p>
+</section>
+</section>
+<section id="skill-controller">
+<h3>Skill controller<a class="headerlink" href="#skill-controller" title="Link to this heading"></a></h3>
+<figure class="align-center">
+<a class="reference internal image-reference" href="../_images/fig_skill_controller.png"><img alt="Alternative text" src="../_images/fig_skill_controller.png" style="width: 600px;" />
+</a>
+</figure>
+<p>The Skill Controller acts as the bridge between high-level task planning and low-level hardware execution,
+managing a set of parameterized primitive skills that encapsulate the robot’s core capabilities.
+As illustrated in the figure, incoming skill requests from the Task Manager’s Skill Clients are
+received and handled by dedicated Skill Servers for each primitive action:</p>
+<ul class="simple">
+<li><p><strong>Move</strong> (for mobile base navigation),</p></li>
+<li><p><strong>Find</strong> (for object detection and localization using onboard cameras),</p></li>
+<li><p><strong>Pick</strong> (for grasping objects with the arm and hybrid gripper, optionally using suction), and</p></li>
+<li><p><strong>Place</strong> (for positioning and releasing objects at specified locations).</p></li>
+</ul>
+<p>Each Skill Server processes its requests by invoking the appropriate Device Control Clients,
+which include specialized clients for arm control, mobile base control, head orientation control,
+elevator vertical adjustment, and sensor data subscription to obtain real-time RGB-D images and
+other environmental feedback.</p>
+<p>Critically, the Find and Pick skills leverage an external VLM Server for advanced vision-based reasoning—such
+as object recognition, affordance detection, and grasp planning in cluttered scenes—ensuring robust perception
+before physical interaction.</p>
+<p>The arrows indicate the primary serving direction: requests flow from Skill Clients to Skill Servers,
+then to Device Control Clients that directly interface with the Hardware Controller,
+while perceptual data (especially from sensors and VLM) flows back upward to inform ongoing skill execution and
+provide feedback to the Task Manager.</p>
+<p>This hierarchical, modular design enables reliable, vision-guided performance of atomic actions
+while maintaining clear separation between planning, skill abstraction, and hardware-specific control.</p>
+<section id="skill-workflow">
+<h4>Skill Workflow<a class="headerlink" href="#skill-workflow" title="Link to this heading"></a></h4>
+<figure class="align-center">
+<a class="reference internal image-reference" href="../_images/fig_skills.png"><img alt="Alternative text" src="../_images/fig_skills.png" style="width: 600px;" />
+</a>
+</figure>
+<p>The skill workflow in the Skill Controller is designed to achieve robust autonomous execution through
+hierarchical precondition checks and built-in retry mechanisms,
+ensuring reliable performance in real-world cluttered environments.
+As depicted in the flowchart, when a high-level skill is invoked,
+the system first evaluates necessary preconditions and, if unmet,</p>
+<blockquote>
+<div><p>recursively triggers lower-level skills with a fixed number of retries (experimentally set to n=2)
+to increase success rates without excessive delay.</p>
+<ul class="simple">
+<li><p>For the <strong>Place skill</strong>, it initially checks if the object is grasped; if not, it calls Pick. It then verifies arrival at the destination; if not, it triggers Move (with up to 2 navigation attempts). Only upon satisfying both conditions does it execute the final place action.</p></li>
+<li><p>The <strong>Pick skill</strong> checks if the object is already found; if not, it invokes Find (allowing up to 2 detection attempts using the VLM Server), followed by the grasp execution if successful.</p></li>
+<li><p>Similarly, the <strong>Find skill</strong> first confirms whether the robot is at an optimal target viewpoint; if not, it calls Move (with up to 2 trials) before performing object detection and localization.</p></li>
+<li><p>The base Move skill directly executes navigation with its own internal robustness.</p></li>
+</ul>
+</div></blockquote>
+<p>At each execution step (move_exec, find_exec, pick_exec, place_exec),
+failure after the allotted retries propagates upward, causing the calling skill to return failure.
+This retry-augmented cascaded structure minimizes planning complexity at the Task Manager level
+while providing fault tolerance through limited reattempts,
+making the system particularly effective for assistive tasks where occasional perception or
+motion errors are common.</p>
+</section>
+</section>
 </section>
 <section id="sdk-overview">
 <h2>SDK Overview<a class="headerlink" href="#sdk-overview" title="Link to this heading"></a></h2>

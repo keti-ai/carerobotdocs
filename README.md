@@ -21,6 +21,12 @@ sphinx-apidoc -f -o source/apidoc $CORE_DIR
 ```
 **Note:** Ensure that `__init__.py` is present in subdirectories for correct module recognition.
 
+## Fix locale issues
+```bash
+export LC_ALL=C.UTF-8
+export LANG=C.UTF-8
+```
+
 ## Building the Documentation
 ```bash
 mkdir build
