@@ -233,18 +233,15 @@ SDK Overview
 
 2. Task-based packages
 
-To reduce the complexity and time consumming while repeatdly coding  callback function or handle different kinds of connections, 
-we developed task-based pakages that aids the easy implementation of the system. The packages inludes:
+o reduce the complexity and time required when repeatedly implementing callback functions or handling different types of connections, we have developed task-based packages that facilitate easier system implementation. The packages include:
 
- -  pyconnect: Enables repeated communication between nodes and functionality PCs with easy ROS node setup and message logging. 
+- **pyconnect**: Enables reliable and repeated communication between nodes and functional PCs, with simplified ROS node setup and message logging.
 
- - pyrecognition: Implements popular recognition functions (e.g., grasp detection, object detection, instance segmentation, VLM)
+- **pyrecognition**: Implements popular recognition functions (e.g., grasp detection, object detection, instance segmentation, and VLM).
 
- - carerobotapp: ROS2 Nodes Implementation
+- **pyinterfaces**: Provides commonly used terms and utilities (e.g., instances, masks, boxes, grasp poses, and place poses).
 
- - pyinterfaces: Represents frequently used terms and utilities (e.g., instances, masks, boxes, grasp pose, place pose)
-
- - rosinterfaces: ROS2 Data Interfaces
+- **rosinterfaces**: ROS2 data interfaces.
 
 3. Manual: see the :ref:`manual` section for more details.
 

@@ -1,6 +1,6 @@
 .. _install:
 =============
-Installation
+Get started
 =============
 
 This guide provides step-by-step instructions to set up the necessary environment for your project, including CUDA, Docker, dependencies, and system execution.

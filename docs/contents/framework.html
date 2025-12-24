@@ -1,0 +1,493 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ROS2-based Framework &mdash; Care Robot 1.0.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=8d563738"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Manual" href="manual.html" />
+    <link rel="prev" title="Get started" href="get_started.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Care Robot
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="intro.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="get_started.html">Get started</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">ROS2-based Framework</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#key-advantages-over-vanilla-ros2">Key Advantages over Vanilla ROS2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#overview-of-the-custom-ros2-node-implementation">Overview of the Custom ROS2 Node Implementation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#detailed-breakdown-of-components">Detailed Breakdown of Components</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#base-class-nodeagent">Base Class: NodeAgent</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#derived-agent-classes">Derived Agent Classes</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#actionserveragent">ActionServerAgent:</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#factory-function-make-agent">Factory Function: make_agent()</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#managing-class-customnode-inherits-from-rclpy-node-node">Managing Class: CustomNode (Inherits from rclpy.node.Node)</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#advantages-in-flexibility-and-handling-complex-workflows">Advantages in Flexibility and Handling Complex Workflows</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#quick-start">Quick Start</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#basic-setup">Basic Setup</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#add-agents">Add Agents</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#subscriber-receive-data-from-a-topic">Subscriber (receive data from a topic)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#publisher-send-data-to-a-topic">Publisher (send data to a topic)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#action-client-call-a-long-running-action">Action Client (call a long-running action)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#action-server-provide-a-service-that-can-give-feedback">Action Server (provide a service that can give feedback)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#service-client">Service Client</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#timer-run-something-periodically">Timer (run something periodically)</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#use-the-agents-super-simple-api">Use the Agents (Super Simple API)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#run-the-node">Run the Node</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#useful-extras">Useful Extras</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#full-minimal-example-publisher-subscriber">Full Minimal Example (Publisher + Subscriber)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="manual.html">Manual</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">Examples</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../apidoc/carerobotapp/modules.html">carerobotapp</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Care Robot</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">ROS2-based Framework</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/contents/framework.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="ros2-based-framework">
+<h1>ROS2-based Framework<a class="headerlink" href="#ros2-based-framework" title="Link to this heading"></a></h1>
+<p>Welcome to a simpler, more powerful way to build ROS2 nodes!</p>
+<p>This lightweight framework wraps vanilla ROS2 (<cite>rclpy</cite>) with a clean <strong>agent-based</strong> design.
+Instead of writing repetitive boilerplate for every subscriber, publisher, action, or service, you:</p>
+<ul class="simple">
+<li><p>Add agents with <strong>one line</strong> of code</p></li>
+<li><p>Use the <strong>same simple API</strong> (<cite>agent.send()</cite>, <cite>agent.get()</cite>) for all communication types</p></li>
+<li><p>Keep your business logic clean (no ROS messages inside your functions)</p></li>
+<li><p>Get <strong>automatic logging</strong>, connection waiting, and multi-threaded execution</p></li>
+</ul>
+<section id="key-advantages-over-vanilla-ros2">
+<h2>Key Advantages over Vanilla ROS2<a class="headerlink" href="#key-advantages-over-vanilla-ros2" title="Link to this heading"></a></h2>
+<table class="docutils align-default" id="id1">
+<caption><span class="caption-text">Robot Skills</span><a class="headerlink" href="#id1" title="Link to this table"></a></caption>
+<colgroup>
+<col style="width: 30.0%" />
+<col style="width: 35.0%" />
+<col style="width: 35.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Feature</p></th>
+<th class="head"><p>Vanilla ROS2</p></th>
+<th class="head"><p>This Custom Framework</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Code length</p></td>
+<td><p>Lots of boilerplate</p></td>
+<td><p>Very concise</p></td>
+</tr>
+<tr class="row-odd"><td><p>Interface consistency</p></td>
+<td><p>Different syntax per type</p></td>
+<td><p>Uniform: send() / get() everywhere</p></td>
+</tr>
+<tr class="row-even"><td><p>Data handling</p></td>
+<td><p>Manual encode/decode everywhere</p></td>
+<td><p>One encode_func + decode_func per agent</p></td>
+</tr>
+<tr class="row-odd"><td><p>Business logic</p></td>
+<td><p>Mixed with ROS calls</p></td>
+<td><p>Pure Python in response_func</p></td>
+</tr>
+<tr class="row-even"><td><p>Managing 20+ interfaces</p></td>
+<td><p>Messy node class</p></td>
+<td><p>Clean node.agents dictionary</p></td>
+</tr>
+<tr class="row-odd"><td><p>Logging &amp; debugging</p></td>
+<td><p>Manual or external tools</p></td>
+<td><p>Built-in: JSON + images + periodic sub logging</p></td>
+</tr>
+<tr class="row-even"><td><p>Waiting for connections</p></td>
+<td><p>You write it</p></td>
+<td><p>One call: node.wait_until_connected()</p></td>
+</tr>
+<tr class="row-odd"><td><p>Concurrency</p></td>
+<td><p>Manual executor + callback groups</p></td>
+<td><p>Smart defaults for images &amp; high-rate topics</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Perfect for</strong>:</p>
+<ul class="simple">
+<li><p>Robots with many sensors/actuators</p></li>
+<li><p>Teams that want fast prototyping</p></li>
+<li><p>Projects needing easy debugging &amp; data recording</p></li>
+</ul>
+</section>
+<section id="overview-of-the-custom-ros2-node-implementation">
+<h2>Overview of the Custom ROS2 Node Implementation<a class="headerlink" href="#overview-of-the-custom-ros2-node-implementation" title="Link to this heading"></a></h2>
+<p>This Python code provides a highly modular and extensible framework for building custom ROS2 nodes, centered on the base class NodeAgent and the managing class CustomNode. It abstracts ROS2 communication primitives — topics, actions, services, and timers — into reusable “agents” that are easily configured and combined to handle complex robotic or distributed systems.
+The key advantage of this design lies in its strict separation of concerns: <strong>callbacks and send operations no longer contain fragmented, repetitive ROS2 message handling code</strong>. Instead, all low-level details are cleanly split into three dedicated components:</p>
+<ul class="simple">
+<li><p><strong>encode_func</strong>: Converts pure Python data (e.g., dicts, NumPy arrays) into ROS2 message fields before sending or publishing.</p></li>
+<li><p><strong>decode_func</strong>: Transforms incoming ROS2 messages back into clean, easy-to-use Python data structures.</p></li>
+<li><p><strong>response_func</strong> (or run_func): Contains only the core business logic or processing, operating exclusively on pure Python data with no direct contact with ROS2 message objects.</p></li>
+</ul>
+<p>This clear separation keeps callbacks and send functions short, readable, and focused solely on orchestration, while the actual data conversion and processing logic lives in reusable, testable pure-Python functions.
+Combined with ROS2’s rclpy library, the framework adds powerful layers for data encoding/decoding, comprehensive logging, robust error handling, and intelligent concurrency management. Agents inherit from NodeAgent and are aggregated in a CustomNode, which manages spinning, callback execution, and lifecycle.
+Key features include:</p>
+<ul class="simple">
+<li><p><strong>Uniform Interface</strong>: All agents expose the same simple get(), send(), and log_msg() methods, regardless of whether they are subscribers, publishers, actions, services, or timers.</p></li>
+<li><p><strong>Clean Data Handling</strong>: Customizable encode_func and decode_func enable seamless use of native Python formats (JSON, NumPy, OpenCV images).</p></li>
+<li><p><strong>Built-in Logging &amp; Debugging</strong>: Automatic saving of messages, images, and arrays to timestamped directories, plus optional periodic logging of all subscribers.</p></li>
+<li><p><strong>Smart Concurrency</strong>: Multi-threaded executors and callback groups automatically applied, especially for high-rate image topics.</p></li>
+<li><p><strong>Easy Extensibility</strong>: Factory function make_agent() and AGENT_CLASS_DICT simplify adding new agent types or integrating non-ROS protocols (e.g., TCP/IP).</p></li>
+</ul>
+<p>This implementation is especially well-suited for robotics, AI, and IoT applications using ROS2, where nodes must reliably coordinate numerous sensors, actuators, and sophisticated processing pipelines while remaining maintainable and debuggable.</p>
+</section>
+<section id="detailed-breakdown-of-components">
+<h2>Detailed Breakdown of Components<a class="headerlink" href="#detailed-breakdown-of-components" title="Link to this heading"></a></h2>
+<section id="base-class-nodeagent">
+<h3>Base Class: NodeAgent<a class="headerlink" href="#base-class-nodeagent" title="Link to this heading"></a></h3>
+<p>Purpose: Serves as the foundation for all agent types, providing shared functionality for initialization, logging, data formatting, and basic send/receive operations.
+Key Methods:</p>
+<ul class="simple">
+<li><p><strong>__init__()</strong>: Sets up agent properties like name, connection type (e.g., ‘sub’ for subscriber, ‘action_server’), data interface (ROS2 message type), and custom functions for encoding/decoding/response processing. It also tracks connection status and logging flags.</p></li>
+<li><p><strong>make_log_dirs()</strong>: Creates timestamped directories for logs (messages in JSON, images/arrays in PNG/NPY). If is_init is True, it starts a new session; otherwise, it reuses the latest one.</p></li>
+<li><p><strong>log_msg()</strong>: Saves data to files, handling JSON-serializable dicts, NumPy arrays (as images or .npy files), and threading for non-blocking I/O. Useful for auditing complex interactions.</p></li>
+<li><p><strong>reform_response()</strong>: Ensures responses include an ‘isdone’ flag for consistent completion signaling.</p></li>
+<li><p><strong>get()</strong>: Retrieves data from subscribers or triggers sends for clients. Includes optional info printing for debugging.</p></li>
+<li><p><strong>send()</strong>: Abstract method overridden in subclasses for type-specific sending.</p></li>
+</ul>
+<p>Advantages: By abstracting common operations, it reduces boilerplate code when dealing with diverse ROS2 interfaces.</p>
+</section>
+<section id="derived-agent-classes">
+<h3>Derived Agent Classes<a class="headerlink" href="#derived-agent-classes" title="Link to this heading"></a></h3>
+<p>These inherit from NodeAgent and implement specific ROS2 behaviors:</p>
+<section id="actionserveragent">
+<h4>ActionServerAgent:<a class="headerlink" href="#actionserveragent" title="Link to this heading"></a></h4>
+<ul class="simple">
+<li><p>Handles action goals via callback(), decoding requests, processing with response_func, and sending feedback/results.</p></li>
+<li><p>Uses threading for continuous feedback during long-running tasks.</p></li>
+<li><p>Error handling ensures graceful aborts with error messages.</p></li>
+</ul>
+<section id="actionclientagent">
+<h5>ActionClientAgent:<a class="headerlink" href="#actionclientagent" title="Link to this heading"></a></h5>
+<ul class="simple">
+<li><p><strong>send()</strong> encodes and sends goals, waits for results (with optional timeout), and decodes responses.</p></li>
+<li><p><strong>Callbacks</strong> for feedback, goal acceptance, and results provide fine-grained control.</p></li>
+</ul>
+</section>
+<section id="topicagent">
+<h5>TopicAgent:<a class="headerlink" href="#topicagent" title="Link to this heading"></a></h5>
+<ul class="simple">
+<li><p><strong>callback()</strong> decodes incoming messages and applies response_func.</p></li>
+<li><p><strong>send()</strong> and <strong>publish()</strong> encode and publish data, with support for periodic publishing via timers.</p></li>
+</ul>
+<p>Tracks first-message receipt to confirm connections.</p>
+</section>
+<section id="serviceserveragent">
+<h5>ServiceServerAgent:<a class="headerlink" href="#serviceserveragent" title="Link to this heading"></a></h5>
+<ul class="simple">
+<li><p><strong>callback()</strong> decodes requests, processes them, and encodes responses.</p></li>
+</ul>
+</section>
+<section id="serviceclientagent">
+<h5>ServiceClientAgent:<a class="headerlink" href="#serviceclientagent" title="Link to this heading"></a></h5>
+<ul class="simple">
+<li><p><strong>send()</strong> encodes requests, calls the service asynchronously, and decodes results. Supports non-blocking mode and timing info for performance analysis.</p></li>
+</ul>
+</section>
+<section id="timeragent">
+<h5>TimerAgent:<a class="headerlink" href="#timeragent" title="Link to this heading"></a></h5>
+<ul class="simple">
+<li><p><strong>callback()</strong> simply invokes response_func at intervals, ideal for periodic tasks without external triggers.</p></li>
+</ul>
+<p><strong>AGENT_CLASS_DICT</strong>: A mapping from connection types (strings like ‘action_server’) to classes, enabling dynamic agent creation.</p>
+</section>
+</section>
+<section id="factory-function-make-agent">
+<h4>Factory Function: make_agent()<a class="headerlink" href="#factory-function-make-agent" title="Link to this heading"></a></h4>
+<p>Takes a CustomNode and config dict (e.g., conn_type, data_interface, encode/decode funcs).
+Instantiates the appropriate agent class, attaches it to the node (e.g., creating subscriptions, publishers, or timers).
+Handles special cases like image sensors with reentrant callback groups for better concurrency.
+Supports integration with non-ROS protocols (e.g., TCP/IP) via conditional branching.
+Output: Prints confirmation messages for easy debugging.</p>
+</section>
+<section id="managing-class-customnode-inherits-from-rclpy-node-node">
+<h4>Managing Class: CustomNode (Inherits from rclpy.node.Node)<a class="headerlink" href="#managing-class-customnode-inherits-from-rclpy-node-node" title="Link to this heading"></a></h4>
+<p>Purpose: Acts as a container for multiple agents, managing their lifecycle and execution.</p>
+<p>Key Methods:</p>
+<ul class="simple">
+<li><p><strong>__init__()</strong>: Initializes node name, logging setup, and shared callback groups. Optional stop_func for cleanup on shutdown.</p></li>
+<li><p><strong>add_agent()</strong>: Configures and adds a single agent, handling name resolution and optional TCP/IP fallback.</p></li>
+<li><p><strong>add_agents()</strong>: Batch-adds agents from a list of configs, with shared kwargs for consistency.</p></li>
+<li><p><strong>listen() / spin()</strong>: Starts callback processing, optionally in a thread. Uses MultiThreadedExecutor if multiple callback groups are needed (e.g., for high-concurrency setups).</p></li>
+<li><p><strong>wait_until_connected()</strong>: Blocks until all subs/clients are connected, ensuring readiness in distributed systems.</p></li>
+<li><p><strong>start_log_subs()</strong>: Periodically logs all subscriber data (e.g., at 10 FPS) to a timestamped directory, handling arrays/images separately for efficiency.</p></li>
+<li><p><strong>stop_log_subs()</strong>: Halts logging thread safely.</p></li>
+<li><p><strong>is_logging_subs</strong>: Property to check logging status.</p></li>
+</ul>
+<p>Agent Storage: Agents are stored in a dict by name for easy access (e.g., node.agents[‘my_sub’].get()).</p>
+</section>
+</section>
+</section>
+<section id="advantages-in-flexibility-and-handling-complex-workflows">
+<h2>Advantages in Flexibility and Handling Complex Workflows<a class="headerlink" href="#advantages-in-flexibility-and-handling-complex-workflows" title="Link to this heading"></a></h2>
+<p>This implementation shines in its flexibility, allowing developers to mix and match ROS2 primitives without rewriting core logic:</p>
+<ul class="simple">
+<li><p><strong>Modular Configuration</strong>: Agents are defined via simple dicts (e.g., in add_agents()), specifying conn_type, data_interface, and custom funcs. This decouples business logic (response_func) from communication details, enabling rapid prototyping. For instance, swapping a topic for an action requires only changing conn_type—no code restructuring.</p></li>
+<li><p><strong>Custom Data Pipelines</strong>: Encode/decode funcs support arbitrary data (e.g., converting dicts to ROS messages, handling images with CvBridge). This integrates seamlessly with libraries like NumPy, OpenCV, or even external APIs, making it adaptable to non-standard ROS workflows.</p></li>
+<li><p><strong>Extensibility</strong>: Inheritance from NodeAgent allows custom subclasses for niche needs (e.g., adding encryption). The factory pattern and AGENT_CLASS_DICT facilitate adding new types without modifying core code.</p></li>
+<li><p><strong>Concurrency and Performance</strong>: Multi-threaded executors and reentrant groups prevent bottlenecks in image-heavy or multi-agent nodes. Timers enable scheduled tasks, while async sends in clients support non-blocking operations.</p></li>
+</ul>
+<p>For complex workflows involving many agents (e.g., a robot with dozens of sensors, controllers, and AI modules):</p>
+<ul class="simple">
+<li><p><strong>Scalability</strong>: A single CustomNode can manage 100+ agents, each handling a specific role (e.g., 10 subs for sensors, 5 action clients for actuators, 3 timers for health checks). add_agents() batch-adds them from configs, ideal for large systems.</p></li>
+<li><p><strong>Orchestration</strong>: Agents interact via shared node methods (e.g., one agent’s response_func can trigger another’s send()). This enables intricate pipelines, like a subscriber triggering an action server, which logs results and publishes updates.</p></li>
+<li><p><strong>Debugging in Complexity</strong>: Logging (messages, images, periodic subs) captures state in timestamped dirs, crucial for diagnosing issues in multi-agent setups. Error decorators (&#64;exception_handler) and feedback loops ensure robustness.</p></li>
+<li><p><strong>Distributed Systems</strong>: Waiting for connections and handling timeouts make it reliable for fleets of nodes. For example, in a swarm robotics scenario, one node could coordinate 50+ agents for perception, planning, and execution, with logging for post-analysis.</p></li>
+<li><p><strong>Real-World Example</strong>: Imagine a autonomous vehicle node: Subs for camera/LiDAR, action servers for navigation commands, services for diagnostics, timers for heartbeat signals. This framework allows implementing such a “very complicated work” by composing agents, reducing development time and errors compared to vanilla ROS2.</p></li>
+</ul>
+<p>In summary, this code transforms ROS2 node development into a composable, agent-based paradigm, offering unparalleled flexibility for simple scripts or massive, multi-node ecosystems. It minimizes glue code, enhances maintainability, and scales effortlessly to demanding applications.</p>
+</section>
+<section id="quick-start">
+<h2>Quick Start<a class="headerlink" href="#quick-start" title="Link to this heading"></a></h2>
+<p>This custom framework makes building ROS2 nodes much simpler and more powerful than vanilla ROS2. You create one CustomNode, then add “agents” for topics, actions, services, or timers — all with a clean, uniform interface.</p>
+<section id="basic-setup">
+<h3>Basic Setup<a class="headerlink" href="#basic-setup" title="Link to this heading"></a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">pyconnect.ros.custom_node</span><span class="w"> </span><span class="kn">import</span> <span class="n">CustomNode</span>
+<span class="n">node</span> <span class="o">=</span> <span class="n">CustomNode</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;my_robot_node&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="add-agents">
+<h3>Add Agents<a class="headerlink" href="#add-agents" title="Link to this heading"></a></h3>
+<section id="subscriber-receive-data-from-a-topic">
+<h4>Subscriber (receive data from a topic)<a class="headerlink" href="#subscriber-receive-data-from-a-topic" title="Link to this heading"></a></h4>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">node</span><span class="o">.</span><span class="n">add_agent</span><span class="p">(</span>
+       <span class="n">conn_name</span><span class="o">=</span><span class="s1">&#39;camera_image&#39;</span><span class="p">,</span>      <span class="c1"># topic name</span>
+       <span class="n">conn_type</span><span class="o">=</span><span class="s1">&#39;sub&#39;</span><span class="p">,</span>               <span class="c1"># subscriber</span>
+       <span class="n">data_interface</span><span class="o">=</span><span class="n">Image</span><span class="p">,</span>          <span class="c1"># your ROS message type, e.g. from sensor_msgs.msg import Image</span>
+       <span class="n">decode_func</span><span class="o">=</span><span class="n">my_image_decoder</span><span class="p">,</span>  <span class="c1"># function: ROS msg → Python dict</span>
+       <span class="n">response_func</span><span class="o">=</span><span class="n">my_image_processor</span><span class="p">,</span>  <span class="c1"># optional: called every time a message arrives</span>
+       <span class="n">do_log_msg</span><span class="o">=</span><span class="kc">True</span>                <span class="c1"># optional: auto-save images + data to disk</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="publisher-send-data-to-a-topic">
+<h4>Publisher (send data to a topic)<a class="headerlink" href="#publisher-send-data-to-a-topic" title="Link to this heading"></a></h4>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">node</span><span class="o">.</span><span class="n">add_agent</span><span class="p">(</span>
+       <span class="n">conn_name</span><span class="o">=</span><span class="s1">&#39;command&#39;</span><span class="p">,</span>
+       <span class="n">conn_type</span><span class="o">=</span><span class="s1">&#39;pub&#39;</span><span class="p">,</span>
+       <span class="n">data_interface</span><span class="o">=</span><span class="n">String</span><span class="p">,</span>
+       <span class="n">encode_func</span><span class="o">=</span><span class="n">my_string_encoder</span><span class="p">,</span>  <span class="c1"># function: Python dict → ROS msg</span>
+       <span class="n">time_period</span><span class="o">=</span><span class="mf">0.5</span>                 <span class="c1"># optional: auto-publish every 0.5 sec</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="action-client-call-a-long-running-action">
+<h4>Action Client (call a long-running action)<a class="headerlink" href="#action-client-call-a-long-running-action" title="Link to this heading"></a></h4>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">node</span><span class="o">.</span><span class="n">add_agent</span><span class="p">(</span>
+       <span class="n">conn_name</span><span class="o">=</span><span class="s1">&#39;navigate&#39;</span><span class="p">,</span>
+       <span class="n">conn_type</span><span class="o">=</span><span class="s1">&#39;action_client&#39;</span><span class="p">,</span>
+       <span class="n">data_interface</span><span class="o">=</span><span class="n">NavigateAction</span><span class="p">,</span>   <span class="c1"># your custom action type</span>
+       <span class="n">encode_func</span><span class="o">=</span><span class="n">my_goal_encoder</span><span class="p">,</span>
+       <span class="n">decode_func</span><span class="o">=</span><span class="n">my_result_decoder</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="action-server-provide-a-service-that-can-give-feedback">
+<h4>Action Server (provide a service that can give feedback)<a class="headerlink" href="#action-server-provide-a-service-that-can-give-feedback" title="Link to this heading"></a></h4>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">node</span><span class="o">.</span><span class="n">add_agent</span><span class="p">(</span>
+       <span class="n">conn_name</span><span class="o">=</span><span class="s1">&#39;process_data&#39;</span><span class="p">,</span>
+       <span class="n">conn_type</span><span class="o">=</span><span class="s1">&#39;action_server&#39;</span><span class="p">,</span>
+       <span class="n">data_interface</span><span class="o">=</span><span class="n">ProcessAction</span><span class="p">,</span>
+       <span class="n">encode_func</span><span class="o">=</span><span class="n">my_result_encoder</span><span class="p">,</span>
+       <span class="n">decode_func</span><span class="o">=</span><span class="n">my_goal_decoder</span><span class="p">,</span>
+       <span class="n">response_func</span><span class="o">=</span><span class="n">my_long_task</span>        <span class="c1"># your main processing function</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="service-client">
+<h4>Service Client<a class="headerlink" href="#service-client" title="Link to this heading"></a></h4>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">node</span><span class="o">.</span><span class="n">add_agent</span><span class="p">(</span>
+       <span class="n">conn_name</span><span class="o">=</span><span class="s1">&#39;get_map&#39;</span><span class="p">,</span>
+       <span class="n">conn_type</span><span class="o">=</span><span class="s1">&#39;service_client&#39;</span><span class="p">,</span>
+       <span class="n">data_interface</span><span class="o">=</span><span class="n">GetMap</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="timer-run-something-periodically">
+<h4>Timer (run something periodically)<a class="headerlink" href="#timer-run-something-periodically" title="Link to this heading"></a></h4>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">node</span><span class="o">.</span><span class="n">add_agent</span><span class="p">(</span>
+       <span class="n">conn_name</span><span class="o">=</span><span class="s1">&#39;heartbeat&#39;</span><span class="p">,</span>
+       <span class="n">conn_type</span><span class="o">=</span><span class="s1">&#39;timer&#39;</span><span class="p">,</span>
+       <span class="n">time_period</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span>                 <span class="c1"># every 1 second</span>
+       <span class="n">response_func</span><span class="o">=</span><span class="n">my_health_check</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+<section id="use-the-agents-super-simple-api">
+<h2>Use the Agents (Super Simple API)<a class="headerlink" href="#use-the-agents-super-simple-api" title="Link to this heading"></a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Get latest data from a subscriber</span>
+<span class="n">latest_image_data</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">agents</span><span class="p">[</span><span class="s1">&#39;camera_image&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>   <span class="c1"># returns decoded Python dict</span>
+
+<span class="c1"># Or with info print</span>
+<span class="n">latest_image_data</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">agents</span><span class="p">[</span><span class="s1">&#39;camera_image&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">show_info</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="c1"># Send/publish data</span>
+<span class="n">node</span><span class="o">.</span><span class="n">agents</span><span class="p">[</span><span class="s1">&#39;command&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">send</span><span class="p">({</span><span class="s1">&#39;cmd&#39;</span><span class="p">:</span> <span class="s1">&#39;forward&#39;</span><span class="p">,</span> <span class="s1">&#39;speed&#39;</span><span class="p">:</span> <span class="mf">0.5</span><span class="p">})</span>
+
+<span class="c1"># Call an action</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">agents</span><span class="p">[</span><span class="s1">&#39;navigate&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">send</span><span class="p">({</span><span class="s1">&#39;goal_x&#39;</span><span class="p">:</span> <span class="mf">10.0</span><span class="p">,</span> <span class="s1">&#39;goal_y&#39;</span><span class="p">:</span> <span class="mf">5.0</span><span class="p">})</span>
+
+<span class="c1"># Call a service</span>
+<span class="n">map_data</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">agents</span><span class="p">[</span><span class="s1">&#39;get_map&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">send</span><span class="p">({</span><span class="s1">&#39;request_full&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">})</span>
+</pre></div>
+</div>
+</section>
+<section id="run-the-node">
+<h2>Run the Node<a class="headerlink" href="#run-the-node" title="Link to this heading"></a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Option A: Run in background thread (good for scripts)</span>
+<span class="n">node</span><span class="o">.</span><span class="n">spin</span><span class="p">(</span><span class="n">run_thread</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="c1"># Option B: Block main thread (good for simple programs)</span>
+<span class="n">node</span><span class="o">.</span><span class="n">spin</span><span class="p">()</span>  <span class="c1"># or node.listen()</span>
+</pre></div>
+</div>
+</section>
+<section id="useful-extras">
+<h2>Useful Extras<a class="headerlink" href="#useful-extras" title="Link to this heading"></a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Wait until all sensors/services are connected</span>
+<span class="n">node</span><span class="o">.</span><span class="n">wait_until_connected</span><span class="p">()</span>
+
+<span class="c1"># Log all incoming subscriber data (images, arrays, etc.) at 10 FPS</span>
+<span class="n">node</span><span class="o">.</span><span class="n">start_log_subs</span><span class="p">(</span><span class="n">fps</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+<span class="c1"># ... later</span>
+<span class="n">node</span><span class="o">.</span><span class="n">stop_log_subs</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
+<section id="full-minimal-example-publisher-subscriber">
+<h2>Full Minimal Example (Publisher + Subscriber)<a class="headerlink" href="#full-minimal-example-publisher-subscriber" title="Link to this heading"></a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">std_msgs.msg</span><span class="w"> </span><span class="kn">import</span> <span class="n">String</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pyconnect.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">dict2str</span><span class="p">,</span> <span class="n">str2dict</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">encoder</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
+<span class="n">msg</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">dict2str</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="k">return</span> <span class="n">msg</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">decoder</span><span class="p">(</span><span class="n">msg</span><span class="p">):</span>
+<span class="k">return</span> <span class="n">str2dict</span><span class="p">(</span><span class="n">msg</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+
+<span class="c1"># Publisher node</span>
+<span class="n">pub_node</span> <span class="o">=</span> <span class="n">CustomNode</span><span class="p">(</span><span class="s1">&#39;talker&#39;</span><span class="p">)</span>
+<span class="n">pub_node</span><span class="o">.</span><span class="n">add_agent</span><span class="p">(</span><span class="n">conn_name</span><span class="o">=</span><span class="s1">&#39;chatter&#39;</span><span class="p">,</span> <span class="n">conn_type</span><span class="o">=</span><span class="s1">&#39;pub&#39;</span><span class="p">,</span> <span class="n">data_interface</span><span class="o">=</span><span class="n">String</span><span class="p">,</span>
+              <span class="n">encode_func</span><span class="o">=</span><span class="n">encoder</span><span class="p">,</span> <span class="n">time_period</span><span class="o">=</span><span class="mf">1.0</span><span class="p">)</span>  <span class="c1"># sends every second</span>
+<span class="n">pub_node</span><span class="o">.</span><span class="n">spin</span><span class="p">(</span><span class="n">run_thread</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="c1"># Subscriber node</span>
+<span class="n">sub_node</span> <span class="o">=</span> <span class="n">CustomNode</span><span class="p">(</span><span class="s1">&#39;listener&#39;</span><span class="p">)</span>
+<span class="n">sub_node</span><span class="o">.</span><span class="n">add_agent</span><span class="p">(</span><span class="n">conn_name</span><span class="o">=</span><span class="s1">&#39;chatter&#39;</span><span class="p">,</span> <span class="n">conn_type</span><span class="o">=</span><span class="s1">&#39;sub&#39;</span><span class="p">,</span> <span class="n">data_interface</span><span class="o">=</span><span class="n">String</span><span class="p">,</span>
+              <span class="n">decode_func</span><span class="o">=</span><span class="n">decoder</span><span class="p">,</span> <span class="n">do_log_msg</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">sub_node</span><span class="o">.</span><span class="n">spin</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="get_started.html" class="btn btn-neutral float-left" title="Get started" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="manual.html" class="btn btn-neutral float-right" title="Manual" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Trung Bui.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
