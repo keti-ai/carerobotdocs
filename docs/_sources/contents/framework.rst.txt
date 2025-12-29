@@ -2,7 +2,196 @@
 ROS2-based Framework
 ==========
 
-Welcome to a simpler, more powerful way to build ROS2 nodes!
+
+Challenges
+-----------------------------------
+
+Single Node: One Specific Task with Tightly Coupled, Customized Interface
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+- Works well in isolation but is rigid and non-reusable.
+
+- Time-consuming due to repeated, low-value work:
+  
+  + Customizing data interfaces
+
+  + Declaring connections
+
+  + Implementing encode/decode functions
+
+
+- Developer should focus solely on the core *response function*
+
+
+.. figure:: images/fig_typical_ROS2_node.png
+   :alt: Alternative text
+   :width: 600px
+   :align: center
+
+
+Customize interfaces
+********************
+
+**Step 1.** Create interface folder in *ros2_ws/src*
+
+.. code-block:: bash
+
+       ros2 pkg create --build-type ament_cmake --license Apache-2.0 tutorial_interfaces
+
+
+**Step 2.** Create *msg*, *srv* folder  in *ros2_ws/src/tutorial_interfaces*
+
+.. code-block:: bash
+
+       mkdir msg srv
+
+
+**Step 3.** Make new file 
+
+*Num.msg* in *ros2_ws/src/tutorial_interfaces/msg*
+
+.. code-block:: bash
+
+       int64 num
+
+*AddThreeInts.srv* in *ros2/src/tutorial_interfaces/srv*
+
+.. code-block:: bash
+
+       int64 a
+       int64 b
+       int64 c
+       ---
+       int64 sum
+
+**Step 4.** Change *CMakeLists.txt*
+
+.. code-block:: bash
+
+       find_package(geometry_msgs REQUIRED)
+       find_package(rosidl_default_generators REQUIRED)
+
+       rosidl_generate_interfaces(${PROJECT_NAME}
+       "msg/Num.msg"
+       "srv/AddThreeInts.srv"
+       DEPENDENCIES geometry_msgs # Add packages that above messages depend on, in this case geometry_msgs for Sphere.msg
+       )
+
+**Step 5.** Change *package.xml*
+
+.. code-block:: bash
+
+       <depend>geometry_msgs</depend>
+       <buildtool_depend>rosidl_default_generators</buildtool_depend>
+       <exec_depend>rosidl_default_runtime</exec_depend>
+       <member_of_group>rosidl_interface_packages</member_of_group>
+
+
+**Step 6.** Build interface
+
+.. code-block:: bash
+
+       colcon build --packages-select tutorial_interfaces
+       source install/setup.bash
+
+
+Implement Node 
+****************
+
+**Step 1.** Define and run server node
+
+.. code-block:: python
+
+       from tutorial_interfaces.srv import AddThreeInts                                                           # CHANGE
+
+       import rclpy
+       from rclpy.node import Node
+
+
+       class MinimalService(Node):
+
+       def __init__(self):
+              super().__init__('minimal_service')
+              
+              # Declare connection and data interface
+              self.srv = self.create_service(AddThreeInts, 'add_three_ints', self.add_three_ints_callback)       # CHANGE
+
+       def add_three_ints_callback(self, request, response):
+              response.sum = request.a + request.b + request.c                                                   # CHANGE
+              self.get_logger().info('Incoming request\na: %d b: %d c: %d' % (request.a, request.b, request.c))  # CHANGE
+
+              return response
+
+       def add_three_ints_callback_rewrite(self, request, response):
+              # Decode 
+              data = {'a': request.a, 'b': request.b, 'c': request.c}
+
+              # Response 
+              res_data = data['a'] + data['b'] + data['c']
+
+              # Encode
+              response.sum = res_data
+              return response
+
+
+**Step 2.** Run clients
+
+.. code-block:: python
+
+       from tutorial_interfaces.srv import AddThreeInts                            # CHANGE
+       import sys
+       import rclpy
+       from rclpy.node import Node
+
+
+       class MinimalClientAsync(Node):
+
+       def __init__(self):
+              super().__init__('minimal_client_async')
+
+              # Declare connection and data interface
+              self.cli = self.create_client(AddThreeInts, 'add_three_ints')       # CHANGE
+              while not self.cli.wait_for_service(timeout_sec=1.0):
+              self.get_logger().info('service not available, waiting again...')
+              self.data_interface = AddThreeInts   
+              self.request = self.data_interface.Request()                               
+
+       def send(self, data):
+              # encode
+              self.request.a = data['a']
+              self.request.b = data['b']
+              self.request.c = data['c']                                     
+              future = self.cli.call_async(self.req)
+
+              while rclpy.ok() and not future.done() and wait_until_done:
+                     time.sleep(0.1)
+              res = future.result()
+              
+              # decode
+              rev_data = {'sum': res.sum}
+              return rev_data
+
+
+Multitask: Hard, Even Impossible 
+++++++++++++++++++++++++
+
+- Multiple tasks within one node
+
+       + quickly results in bloated, hard-to-maintain code
+
+       +  manually manage numerous subscribers, publishers, actions, services, and timers, each with different APIs and callback signatures
+
+
+- Coordination across multiple tasks (e.g., perception, planning, control, diagnostics)
+
+       + forced to split logic across multiple nodes, introducing complex inter-node communication
+
+       + synchronization issues, lifecycle management overhead, and debugging difficulties
+
+
+
+Key Advantages of Custom ROS2 Node
+-----------------------------------
 
 This lightweight framework wraps vanilla ROS2 (`rclpy`) with a clean **agent-based** design.  
 Instead of writing repetitive boilerplate for every subscriber, publisher, action, or service, you:
@@ -12,8 +201,11 @@ Instead of writing repetitive boilerplate for every subscriber, publisher, actio
 - Keep your business logic clean (no ROS messages inside your functions)  
 - Get **automatic logging**, connection waiting, and multi-threaded execution  
 
-Key Advantages over Vanilla ROS2
------------------------------------
+.. figure:: images/fig_custom_ROS2_node.png
+   :alt: Alternative text
+   :width: 600px
+   :align: center
+
 
 .. list-table:: Robot Skills
    :header-rows: 1
@@ -46,8 +238,6 @@ Key Advantages over Vanilla ROS2
    * - Concurrency
      - Manual executor + callback groups
      - Smart defaults for images & high-rate topics
-
-
 
 
 **Perfect for**:  
