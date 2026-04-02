@@ -296,34 +296,56 @@ VLM Server Execution:
 
 .. code-block:: bash
 
-       python3 -m pyrecognition.run_server server_type=tcp port=8805 detector=vlms
+       python3 -m pyrecognition.run_server server_type=tcp port=8805 detector=groundedsam_grasp,fastsam,groundingdino,audio,mask2grasps,groundedsam,fastsam_grasp
 
 Step 3. Control PC: Run Control Nodes in different Terminal Window
 --------------------------------
 
-Terminal 1
+Terminal 1 — Skill Serve
 
 .. code-block:: bash
 
-       python3 -m carerobotapp.node_prompt
+       python -m carerobotapp.node_skill_servers
 
 
-Terminal 2
+Terminal 2 — Task Manager
 
 .. code-block:: bash
 
        python3 -m carerobotapp.node_taskmanager
 
-Terminal 3
+Terminal 3 — WebRTC Server (remote browser control)
 
 .. code-block:: bash
 
-       python3 -m carerobotapp.node_skill_servers
+       python -m carerobotapp.node_prompt_webrtc_server
+       # Open http://<robot-ip>:<port> in a browser
+
+Terminal 4 - Extra Device Server (wrist camera, optional)
+
+.. code-block:: bash
+
+       python -m carerobotapp.node_extra_device_server
 
 Configuration Files
 ----------------------
 
-For further configurations, refer to the `carerobotapp.configs` directory.
+Configurations `carerobotapp.configs` directory.
+
+Make configuration file
+
+.. code-block:: bash
+
+       Copy and Edit configs/robot_10.py -> configs/robot_$ROBOT_DOMAIN_ID.py
+       Edit configs/tasks.py: from carerobotapp.configs.robot_10 -> carerobotapp.configs.robot_$ROBOT_DOMAIN_ID
+
+Confirure html
+
+.. code-block:: bash
+
+       Copy and Edit html/text_entries_pangyo.py -> configs/text_entries_$ROBOT_DOMAIN_ID.py
+       Edit offerUrl -> https://$ROBOT_IP:8443/offer
+
 
 
 
