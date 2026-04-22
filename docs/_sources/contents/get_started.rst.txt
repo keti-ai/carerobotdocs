@@ -165,7 +165,54 @@ Test SSH and FTP servers
        ssh keti@0.0.0.0
        ftp 0.0.0.0
 
+Servere PC Installation
+===================
 
+- Clone the Docker configuration repository:
+
+   .. code-block:: bash
+
+       git clone https://github.com/keti-ai/dockers.git
+       cd dockers
+
+- Build container
+
+   .. code-block:: bash
+       
+       cd dockers
+       ./build_recognition_container.sh  --share-dir=<SHARE_DIR>
+   
+   - `<SHARE_DIR>`: Share directory with source codes [default: None, no sahred folder]
+
+
+
+Clone the following repositories to set up the necessary dependencies:
+
+.. code-block:: bash
+
+       git clone https://github.com/keti-ai/pyrecognition.git
+       git clone https://github.com/keti-ai/pyconnect.git
+       git clone https://github.com/keti-ai/pyinterfaces.git
+
+
+
+Install the repositories as editable Python packages:
+
+.. code-block:: bash
+
+       pip install -e pyrecognition
+       pip install -e pyconnect
+       pip install -e pyinterfaces
+
+Install ssh and sshfs server (optional)
+
+.. code-block:: bash
+
+       sudo apt update
+       sudo apt install openssh-server
+       sudo systemctl start ssh
+       sudo systemctl enable ssh
+       sudo apt install sshfs
 
 Edge and Control PCs Container Installation
 ===================
@@ -180,14 +227,6 @@ Edge and Control PCs Container Installation
 To set up a Docker containerized environment for your project, follow these steps:
 
 1. Build containers
-
-- Clone the Docker configuration repository:
-
-   .. code-block:: bash
-
-       git clone https://github.com/keti-ai/dockers.git
-       cd dockers
-
 
 - Build the Docker image with the required specifications:
 
@@ -213,31 +252,26 @@ To set up a Docker containerized environment for your project, follow these step
        ./build_container.sh --ubuntu=<UBUNTU_VERSION> --cuda=<CUDA_VERSION> --ros=<ROS_DISTRO> --name=<CONTAINER_NAME> --share-dir=<SHARE_DIR>
 
    - `<CONTAINER_NAME>`: Name of the container [default: name of ubuntu and cuda version , e.g u22cu12]
-   - `<SHARE_DIR>`: Shared directory path [default: None, no sahred folder]
-
-Servere PC Installation
-===================
-
-   .. code-block:: bash
-       
-       cd dockers
-       ./build_recognition_container.sh  --share-dir=<SHARE_DIR>
-   
-   - `<SHARE_DIR>`: Shared directory path [default: None, no sahred folder]
-
-       
-
+   - `<SHARE_DIR>`: Share directory with source code [default: None, no sahred folder]
 
 Clone the following repositories to set up the necessary dependencies:
 
 .. code-block:: bash
 
        git clone https://github.com/keti-ai/carerobotapp.git
-       git clone https://github.com/keti-ai/pyrecognition.git
        git clone https://github.com/keti-ai/pyconnect.git
        git clone https://github.com/keti-ai/pyinterfaces.git
-       git clone https://github.com/keti-ai/rosinterfaces.git
        git clone https://github.com/keti-ai/pydevice.git
+
+
+OR mount ssh driver from server PC:
+
+.. code-block:: bash
+       
+       sudo nano /etc/fstab
+       append sshfs#$SERVER_USER@$SERVER_IP:SERVER_DIR $CLIENT_MOUNT_DIR fuse defaults,_netdev,allow_other,IdentityFile=/home/$CLIENT_USER/.ssh/id_rsa 0 0
+       save and close
+       sudo mount -a
 
 
 
@@ -246,7 +280,6 @@ Install the repositories as editable Python packages:
 .. code-block:: bash
 
        pip install -e carerobotapp
-       pip install -e pyrecognition
        pip install -e pyconnect
        pip install -e pyinterfaces
        pip install -e pydevice
@@ -266,6 +299,8 @@ Install ROS Interfaces
 
        cd ~/ros2_ws
        colcon build --packages-select rosinterfaces
+
+
 
 .. _system_exec:
 

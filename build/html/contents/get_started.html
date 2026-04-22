@@ -54,8 +54,8 @@
 <li class="toctree-l3"><a class="reference internal" href="#install-and-configure-ssh-and-ftp-server-optional">Install and configure SSH and FTP server (Optional)</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#edge-and-control-pcs-container-installation">Edge and Control PCs Container Installation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#servere-pc-installation">Servere PC Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#edge-and-control-pcs-container-installation">Edge and Control PCs Container Installation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#system-execution">System Execution</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#step-1-edge-pc-run-robot-and-device-server">Step 1. Edge PC: Run Robot and Device Server</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#step-2-server-pc-run-llm-vlm-servers">Step 2. Server PC: Run LLM/VLM Servers</a></li>
@@ -246,6 +246,50 @@ ftp<span class="w"> </span><span class="m">0</span>.0.0.0
 </div></blockquote>
 </section>
 </section>
+<section id="servere-pc-installation">
+<h2>Servere PC Installation<a class="headerlink" href="#servere-pc-installation" title="Link to this heading"></a></h2>
+<ul>
+<li><p>Clone the Docker configuration repository:</p>
+<blockquote>
+<div><div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/keti-ai/dockers.git
+<span class="nb">cd</span><span class="w"> </span>dockers
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+<li><p>Build container</p>
+<blockquote>
+<div><div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>dockers
+./build_recognition_container.sh<span class="w">  </span>--share-dir<span class="o">=</span>&lt;SHARE_DIR&gt;
+</pre></div>
+</div>
+<ul class="simple">
+<li><p><cite>&lt;SHARE_DIR&gt;</cite>: Share directory with source codes [default: None, no sahred folder]</p></li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+<p>Clone the following repositories to set up the necessary dependencies:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/keti-ai/pyrecognition.git
+git<span class="w"> </span>clone<span class="w"> </span>https://github.com/keti-ai/pyconnect.git
+git<span class="w"> </span>clone<span class="w"> </span>https://github.com/keti-ai/pyinterfaces.git
+</pre></div>
+</div>
+<p>Install the repositories as editable Python packages:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span>pyrecognition
+pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span>pyconnect
+pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span>pyinterfaces
+</pre></div>
+</div>
+<p>Install ssh and sshfs server (optional)</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo<span class="w"> </span>apt<span class="w"> </span>update
+sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>openssh-server
+sudo<span class="w"> </span>systemctl<span class="w"> </span>start<span class="w"> </span>ssh
+sudo<span class="w"> </span>systemctl<span class="w"> </span><span class="nb">enable</span><span class="w"> </span>ssh
+sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>sshfs
+</pre></div>
+</div>
+</section>
 <section id="edge-and-control-pcs-container-installation">
 <h2>Edge and Control PCs Container Installation<a class="headerlink" href="#edge-and-control-pcs-container-installation" title="Link to this heading"></a></h2>
 <ol class="arabic" start="0">
@@ -260,14 +304,6 @@ ftp<span class="w"> </span><span class="m">0</span>.0.0.0
 <li><p>Build containers</p></li>
 </ol>
 <ul>
-<li><p>Clone the Docker configuration repository:</p>
-<blockquote>
-<div><div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/keti-ai/dockers.git
-<span class="nb">cd</span><span class="w"> </span>dockers
-</pre></div>
-</div>
-</div></blockquote>
-</li>
 <li><p>Build the Docker image with the required specifications:</p>
 <blockquote>
 <div><div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./build_image.sh<span class="w"> </span>--ubuntu<span class="o">=</span>&lt;UBUNTU_VERSION&gt;<span class="w"> </span>--cuda<span class="o">=</span>&lt;CUDA_VERSION&gt;<span class="w"> </span>--ros<span class="o">=</span>&lt;ROS_DISTRO&gt;
@@ -289,35 +325,27 @@ ftp<span class="w"> </span><span class="m">0</span>.0.0.0
 </div>
 <ul class="simple">
 <li><p><cite>&lt;CONTAINER_NAME&gt;</cite>: Name of the container [default: name of ubuntu and cuda version , e.g u22cu12]</p></li>
-<li><p><cite>&lt;SHARE_DIR&gt;</cite>: Shared directory path [default: None, no sahred folder]</p></li>
+<li><p><cite>&lt;SHARE_DIR&gt;</cite>: Share directory with source code [default: None, no sahred folder]</p></li>
 </ul>
 </div></blockquote>
 </li>
 </ul>
-</section>
-<section id="servere-pc-installation">
-<h2>Servere PC Installation<a class="headerlink" href="#servere-pc-installation" title="Link to this heading"></a></h2>
-<blockquote>
-<div><div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span><span class="w"> </span>dockers
-./build_recognition_container.sh<span class="w">  </span>--share-dir<span class="o">=</span>&lt;SHARE_DIR&gt;
-</pre></div>
-</div>
-<ul class="simple">
-<li><p><cite>&lt;SHARE_DIR&gt;</cite>: Shared directory path [default: None, no sahred folder]</p></li>
-</ul>
-</div></blockquote>
 <p>Clone the following repositories to set up the necessary dependencies:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/keti-ai/carerobotapp.git
-git<span class="w"> </span>clone<span class="w"> </span>https://github.com/keti-ai/pyrecognition.git
 git<span class="w"> </span>clone<span class="w"> </span>https://github.com/keti-ai/pyconnect.git
 git<span class="w"> </span>clone<span class="w"> </span>https://github.com/keti-ai/pyinterfaces.git
-git<span class="w"> </span>clone<span class="w"> </span>https://github.com/keti-ai/rosinterfaces.git
 git<span class="w"> </span>clone<span class="w"> </span>https://github.com/keti-ai/pydevice.git
+</pre></div>
+</div>
+<p>OR mount ssh driver from server PC:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo<span class="w"> </span>nano<span class="w"> </span>/etc/fstab
+append<span class="w"> </span>sshfs#<span class="nv">$SERVER_USER</span>@<span class="nv">$SERVER_IP</span>:SERVER_DIR<span class="w"> </span><span class="nv">$CLIENT_MOUNT_DIR</span><span class="w"> </span>fuse<span class="w"> </span>defaults,_netdev,allow_other,IdentityFile<span class="o">=</span>/home/<span class="nv">$CLIENT_USER</span>/.ssh/id_rsa<span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">0</span>
+save<span class="w"> </span>and<span class="w"> </span>close
+sudo<span class="w"> </span>mount<span class="w"> </span>-a
 </pre></div>
 </div>
 <p>Install the repositories as editable Python packages:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span>carerobotapp
-pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span>pyrecognition
 pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span>pyconnect
 pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span>pyinterfaces
 pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span>pydevice

@@ -586,4 +586,98 @@ Place Skills
                         approach to pose_3d
               
               All approach input params
+
+Wipe Skills
+--------------------
+
+.. list-table:: 
+   :header-rows: 1
+
+   * - Fuction 
+     - Usage 
+     - Inputs
+
+   * - Wipe
+       
+     - .. code-block:: python
+
+              # PROMPT USE
+              wipe::[INPUTS]
+
+              example 1: 
+                 wipe::
+              
+              example 2: 
+                 wipe::spill@dining table
+              
+              example 3: 
+                 wipe::towel@table@living room>>spill@dining table
+
+
+       .. code-block:: python
+              
+              # DEV USE
+              from carerobotapp.skills.place import wipe
+              wipe(node=node, inputs='spill@dining table')
+       
+     - .. code-block:: python
+              
+              inputs 
+                 [caption, location,
+                 caption@location, pose_3d]
+                     . if no location:
+                        find at current loc
+                     . else:
+                        move to loc first
+                     
+                     . if caption:
+                         find [caption] first
+                       else:
+                         move to location
+                         approach to placepose
+                     
+              
+              All approach input params
+
+Open/Close Drawer Skills
+--------------------
+
+.. list-table:: 
+   :header-rows: 1
+
+   * - Fuction 
+     - Usage 
+     - Inputs
+
+   * - Open/Close Drawer
+       
+     - .. code-block:: python
+
+              # PROMPT USE
+              open_drawer::[INPUTS]
+              close_drawer::[INPUTS]
+
+              example 1: 
+                 open_drawer::
+                 close_drawer::
+              
+              example 2: 
+                 open_drawer::drawer table
+                 close_drawer::drawer table
+
+
+       .. code-block:: python
+              
+              # DEV USE
+              from carerobotapp.skills.pick import open_drawer, close_drawer
+              open_drawer(node=node, inputs='drawer table')
+              close_drawer(node=node, inputs='drawer table')
+       
+     - .. code-block:: python
+              
+              inputs 
+                 [location]
+                     
+              
+              All approach input params
               
