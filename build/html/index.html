@@ -14,12 +14,12 @@
       <script src="_static/jquery.js?v=5d32c60e"></script>
       <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
       <script src="_static/documentation_options.js?v=8d563738"></script>
-      <script src="_static/doctools.js?v=9bcbadda"></script>
-      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Overview" href="contents/intro.html" /> 
+    <link rel="next" title="Architecture" href="contents/architecture.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -43,14 +43,17 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="contents/intro.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contents/architecture.html">Architecture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contents/cognition.html">Cognition: planning &amp; verification</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contents/embodiment.html">Embodiment: skills, vision &amp; hardware</a></li>
 <li class="toctree-l1"><a class="reference internal" href="contents/get_started.html">Get started</a></li>
-<li class="toctree-l1"><a class="reference internal" href="contents/framework.html">ROS2-based Framework</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contents/dashboard.html">Operator dashboard</a></li>
 <li class="toctree-l1"><a class="reference internal" href="contents/manual.html">Manual</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contents/configuration.html">Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contents/framework.html">ROS2-based Framework</a></li>
 <li class="toctree-l1"><a class="reference internal" href="contents/examples.html">Examples</a></li>
-</ul>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="apidoc/carerobotapp/modules.html">carerobotapp</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contents/troubleshooting.html">Troubleshooting &amp; FAQ</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contents/api.html">API &amp; code map</a></li>
 </ul>
 
         </div>
@@ -85,31 +88,50 @@
 <div class="toctree-wrapper compound">
 <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="contents/intro.html">Overview</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="contents/intro.html#introduction">Introduction</a></li>
-<li class="toctree-l2"><a class="reference internal" href="contents/intro.html#system-overview">System Overview</a></li>
-<li class="toctree-l2"><a class="reference internal" href="contents/intro.html#system-details">System Details</a></li>
-<li class="toctree-l2"><a class="reference internal" href="contents/intro.html#sdk-overview">SDK Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contents/architecture.html">Architecture</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="contents/architecture.html#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="contents/architecture.html#three-operating-modes">Three operating modes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="contents/architecture.html#system-overview">System overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="contents/architecture.html#cognition-the-closed-loop-brain">Cognition: the closed-loop brain</a></li>
+<li class="toctree-l2"><a class="reference internal" href="contents/architecture.html#embodiment-skills-vision-hardware">Embodiment: skills, vision, hardware</a></li>
+<li class="toctree-l2"><a class="reference internal" href="contents/architecture.html#walkthrough-one-command-end-to-end">Walkthrough: one command, end to end</a></li>
+<li class="toctree-l2"><a class="reference internal" href="contents/architecture.html#where-to-go-next">Where to go next</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="contents/cognition.html">Cognition: planning &amp; verification</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="contents/cognition.html#the-closed-loop">The closed loop</a></li>
+<li class="toctree-l2"><a class="reference internal" href="contents/cognition.html#worldstate-the-robot-s-belief">WorldState — the robot’s belief</a></li>
+<li class="toctree-l2"><a class="reference internal" href="contents/cognition.html#mapping-symbolic-actions-to-skills">Mapping symbolic actions to skills</a></li>
+<li class="toctree-l2"><a class="reference internal" href="contents/cognition.html#layered-verification">Layered verification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="contents/cognition.html#sage-planner-via-the-planner-protocol">SAGE planner via the Planner Protocol</a></li>
+<li class="toctree-l2"><a class="reference internal" href="contents/cognition.html#the-llm-backend">The LLM backend</a></li>
+<li class="toctree-l2"><a class="reference internal" href="contents/cognition.html#the-event-stream">The event stream</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="contents/embodiment.html">Embodiment: skills, vision &amp; hardware</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="contents/embodiment.html#the-skill-contract">The skill contract</a></li>
+<li class="toctree-l2"><a class="reference internal" href="contents/embodiment.html#skill-groups">Skill groups</a></li>
+<li class="toctree-l2"><a class="reference internal" href="contents/embodiment.html#perception-grasp-pipeline">Perception &amp; grasp pipeline</a></li>
+<li class="toctree-l2"><a class="reference internal" href="contents/embodiment.html#visionserve-gpu-inference-server">VisionServe — GPU inference server</a></li>
+<li class="toctree-l2"><a class="reference internal" href="contents/embodiment.html#robot-hardware-ros2">Robot hardware (ROS2)</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="contents/get_started.html">Get started</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="contents/get_started.html#host-pc-installation">Host PC Installation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="contents/get_started.html#servere-pc-installation">Servere PC Installation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="contents/get_started.html#edge-and-control-pcs-container-installation">Edge and Control PCs Container Installation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="contents/get_started.html#system-execution">System Execution</a></li>
+<li class="toctree-l2"><a class="reference internal" href="contents/get_started.html#repositories">Repositories</a></li>
+<li class="toctree-l2"><a class="reference internal" href="contents/get_started.html#prerequisites">Prerequisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="contents/get_started.html#install-the-python-packages">Install the Python packages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="contents/get_started.html#run-the-stack">Run the stack</a></li>
+<li class="toctree-l2"><a class="reference internal" href="contents/get_started.html#your-first-command">Your first command</a></li>
+<li class="toctree-l2"><a class="reference internal" href="contents/get_started.html#deployment-scenarios">Deployment scenarios</a></li>
+<li class="toctree-l2"><a class="reference internal" href="contents/get_started.html#appendix-host-setup">Appendix: host setup</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="contents/framework.html">ROS2-based Framework</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="contents/framework.html#challenges">Challenges</a></li>
-<li class="toctree-l2"><a class="reference internal" href="contents/framework.html#key-advantages-of-custom-ros2-node">Key Advantages of Custom ROS2 Node</a></li>
-<li class="toctree-l2"><a class="reference internal" href="contents/framework.html#overview-of-the-custom-ros2-node-implementation">Overview of the Custom ROS2 Node Implementation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="contents/framework.html#detailed-breakdown-of-components">Detailed Breakdown of Components</a></li>
-<li class="toctree-l2"><a class="reference internal" href="contents/framework.html#advantages-in-flexibility-and-handling-complex-workflows">Advantages in Flexibility and Handling Complex Workflows</a></li>
-<li class="toctree-l2"><a class="reference internal" href="contents/framework.html#quick-start">Quick Start</a></li>
-<li class="toctree-l2"><a class="reference internal" href="contents/framework.html#use-the-agents-super-simple-api">Use the Agents (Super Simple API)</a></li>
-<li class="toctree-l2"><a class="reference internal" href="contents/framework.html#run-the-node">Run the Node</a></li>
-<li class="toctree-l2"><a class="reference internal" href="contents/framework.html#useful-extras">Useful Extras</a></li>
-<li class="toctree-l2"><a class="reference internal" href="contents/framework.html#full-minimal-example-publisher-subscriber">Full Minimal Example (Publisher + Subscriber)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contents/dashboard.html">Operator dashboard</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="contents/dashboard.html#choosing-a-robot-and-a-site">Choosing a robot and a site</a></li>
+<li class="toctree-l2"><a class="reference internal" href="contents/dashboard.html#sending-a-task">Sending a task</a></li>
+<li class="toctree-l2"><a class="reference internal" href="contents/dashboard.html#watching-the-run">Watching the run</a></li>
+<li class="toctree-l2"><a class="reference internal" href="contents/dashboard.html#safety">Safety</a></li>
+<li class="toctree-l2"><a class="reference internal" href="contents/dashboard.html#build-deploy">Build &amp; deploy</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="contents/manual.html">Manual</a><ul>
@@ -125,6 +147,27 @@
 <li class="toctree-l2"><a class="reference internal" href="contents/manual.html#open-close-drawer-skills">Open/Close Drawer Skills</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="contents/configuration.html">Configuration</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="contents/configuration.html#location-site-profiles">Location (site) profiles</a></li>
+<li class="toctree-l2"><a class="reference internal" href="contents/configuration.html#device-connections">Device connections</a></li>
+<li class="toctree-l2"><a class="reference internal" href="contents/configuration.html#the-name-map">The name map</a></li>
+<li class="toctree-l2"><a class="reference internal" href="contents/configuration.html#world-state">World state</a></li>
+<li class="toctree-l2"><a class="reference internal" href="contents/configuration.html#llm-provider-keys">LLM provider &amp; keys</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="contents/framework.html">ROS2-based Framework</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="contents/framework.html#challenges">Challenges</a></li>
+<li class="toctree-l2"><a class="reference internal" href="contents/framework.html#key-advantages-of-custom-ros2-node">Key Advantages of Custom ROS2 Node</a></li>
+<li class="toctree-l2"><a class="reference internal" href="contents/framework.html#overview-of-the-custom-ros2-node-implementation">Overview of the Custom ROS2 Node Implementation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="contents/framework.html#detailed-breakdown-of-components">Detailed Breakdown of Components</a></li>
+<li class="toctree-l2"><a class="reference internal" href="contents/framework.html#advantages-in-flexibility-and-handling-complex-workflows">Advantages in Flexibility and Handling Complex Workflows</a></li>
+<li class="toctree-l2"><a class="reference internal" href="contents/framework.html#quick-start">Quick Start</a></li>
+<li class="toctree-l2"><a class="reference internal" href="contents/framework.html#use-the-agents-super-simple-api">Use the Agents (Super Simple API)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="contents/framework.html#run-the-node">Run the Node</a></li>
+<li class="toctree-l2"><a class="reference internal" href="contents/framework.html#useful-extras">Useful Extras</a></li>
+<li class="toctree-l2"><a class="reference internal" href="contents/framework.html#full-minimal-example-publisher-subscriber">Full Minimal Example (Publisher + Subscriber)</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="contents/examples.html">Examples</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="contents/examples.html#topic-pub-sub">Topic Pub/Sub</a></li>
 <li class="toctree-l2"><a class="reference internal" href="contents/examples.html#image-sub">Image Sub</a></li>
@@ -135,15 +178,21 @@
 <li class="toctree-l2"><a class="reference internal" href="contents/examples.html#detect-place-pose-of-an-object-using-structured-commnad">Detect place pose of an object using structured commnad</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="contents/troubleshooting.html">Troubleshooting &amp; FAQ</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="contents/troubleshooting.html#the-backend-won-t-boot">The backend won’t boot</a></li>
+<li class="toctree-l2"><a class="reference internal" href="contents/troubleshooting.html#no-devices-ros-not-connected">No devices / ROS not connected</a></li>
+<li class="toctree-l2"><a class="reference internal" href="contents/troubleshooting.html#visionserve-detection-fails">VisionServe / detection fails</a></li>
+<li class="toctree-l2"><a class="reference internal" href="contents/troubleshooting.html#planning-llm-problems">Planning / LLM problems</a></li>
+<li class="toctree-l2"><a class="reference internal" href="contents/troubleshooting.html#grasping-issues">Grasping issues</a></li>
+<li class="toctree-l2"><a class="reference internal" href="contents/troubleshooting.html#replanning-never-finishes">Replanning never finishes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="contents/troubleshooting.html#voice-tts">Voice / TTS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="contents/troubleshooting.html#two-operators-conflict">Two operators conflict</a></li>
 </ul>
-</div>
-</section>
-<section id="api-reference">
-<span id="id1"></span><h2>API Reference<a class="headerlink" href="#api-reference" title="Link to this heading"></a></h2>
-<div class="toctree-wrapper compound">
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="apidoc/carerobotapp/modules.html">carerobotapp</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="apidoc/carerobotapp/carerobotapp.html">carerobotapp package</a></li>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="contents/api.html">API &amp; code map</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="contents/api.html#http-websocket-endpoints">HTTP / WebSocket endpoints</a></li>
+<li class="toctree-l2"><a class="reference internal" href="contents/api.html#where-the-code-lives">Where the code lives</a></li>
+<li class="toctree-l2"><a class="reference internal" href="contents/api.html#enabling-autodoc">Enabling autodoc</a></li>
 </ul>
 </li>
 </ul>
@@ -155,7 +204,7 @@
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="contents/intro.html" class="btn btn-neutral float-right" title="Overview" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="contents/architecture.html" class="btn btn-neutral float-right" title="Architecture" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

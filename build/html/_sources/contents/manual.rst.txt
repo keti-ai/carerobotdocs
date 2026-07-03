@@ -1,11 +1,12 @@
 .. _manual:
+
 =============
 Manual
 =============
 
 This section list commands used to control robot
 
-Refer to DEVICE_CLIENT_CONFIGS in :ref:`device_configs` for more details.
+Refer to ``DEVICE_CLIENT_CONFIGS`` in :doc:`configuration` for more details.
 
 [CLIK  TO SOURCE]
 
@@ -70,6 +71,7 @@ How to use
       # add new_skill to SKILL_LISTS  in your own tasks config file
 
 .. code-block:: python
+
        # in skills/new_skill.py
        from carerobotapp.skills.recognition import find
        def new_skill(node, **kwargs):
@@ -102,11 +104,11 @@ Init Arm
    * - Fuction 
      - Prompt Use 
      - Dev Use
-   * - Clear  error 
-     - clear_error:: 
+   * - Clear  error
+     - ``clear_error::``
      - node.agents['clean_error'].send({})
-   * - Enable motion 
-     - enable_motion::
+   * - Enable motion
+     - ``enable_motion::``
      - node.agents['enable_motion'].send({'inputs':0})
    * - Set mode
      - set_mode::[INT]
@@ -115,7 +117,7 @@ Init Arm
      - set_state::[INT]
      - node.agents['set_state'].send({'inputs':[INT]})
    * - Init Arm
-     - init_arm::
+     - ``init_arm::``
      - .. code-block:: python
 
               from carerobotapp.skills.goto_ready import init_arm
@@ -243,7 +245,7 @@ Arm Control
               
                      
 Gripper / Litf/ Head / Mobile Control 
---------------------
+-------------------------------------
 
 .. list-table:: 
    :header-rows: 1
@@ -640,7 +642,7 @@ Wipe Skills
               All approach input params
 
 Open/Close Drawer Skills
---------------------
+------------------------
 
 .. list-table:: 
    :header-rows: 1

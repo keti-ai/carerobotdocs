@@ -1,3 +1,11 @@
+:orphan:
+
+.. note::
+
+   **Legacy page.** This describes the earlier ROS2 ``carerobotapp`` (MARS)
+   architecture and is kept for reference only. For the current closed-loop
+   stack start at :doc:`architecture`.
+
 ==========
 Overview
 ==========
@@ -139,7 +147,7 @@ This closed-loop design enables robust, user-supervised task execution while lev
 long-horizon assistive tasks in unstructured home environments.
 
 LLM-based Task Planning
-+++++++++++++++++++
++++++++++++++++++++++++
 .. figure:: images/fig_llm_task_plan.png
    :alt: Alternative text
    :width: 600px
@@ -202,8 +210,8 @@ hierarchical precondition checks and built-in retry mechanisms,
 ensuring reliable performance in real-world cluttered environments. 
 As depicted in the flowchart, when a high-level skill is invoked, 
 the system first evaluates necessary preconditions and, if unmet,
- recursively triggers lower-level skills with a fixed number of retries (experimentally set to n=2) 
- to increase success rates without excessive delay. 
+recursively triggers lower-level skills with a fixed number of retries (experimentally set to n=2)
+to increase success rates without excessive delay.
 
  - For the **Place skill**, it initially checks if the object is grasped; if not, it calls Pick. It then verifies arrival at the destination; if not, it triggers Move (with up to 2 navigation attempts). Only upon satisfying both conditions does it execute the final place action. 
  

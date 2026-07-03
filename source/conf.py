@@ -15,8 +15,14 @@ release = '1.0.0'
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
 import os
 import sys
-sys.path.insert(0, '/media/keti/workdir/projects/app_carerobot')
-sys.path.insert(0, '/media/keti/workdir/projects/pyconnect')
+
+# Source roots for autodoc. The new closed-loop stack lives under
+# .../remote_dir; keep carerobotapp/pyconnect for any legacy API pages.
+_REPO = os.environ.get('CAREROBOT_REPO', '/media/keti/workdir/remote_dir')
+for _pkg in ('robot_agent', 'kcare_robot', 'pyplanner', 'carerobotapp', 'pyconnect'):
+    _path = os.path.join(_REPO, _pkg)
+    if os.path.isdir(_path):
+        sys.path.insert(0, _path)
 
 extensions = [
     'sphinx.ext.autodoc',  # For auto-generating docs from code
@@ -25,7 +31,10 @@ extensions = [
 ]
 
 templates_path = ['_templates']
-exclude_patterns = []
+# Legacy autodoc stubs for the old MARS ``carerobotapp`` package: they import
+# ROS2/heavy deps that aren't present in the docs env and aren't in any toctree.
+# Keep the files for reference but skip them at build time.
+exclude_patterns = ['apidoc/**']
 
 
 autodoc_default_options = {
@@ -43,4 +52,5 @@ autodoc_default_options = {
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output
 
 html_theme = 'sphinx_rtd_theme'
-#html_static_path = ['_static']
+# Holds self-hosted media (e.g. robot demo videos in _static/videos/).
+html_static_path = ['_static']

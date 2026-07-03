@@ -10,19 +10,17 @@ This is the documentation for the care robot project.
    :maxdepth: 2
    :caption: Contents:
 
-   contents/intro
-   contents/get_started   
-   contents/framework  
+   contents/architecture
+   contents/cognition
+   contents/embodiment
+   contents/get_started
+   contents/dashboard
    contents/manual
-   contents/examples 
-
-.. _api_reference:
-API Reference
-=============
-.. toctree::
-   :maxdepth: 2
-
-   apidoc/carerobotapp/modules   
+   contents/configuration
+   contents/framework
+   contents/examples
+   contents/troubleshooting
+   contents/api
 
    
 

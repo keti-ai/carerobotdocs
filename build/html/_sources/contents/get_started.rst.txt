@@ -1,391 +1,154 @@
 .. _install:
-=============
+
+===========
 Get started
-=============
+===========
 
-This guide provides step-by-step instructions to set up the necessary environment for your project, including CUDA, Docker, dependencies, and system execution.
+This guide installs and runs the **closed-loop stack**: the ``robot_agent``
+runtime, the ``kcare_robot`` robot package, the optional ``robotapp`` dashboard,
+the ``pyplanner`` / SAGE planner, and the ``VisionServe`` GPU vision server.
 
----
-
-Host PC Installation
-===================
-
-GPU Driver Installation
-------------------------
-
-**Prerequisites:**
-- Ubuntu version **20.04 or later** (22.04 recommended)
-
-Steps to Install CUDA Drivers:
-
-1. Add the official graphics drivers repository:
-
-   .. code-block:: bash
-
-       sudo add-apt-repository ppa:graphics-drivers/ppa
-       sudo apt update
-       reboot
-
-2. After rebooting, open **Software & Updates** → **Additional Drivers** and select the appropriate driver for your GPU.
-3. Apply the changes and reboot the system:
-
-   .. code-block:: bash
-
-       reboot
+For host preparation (NVIDIA driver, CUDA, Docker) see :ref:`host_setup` at the
+bottom of this page.
 
 
-Dependencies Installation
--------------------------
+Repositories
+===========================
 
-   .. code-block:: bash
+.. list-table::
+   :header-rows: 1
+   :widths: 24 76
 
-       sudo update
-       sudo apt install terminator htop  -y 
-       sudo apt install python3-dev  python3-venv python-pip -y
+   * - Repository
+     - Role
+   * - ``robot_agent``
+     - robot-agnostic FastAPI runtime (closed loop, world state, verifier)
+   * - ``kcare_robot``
+     - reference robot package (skills + name map + per-site configs)
+   * - ``pyplanner``
+     - pluggable LLM planners incl. **SAGE** (used by ``robot_agent``)
+   * - ``pyconnect``
+     - ROS2 transport + VisionServe client
+   * - ``robotapp``
+     - optional Next.js operator dashboard
+   * - ``visionserve``
+     - GPU inference server (object + grasp detection)
 
 
-Docker  and nvidia docker toolkit Installation
---------------------
+Prerequisites
+===========================
 
-https://docs.docker.com/engine/install/ubuntu/
+- Ubuntu 22.04, Python 3.10+, and an NVIDIA GPU for VisionServe.
+- ROS2 (Humble) on the robot/control machine for the hardware interfaces.
+- Node.js 18+ if you want to run the dashboard.
+- An LLM backend: a local Ollama server (recommended, on-premise) or an
+  OpenAI / Gemini API key.
 
 
-https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/latest/install-guide.html
+Install the Python packages
+===========================
 
-
-Add some custom useful alias (Optional)
-----------------------------------------
+Clone the repositories side by side and install them editable:
 
 .. code-block:: bash
 
-       # utils
-       alias chown_keti='sudo chown -R keti .'
-       alias sb='source ~/.bashrc'
-       alias eb='sudo gedit ~/.bashrc'
-       alias nb='nano ~/.bashrc'
-       alias about_pc='lsb_release -a'
-       alias create_py_simple_pkg='cookiecutter https://github.com/mtbui2010/python_pkg_simple_template.git'
-       alias vscode='sudo code --no-sandbox --user-data-dir ~/.vscode_cache'
-       alias run_pyvir='source ~/.pyvir/bin/activate'
+    pip install -e pyplanner
+    pip install -e robot_agent
+    pip install -e kcare_robot
+    pip install -e pyconnect
 
-       #docker
-       alias docker_start='sudo docker start'
-       alias docker_stop='sudo docker stop'
-       alias docker_run='sudo docker run -it'
-       alias docker_watch='sudo watch docker ps -a'
-       alias image_watch='sudo watch docker image ls -a'
-       alias image_rm='sudo docker image rm'
-
-
-       #functions
-       dockerexec() {
-              xhost local: & sudo docker start "$@" & sudo docker exec -it "$@" /bin/bash
-       }
-       dockerrm() {
-              sudo docker stop "$@" && sudo docker rm "$@"
-       }
-       gitpush() {
-              local date_str=$(date +%Y%m%d)
-              git add . .gitignore && git commit -m "$date_str - $*" && git push
-              }
-       rund() {
-              local container_name="$1"
-              local ros_domain_id="$2"
-              shift 2
-
-              # Allow local GUI access
-              xhost +local:
-
-              # Start the container
-              sudo docker start "$container_name"
-
-              # Execute the command inside the container
-              sudo docker exec -it "$container_name" bash -c "
-              source ~/.bashrc
-              source /opt/ros/humble/setup.bash
-              source ~/ros2_ws/install/setup.bash
-              export ROS_DOMAIN_ID=$ros_domain_id
-              $*"
-       }
-
-
-Install and configure SSH and FTP server (Optional)
---------------------------------------------------
-
-   .. code-block:: bash
-       sudo apt install terminator htop openssh-server vsftpd  -y 
-       sudo ufw allow ssh
-       sudo systemctl start ssh
-
-Configure FTP
-
-   .. code-block:: bash
-
-       #!/bin/bash
-       set -e
-
-       FTP_DIR="/media/keti/workdir"
-       FTP_USER="keti"
-
-       echo "🛠 Backing up original config..."
-       sudo cp /etc/vsftpd.conf /etc/vsftpd.conf.bak
-
-       echo "📝 Writing new vsftpd config..."
-       sudo tee /etc/vsftpd.conf > /dev/null <<EOL
-       listen=YES
-       listen_ipv6=NO
-       anonymous_enable=NO
-       local_enable=YES
-       write_enable=YES
-       local_umask=022
-       chroot_local_user=YES
-       allow_writeable_chroot=YES
-       user_sub_token=\$USER
-       local_root=${FTP_DIR}
-       pasv_enable=YES
-       pasv_min_port=10000
-       pasv_max_port=10100
-       EOL
-
-       echo "📁 Setting permissions for $FTP_DIR..."
-       sudo chown -R "$FTP_USER":"$FTP_USER" "$FTP_DIR"
-       sudo chmod -R 755 "$FTP_DIR"
-
-       echo "🔁 Restarting vsftpd..."
-       sudo systemctl restart vsftpd
-       sudo systemctl enable vsftpd
-
-       echo "✅ FTP setup complete. You can now FTP into this machine with your user account."
-
-
-Test SSH and FTP servers
-
-   .. code-block:: bash
-
-       ssh keti@0.0.0.0
-       ftp 0.0.0.0
-
-Servere PC Installation
-===================
-
-- Clone the Docker configuration repository:
-
-   .. code-block:: bash
-
-       git clone https://github.com/keti-ai/dockers.git
-       cd dockers
-
-- Build container
-
-   .. code-block:: bash
-       
-       cd dockers
-       ./build_recognition_container.sh  --share-dir=<SHARE_DIR>
-   
-   - `<SHARE_DIR>`: Share directory with source codes [default: None, no sahred folder]
-
-
-
-Clone the following repositories to set up the necessary dependencies:
+Install the dashboard dependencies:
 
 .. code-block:: bash
 
-       git clone https://github.com/keti-ai/pyrecognition.git
-       git clone https://github.com/keti-ai/pyconnect.git
-       git clone https://github.com/keti-ai/pyinterfaces.git
+    cd robotapp/frontend && npm install        # or: cd robotapp && make install
 
 
+Run the stack
+===========================
 
-Install the repositories as editable Python packages:
+The stack is three long-running processes (plus an LLM server). Start them in
+this order:
 
-.. code-block:: bash
-
-       pip install -e pyrecognition
-       pip install -e pyconnect
-       pip install -e pyinterfaces
-
-Install ssh and sshfs server (optional)
+**1. LLM server (Ollama, local).**
 
 .. code-block:: bash
 
-       sudo apt update
-       sudo apt install openssh-server
-       sudo systemctl start ssh
-       sudo systemctl enable ssh
-       sudo apt install sshfs
+    docker run -d --gpus=all -v ollama:/root/.ollama -p 11434:11434 --name ollama ollama/ollama
+    docker exec -it ollama ollama pull qwen2.5:7b
 
-Edge and Control PCs Container Installation
-===================
+**2. VisionServe GPU server** — listens on ``:11435`` (object + grasp detection).
+Start it on the GPU machine per the ``visionserve`` README; the robot reaches it
+via the ``visionserve`` connection in ``connections.json``.
 
-0. Git credential:
-
-   .. code-block:: bash
-
-       git config --global credential.helper store
-       
-
-To set up a Docker containerized environment for your project, follow these steps:
-
-1. Build containers
-
-- Build the Docker image with the required specifications:
-
-   .. code-block:: bash
-
-       ./build_image.sh --ubuntu=<UBUNTU_VERSION> --cuda=<CUDA_VERSION> --ros=<ROS_DISTRO>
-
-   Replace `<UBUNTU_VERSION>`, `<CUDA_VERSION>`, and `<ROS_DISTRO>` with your specific environment settings.
-
-   Support versions:
-   
-   - Ubuntu20.04, 22.04 (default)
-
-   - CUDA 11.1.1, 11.7.1, 12.1.0, 12.4.1, 12.6.3(default)
-
-   - ROS2: foxy, humble (default)
-   
-
-- Create and run a Docker container:
-
-   .. code-block:: bash
-
-       ./build_container.sh --ubuntu=<UBUNTU_VERSION> --cuda=<CUDA_VERSION> --ros=<ROS_DISTRO> --name=<CONTAINER_NAME> --share-dir=<SHARE_DIR>
-
-   - `<CONTAINER_NAME>`: Name of the container [default: name of ubuntu and cuda version , e.g u22cu12]
-   - `<SHARE_DIR>`: Share directory with source code [default: None, no sahred folder]
-
-Clone the following repositories to set up the necessary dependencies:
+**3. Robot backend** — the ``kcare_robot`` FastAPI app (boots on ``:8001``).
 
 .. code-block:: bash
 
-       git clone https://github.com/keti-ai/carerobotapp.git
-       git clone https://github.com/keti-ai/pyconnect.git
-       git clone https://github.com/keti-ai/pyinterfaces.git
-       git clone https://github.com/keti-ai/pydevice.git
+    uvicorn kcare_robot.main:app --host 0.0.0.0 --port 8001
 
-
-OR mount ssh driver from server PC:
-
-.. code-block:: bash
-       
-       sudo nano /etc/fstab
-       append sshfs#$SERVER_USER@$SERVER_IP:SERVER_DIR $CLIENT_MOUNT_DIR fuse defaults,_netdev,allow_other,IdentityFile=/home/$CLIENT_USER/.ssh/id_rsa 0 0
-       save and close
-       sudo mount -a
-
-
-
-Install the repositories as editable Python packages:
+**4. Dashboard (optional)** — Next.js dev server on ``:3007``.
 
 .. code-block:: bash
 
-       pip install -e carerobotapp
-       pip install -e pyconnect
-       pip install -e pyinterfaces
-       pip install -e pydevice
+    cd robotapp && make run-frontend
 
-Install ROS Interfaces
+.. note::
 
-- Create a symbolic link to `rosinterfaces` inside the ROS2 workspace:
-
-   .. code-block:: bash
-       
-       cd ~/ros2_ws/src
-       ln -s $ROSINTERFACES_PATH .
-
-- Build the ROS package:
-
-   .. code-block:: bash
-
-       cd ~/ros2_ws
-       colcon build --packages-select rosinterfaces
+   Exact backend / VisionServe launch commands can vary by deployment — confirm
+   against each package's README. The ports above (``8001`` backend, ``11435``
+   VisionServe, ``11434`` Ollama, ``3007`` dashboard) are the project defaults.
 
 
+Your first command
+===========================
 
-.. _system_exec:
+**From the dashboard** — open ``http://<robot-ip>:3007``, pick the robot and a
+location, type or speak a task ("bring me the cup from the table"), choose the
+``grace`` planner, and watch the plan, world state, and step timeline update
+live.
 
-System Execution
-===================
+**From the CLI / Python API** — drive the same skills in-process without the
+dashboard (see :doc:`manual` for the skill syntax and :doc:`examples` for code).
 
-Step 1. Edge PC: Run Robot and Device Server
--------------------------------------------
-
-.. code-block:: bash
-
-       robot   # Initializes robot arm, elevator, head, etc.
-       femto   # Runs the Femto camera
-       hand    # Runs the wrist camera
-
-Step 2. Server PC: Run LLM/VLM Servers
-------------------------------------
-
-Ollama Server Execution:
-
-.. code-block:: bash
-
-       sudo docker run -d --gpus=all -v ollama:/root/.ollama -p 11434:11434 --name ollama ollama/ollama
-       sudo docker exec -it ollama /bin/bash
+Two clients driving the *same* robot at once is unsafe — operate from one at a
+time.
 
 
-VLM Server Execution:
+Deployment scenarios
+===========================
 
-.. code-block:: bash
+.. list-table::
+   :header-rows: 1
+   :widths: 24 76
 
-       python3 -m pyrecognition.run_server server_type=tcp port=8805 detector=groundedsam_grasp,fastsam,groundingdino,audio,mask2grasps,groundedsam,fastsam_grasp
+   * - Scenario
+     - What runs where
+   * - Single-PC dev
+     - everything on one machine with a GPU; Ollama + VisionServe + backend local
+   * - Robot + GPU box
+     - backend on the robot PC; VisionServe + Ollama on a GPU server reached over the LAN
+   * - Remote operator
+     - add the dashboard; operators drive the robot over HTTP / WebSocket from any device
 
-Step 3. Control PC: Run Control Nodes in different Terminal Window
---------------------------------
 
-Terminal 1 — Skill Serve
+.. _host_setup:
+
+Appendix: host setup
+===========================
+
+GPU driver, Docker and the NVIDIA Container Toolkit are needed for the GPU
+machine (Ollama + VisionServe):
+
+- NVIDIA drivers: ``sudo add-apt-repository ppa:graphics-drivers/ppa`` then pick
+  the driver in *Software & Updates ▸ Additional Drivers* and reboot.
+- Docker Engine: https://docs.docker.com/engine/install/ubuntu/
+- NVIDIA Container Toolkit:
+  https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/latest/install-guide.html
+
+Base packages:
 
 .. code-block:: bash
 
-       python -m carerobotapp.node_skill_servers
-
-
-Terminal 2 — Task Manager
-
-.. code-block:: bash
-
-       python3 -m carerobotapp.node_taskmanager
-
-Terminal 3 — WebRTC Server (remote browser control)
-
-.. code-block:: bash
-
-       python -m carerobotapp.node_prompt_webrtc_server
-       # Open http://<robot-ip>:<port> in a browser
-
-Terminal 4 - Extra Device Server (wrist camera, optional)
-
-.. code-block:: bash
-
-       python -m carerobotapp.node_extra_device_server
-
-Configuration Files
-----------------------
-
-Configurations `carerobotapp.configs` directory.
-
-Make configuration file
-
-.. code-block:: bash
-
-       Copy and Edit configs/robot_10.py -> configs/robot_$ROBOT_DOMAIN_ID.py
-       Edit configs/tasks.py: from carerobotapp.configs.robot_10 -> carerobotapp.configs.robot_$ROBOT_DOMAIN_ID
-
-Confirure html
-
-.. code-block:: bash
-
-       Copy and Edit html/text_entries_pangyo.py -> configs/text_entries_$ROBOT_DOMAIN_ID.py
-       Edit offerUrl -> https://$ROBOT_IP:8443/offer
-
-
-
-
-
-
-
-
-
+    sudo apt update
+    sudo apt install -y python3-dev python3-venv python3-pip terminator htop

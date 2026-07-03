@@ -1,4 +1,5 @@
 .. _examples:
+
 =============
 Examples
 =============
@@ -90,7 +91,7 @@ Retrieve data
 
 
 Service Client/Server
-=============
+=====================
 
 .. code-block:: python
 
@@ -131,7 +132,7 @@ Client periodically send to server
 
 
 Get plan from user's prompt
-=============
+===========================
 
 - Set **isplanned=False** when running about terminal 1 command
 
@@ -151,7 +152,7 @@ Get plan from user's prompt
 
 
 Detect an object using structured command
-=============
+=========================================
 
 - Set **isplanned=True** when running about terminal 1 command
 
@@ -177,7 +178,7 @@ Detect an object using structured command
    Detection Result.
 
 Detect grasp pose of an object using structured command
-=============
+=======================================================
 
 - Set **isplanned=True** when running about terminal 1 command
 
@@ -196,7 +197,7 @@ Detect grasp pose of an object using structured command
    Detection Result.
 
 Detect place pose of an object using structured commnad
-=============
+=======================================================
 
 - Set **isplanned=True** when running about terminal 1 command
 

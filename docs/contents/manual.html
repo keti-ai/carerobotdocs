@@ -14,13 +14,13 @@
       <script src="../_static/jquery.js?v=5d32c60e"></script>
       <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
       <script src="../_static/documentation_options.js?v=8d563738"></script>
-      <script src="../_static/doctools.js?v=9bcbadda"></script>
-      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Examples" href="examples.html" />
-    <link rel="prev" title="ROS2-based Framework" href="framework.html" /> 
+    <link rel="next" title="Configuration" href="configuration.html" />
+    <link rel="prev" title="Operator dashboard" href="dashboard.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -44,9 +44,11 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="intro.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="architecture.html">Architecture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cognition.html">Cognition: planning &amp; verification</a></li>
+<li class="toctree-l1"><a class="reference internal" href="embodiment.html">Embodiment: skills, vision &amp; hardware</a></li>
 <li class="toctree-l1"><a class="reference internal" href="get_started.html">Get started</a></li>
-<li class="toctree-l1"><a class="reference internal" href="framework.html">ROS2-based Framework</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dashboard.html">Operator dashboard</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Manual</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#how-to-use">How to use</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#init-arm">Init Arm</a></li>
@@ -60,10 +62,11 @@
 <li class="toctree-l2"><a class="reference internal" href="#open-close-drawer-skills">Open/Close Drawer Skills</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="configuration.html">Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="framework.html">ROS2-based Framework</a></li>
 <li class="toctree-l1"><a class="reference internal" href="examples.html">Examples</a></li>
-</ul>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../apidoc/carerobotapp/modules.html">carerobotapp</a></li>
+<li class="toctree-l1"><a class="reference internal" href="troubleshooting.html">Troubleshooting &amp; FAQ</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api.html">API &amp; code map</a></li>
 </ul>
 
         </div>
@@ -93,7 +96,7 @@
   <section id="manual">
 <span id="id1"></span><h1>Manual<a class="headerlink" href="#manual" title="Link to this heading"></a></h1>
 <p>This section list commands used to control robot</p>
-<p>Refer to DEVICE_CLIENT_CONFIGS in <a class="reference internal" href="../apidoc/carerobotapp/carerobotapp.configs.html#device-configs"><span class="std std-ref">carerobotapp.configs.device_clients module</span></a> for more details.</p>
+<p>Refer to <code class="docutils literal notranslate"><span class="pre">DEVICE_CLIENT_CONFIGS</span></code> in <a class="reference internal" href="configuration.html"><span class="doc">Configuration</span></a> for more details.</p>
 <p>[CLIK  TO SOURCE]</p>
 <section id="how-to-use">
 <h2>How to use<a class="headerlink" href="#how-to-use" title="Link to this heading"></a></h2>
@@ -149,6 +152,15 @@
 <span class="c1"># add new_skill to SKILL_LISTS  in your own tasks config file</span>
 </pre></div>
 </div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># in skills/new_skill.py</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">carerobotapp.skills.recognition</span><span class="w"> </span><span class="kn">import</span> <span class="n">find</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">new_skill</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="n">ret</span> <span class="o">=</span> <span class="n">find</span><span class="p">(</span><span class="n">node</span><span class="o">=</span><span class="n">node</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">ret</span><span class="p">[</span><span class="s1">&#39;isdon&#39;</span><span class="p">]:</span>
+        <span class="k">return</span> <span class="n">ret</span>
+    <span class="n">YOUR_CODE_HERE</span>
+</pre></div>
+</div>
 <ol class="arabic simple" start="4">
 <li><p>Execute new skill</p></li>
 </ol>
@@ -174,11 +186,11 @@
 </thead>
 <tbody>
 <tr class="row-even"><td><p>Clear  error</p></td>
-<td><p>clear_error:</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">clear_error::</span></code></p></td>
 <td><p>node.agents[‘clean_error’].send({})</p></td>
 </tr>
 <tr class="row-odd"><td><p>Enable motion</p></td>
-<td><p>enable_motion:</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">enable_motion::</span></code></p></td>
 <td><p>node.agents[‘enable_motion’].send({‘inputs’:0})</p></td>
 </tr>
 <tr class="row-even"><td><p>Set mode</p></td>
@@ -190,7 +202,7 @@
 <td><p>node.agents[‘set_state’].send({‘inputs’:[INT]})</p></td>
 </tr>
 <tr class="row-even"><td><p>Init Arm</p></td>
-<td><p>init_arm:</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">init_arm::</span></code></p></td>
 <td><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">carerobotapp.skills.goto_ready</span><span class="w"> </span><span class="kn">import</span> <span class="n">init_arm</span>
 <span class="n">init_arm</span><span class="p">(</span><span class="n">node</span><span class="o">=</span><span class="n">node</span><span class="p">)</span>
 </pre></div>
@@ -775,8 +787,8 @@
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="framework.html" class="btn btn-neutral float-left" title="ROS2-based Framework" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="examples.html" class="btn btn-neutral float-right" title="Examples" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="dashboard.html" class="btn btn-neutral float-left" title="Operator dashboard" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="configuration.html" class="btn btn-neutral float-right" title="Configuration" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

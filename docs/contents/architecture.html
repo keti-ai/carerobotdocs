@@ -1,0 +1,350 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Architecture &mdash; Care Robot 1.0.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=8d563738"></script>
+      <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Cognition: planning &amp; verification" href="cognition.html" />
+    <link rel="prev" title="Welcome to Care Robot’s Documentation" href="../index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Care Robot
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Architecture</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#three-operating-modes">Three operating modes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#system-overview">System overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#cognition-the-closed-loop-brain">Cognition: the closed-loop brain</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#embodiment-skills-vision-hardware">Embodiment: skills, vision, hardware</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#walkthrough-one-command-end-to-end">Walkthrough: one command, end to end</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#where-to-go-next">Where to go next</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="cognition.html">Cognition: planning &amp; verification</a></li>
+<li class="toctree-l1"><a class="reference internal" href="embodiment.html">Embodiment: skills, vision &amp; hardware</a></li>
+<li class="toctree-l1"><a class="reference internal" href="get_started.html">Get started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dashboard.html">Operator dashboard</a></li>
+<li class="toctree-l1"><a class="reference internal" href="manual.html">Manual</a></li>
+<li class="toctree-l1"><a class="reference internal" href="configuration.html">Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="framework.html">ROS2-based Framework</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="troubleshooting.html">Troubleshooting &amp; FAQ</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api.html">API &amp; code map</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Care Robot</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Architecture</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/contents/architecture.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="architecture">
+<h1>Architecture<a class="headerlink" href="#architecture" title="Link to this heading"></a></h1>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><strong>Media checklist for this page.</strong> Slots are already laid out below; just drop
+files with these exact names and they render automatically.</p>
+<p><em>Diagrams</em> — export each tab of the master
+<code class="docutils literal notranslate"><span class="pre">robotapp/diagrams/robotapp.drawio</span></code> (click the tab, then draw.io ▸ <em>Export
+as ▸ PNG</em>, scale 2x) into <code class="docutils literal notranslate"><span class="pre">source/contents/images/</span></code>:</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>draw.io tab</p></th>
+<th class="head"><p>target file</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">Overview</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">images/diag_overview.png</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">brain</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">images/diag_cognition.png</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">body</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">images/diag_embodiment.png</span></code></p></td>
+</tr>
+</tbody>
+</table>
+<p><em>Photos</em> (JPG/PNG) go in <code class="docutils literal notranslate"><span class="pre">source/contents/images/</span></code> and <em>videos</em>
+(WebM/MP4) in <code class="docutils literal notranslate"><span class="pre">source/_static/videos/</span></code>. Robot photos, camera frames and
+the two demo videos were extracted from <code class="docutils literal notranslate"><span class="pre">robotapp/data/</span></code>. The only slots
+still empty are the dashboard screenshot on <a class="reference internal" href="dashboard.html"><span class="doc">Operator dashboard</span></a>
+(<code class="docutils literal notranslate"><span class="pre">images/shot_dashboard.png</span></code>) and the plan-panel screenshot on
+<a class="reference internal" href="cognition.html"><span class="doc">Cognition: planning &amp; verification</span></a> (<code class="docutils literal notranslate"><span class="pre">images/shot_plan_panel.png</span></code>).</p>
+</div>
+<section id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Link to this heading"></a></h2>
+<p>The care robot is an assistive mobile manipulator that turns a spoken or typed
+request (“bring me the cup from the table”) into a sequence of real robot
+actions, checks each step, and repairs the plan on the fly when something goes
+wrong. It is built as a <strong>robot-agnostic runtime</strong> (<code class="docutils literal notranslate"><span class="pre">robot_agent</span></code>) driving a
+concrete <strong>robot package</strong> (<code class="docutils literal notranslate"><span class="pre">kcare_robot</span></code>), with an optional multi-user
+<strong>web dashboard</strong> (<code class="docutils literal notranslate"><span class="pre">robotapp</span></code>) and a pluggable <strong>LLM task planner</strong>
+(<code class="docutils literal notranslate"><span class="pre">pyplanner</span></code> / <strong>SAGE</strong>).</p>
+<figure class="align-center" id="id1">
+<a class="reference internal image-reference" href="../_images/photo_robot_hero.png"><img alt="The care robot" src="../_images/photo_robot_hero.png" style="width: 320px;" />
+</a>
+<figcaption>
+<p><span class="caption-text">The care robot: KAAIR 6-DOF arm + lift on a mobile base, two-finger/suction
+gripper, pan-tilt head, and wrist + head RGB-D cameras.</span><a class="headerlink" href="#id1" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<p>See it in action — two real manipulation runs recorded from an external
+webcam (<code class="docutils literal notranslate"><span class="pre">pick</span> <span class="pre">the</span> <span class="pre">phone</span></code> and <code class="docutils literal notranslate"><span class="pre">pick</span> <span class="pre">the</span> <span class="pre">coffee</span> <span class="pre">can</span></code>):</p>
+<p>
+<video width="560" controls muted>
+  <source src="../_static/videos/demo_pick_phone.webm" type="video/webm">
+  Your browser does not support embedded video.
+</video>
+<video width="560" controls muted>
+  <source src="../_static/videos/demo_pick_coffee.webm" type="video/webm">
+  Your browser does not support embedded video.
+</video>
+</p></section>
+<section id="three-operating-modes">
+<h2>Three operating modes<a class="headerlink" href="#three-operating-modes" title="Link to this heading"></a></h2>
+<p>The same robot can be driven three ways — they all reach the <strong>same skills</strong>
+through the same registry, so behaviour is identical:</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 18.0%" />
+<col style="width: 30.0%" />
+<col style="width: 52.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Mode</p></th>
+<th class="head"><p>Entry point</p></th>
+<th class="head"><p>Talks to</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong>UI / HTTP</strong></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">robotapp</span></code> dashboard</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">robot_agent</span></code> FastAPI over HTTP / WebSocket</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong>CLI</strong></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">&lt;pkg&gt;</span> <span class="pre">name::inputs</span></code></p></td>
+<td><p>bootstraps the robot in-process</p></td>
+</tr>
+<tr class="row-even"><td><p><strong>Python API</strong></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">kcare_robot.skills.*</span></code></p></td>
+<td><p>bootstraps the robot in-process</p></td>
+</tr>
+</tbody>
+</table>
+<p>The dashboard is <strong>optional</strong>: the robot is fully operable from the CLI or
+Python API. Two clients driving the <em>same</em> robot at once is unsafe — the UI
+documents this for operators.</p>
+</section>
+<section id="system-overview">
+<h2>System overview<a class="headerlink" href="#system-overview" title="Link to this heading"></a></h2>
+<p>At a glance, a command flows top-down from the operator to the hardware and
+feeds back up through verification and voice:</p>
+<figure class="align-center" id="id2">
+<a class="reference internal image-reference" href="../_images/diag_overview.png"><img alt="High-level system overview" src="../_images/diag_overview.png" style="width: 680px;" />
+</a>
+<figcaption>
+<p><span class="caption-text">High-level flow: <strong>User → robot_agent brain (understand → plan → act →
+verify → self-repair) → skills → VisionServe + robot</strong>, with the SAGE
+planner and world-state memory feeding the brain.</span><a class="headerlink" href="#id2" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<p>The system splits cleanly into two halves, each with its own detailed diagram
+and page:</p>
+<ul class="simple">
+<li><p>the <strong>robot-agnostic cognition</strong> half (closed-loop driver, world state,
+verifier, SAGE planner and LLM) — see <a class="reference internal" href="cognition.html"><span class="doc">Cognition: planning &amp; verification</span></a>;</p></li>
+<li><p>the <strong>robot-specific embodiment</strong> half (skills, perception/grasp pipeline,
+VisionServe and the ROS2 hardware over <code class="docutils literal notranslate"><span class="pre">pyconnect</span></code>) — see <a class="reference internal" href="embodiment.html"><span class="doc">Embodiment: skills, vision &amp; hardware</span></a>.</p></li>
+</ul>
+<p>Together they span six tiers: interaction (dashboard/CLI/API) · <code class="docutils literal notranslate"><span class="pre">robot_agent</span></code>
+runtime · <code class="docutils literal notranslate"><span class="pre">pyplanner</span></code>/SAGE + LLM backend · <code class="docutils literal notranslate"><span class="pre">kcare_robot</span></code> skills ·
+<code class="docutils literal notranslate"><span class="pre">pyconnect</span></code> transport · external processes (VisionServe GPU server and the
+ROS2 hardware).</p>
+</section>
+<section id="cognition-the-closed-loop-brain">
+<h2>Cognition: the closed-loop brain<a class="headerlink" href="#cognition-the-closed-loop-brain" title="Link to this heading"></a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">robot_agent</span></code> runs a bounded <strong>closed loop</strong> rather than executing a fixed
+plan blindly. Each step is perceived, mapped to a skill, executed, and
+<strong>verified</strong>; on failure the planner repairs only the failed sub-goal’s suffix.</p>
+<figure class="align-center" id="id3">
+<a class="reference internal image-reference" href="../_images/diag_cognition.png"><img alt="Cognition stack" src="../_images/diag_cognition.png" style="width: 720px;" />
+</a>
+<figcaption>
+<p><span class="caption-text"><code class="docutils literal notranslate"><span class="pre">UnifiedAgent</span></code> → <code class="docutils literal notranslate"><span class="pre">ClosedLoop</span></code> (Perceive → Plan → Map · <code class="docutils literal notranslate"><span class="pre">ActionMapper</span></code>
+→ Act · <code class="docutils literal notranslate"><span class="pre">SkillRegistry</span></code> → Verify · <code class="docutils literal notranslate"><span class="pre">StepVerifier</span></code>; ✓ pass advances,
+✗ fail triggers <code class="docutils literal notranslate"><span class="pre">Replan</span></code>) with <code class="docutils literal notranslate"><span class="pre">WorldState</span></code>, <code class="docutils literal notranslate"><span class="pre">Announcer</span></code> and
+<code class="docutils literal notranslate"><span class="pre">RunLogger</span></code>, backed by <strong>SAGE</strong> over the <code class="docutils literal notranslate"><span class="pre">Planner</span> <span class="pre">Protocol</span></code>.</span><a class="headerlink" href="#id3" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<p>Key pieces:</p>
+<ul class="simple">
+<li><p><strong>WorldState</strong> — a persistent symbolic <em>belief</em> the robot carries across
+runs: <code class="docutils literal notranslate"><span class="pre">arrived</span></code> · <code class="docutils literal notranslate"><span class="pre">found</span></code> · <code class="docutils literal notranslate"><span class="pre">holding</span></code> · <code class="docutils literal notranslate"><span class="pre">opened</span></code> · <code class="docutils literal notranslate"><span class="pre">on</span></code> ·
+<code class="docutils literal notranslate"><span class="pre">found_pose</span></code>. Only <code class="docutils literal notranslate"><span class="pre">arrived</span></code> is sensor-derived; the rest are beliefs (no
+gripper sensor).</p></li>
+<li><p><strong>Layered verification</strong> (<code class="docutils literal notranslate"><span class="pre">StepVerifier</span></code>) — cheap to expensive:
+<code class="docutils literal notranslate"><span class="pre">isdone</span></code> (did the skill report success?) → <code class="docutils literal notranslate"><span class="pre">symbolic</span></code> (do the step’s
+preconditions/effects hold?) → <code class="docutils literal notranslate"><span class="pre">VLM</span></code> (optional vision check). A
+never-fail guard keeps a broken vision check from stalling the loop.</p></li>
+<li><p><strong>SAGE planner</strong> (<code class="docutils literal notranslate"><span class="pre">pyplanner</span></code>) — the paper’s contribution, reached through a
+decoupled <code class="docutils literal notranslate"><span class="pre">Planner</span> <span class="pre">Protocol</span></code> (<code class="docutils literal notranslate"><span class="pre">get_planner</span></code>): hierarchical decomposition,
+hybrid memory (curated seed + live episodes, Chroma/Jaccard), a <strong>zero-token
+symbolic gate</strong> that verifies steps before execution, and <strong>suffix-only
+repair</strong> that regenerates just the failed sub-goal — recovering from failures
+with far fewer LLM calls than whole-plan replanning.</p></li>
+<li><p><strong>LLM backend</strong> — a single open-weight model (Ollama / OpenAI / Gemini) over
+HTTP, seeded for reproducibility.</p></li>
+</ul>
+</section>
+<section id="embodiment-skills-vision-hardware">
+<h2>Embodiment: skills, vision, hardware<a class="headerlink" href="#embodiment-skills-vision-hardware" title="Link to this heading"></a></h2>
+<p>The robot-specific half lives in <code class="docutils literal notranslate"><span class="pre">kcare_robot</span></code> (skills + name map + per-site
+configs), reaching hardware through <code class="docutils literal notranslate"><span class="pre">pyconnect</span></code> and a separate GPU vision
+server.</p>
+<figure class="align-center" id="id4">
+<a class="reference internal image-reference" href="../_images/diag_embodiment.png"><img alt="Embodiment stack" src="../_images/diag_embodiment.png" style="width: 760px;" />
+</a>
+<figcaption>
+<p><span class="caption-text">23 skills (Navigation / Perception / Manipulation / Low-level), the
+perception-and-grasp pipeline, <code class="docutils literal notranslate"><span class="pre">pyconnect</span></code> transport, the <strong>VisionServe</strong>
+GPU server, and the ROS2 robot hardware.</span><a class="headerlink" href="#id4" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<ul class="simple">
+<li><p><strong>Skills</strong> — grouped as Navigation (<code class="docutils literal notranslate"><span class="pre">move</span></code>, Nav2 <code class="docutils literal notranslate"><span class="pre">moveb</span></code>, <code class="docutils literal notranslate"><span class="pre">turn</span></code> …),
+Perception (<code class="docutils literal notranslate"><span class="pre">find</span></code>, <code class="docutils literal notranslate"><span class="pre">detect</span></code>, <code class="docutils literal notranslate"><span class="pre">get3d</span></code>, <code class="docutils literal notranslate"><span class="pre">grasp_succeed</span></code>),
+Manipulation (<code class="docutils literal notranslate"><span class="pre">pick</span></code>, <code class="docutils literal notranslate"><span class="pre">place</span></code>, <code class="docutils literal notranslate"><span class="pre">open_drawer</span></code> …, with <code class="docutils literal notranslate"><span class="pre">fine_move</span></code>
+self-correction), and Low-level (<code class="docutils literal notranslate"><span class="pre">arm</span></code>/<code class="docutils literal notranslate"><span class="pre">lift</span></code>/<code class="docutils literal notranslate"><span class="pre">head</span></code>/<code class="docutils literal notranslate"><span class="pre">grip</span></code>).</p></li>
+<li><p><strong>Perception &amp; grasp pipeline</strong> — <code class="docutils literal notranslate"><span class="pre">fetch_camera_data</span></code> (head/wrist RGB-D) →
+<code class="docutils literal notranslate"><span class="pre">VisionServe.predict</span></code> (GroundingDINO / GroundedSAM / grasp-gd) →
+<code class="docutils literal notranslate"><span class="pre">select_target_*</span></code> → <code class="docutils literal notranslate"><span class="pre">get3d</span></code> (<code class="docutils literal notranslate"><span class="pre">/create_object_marker</span></code>) → a 3D result
+<code class="docutils literal notranslate"><span class="pre">ins{loc_3d,</span> <span class="pre">grasppose,</span> <span class="pre">box,</span> <span class="pre">score}</span></code> that drives the grasp.</p></li>
+<li><p><strong>VisionServe</strong> — a <strong>separate GPU process</strong> the robot talks to over
+TCP/HTTP <code class="docutils literal notranslate"><span class="pre">:11435</span></code>; in: RGB + text prompt, out: detections / masks / grasps.</p></li>
+</ul>
+<figure class="align-center" id="id5">
+<a class="reference internal image-reference" href="../_images/photo_grasp_closeup.png"><img alt="Fine grasp close-up" src="../_images/photo_grasp_closeup.png" style="width: 480px;" />
+</a>
+<figcaption>
+<p><span class="caption-text">Wrist-camera view at the end of a <code class="docutils literal notranslate"><span class="pre">fine_move</span></code> approach: the grasp check
+reports <code class="docutils literal notranslate"><span class="pre">grasp</span> <span class="pre">OK,</span> <span class="pre">near=100%,</span> <span class="pre">d=-0.007m</span></code> just before closing the gripper.</span><a class="headerlink" href="#id5" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+</section>
+<section id="walkthrough-one-command-end-to-end">
+<h2>Walkthrough: one command, end to end<a class="headerlink" href="#walkthrough-one-command-end-to-end" title="Link to this heading"></a></h2>
+<p>“Bring me the cup from the table”:</p>
+<ol class="arabic simple">
+<li><p><strong>Dashboard / CLI</strong> sends the natural-language task to <code class="docutils literal notranslate"><span class="pre">robot_agent</span></code>.</p></li>
+<li><p><strong>UnifiedAgent</strong> translates (vi/ko → en) and starts the <code class="docutils literal notranslate"><span class="pre">ClosedLoop</span></code>.</p></li>
+<li><p><strong>Perceive</strong> reconciles <code class="docutils literal notranslate"><span class="pre">WorldState</span></code> from localization and observes the scene.</p></li>
+<li><p><strong>Plan</strong> — SAGE returns steps (<code class="docutils literal notranslate"><span class="pre">MoveTo</span> <span class="pre">Table</span></code> → <code class="docutils literal notranslate"><span class="pre">Find</span> <span class="pre">Cup</span></code> → <code class="docutils literal notranslate"><span class="pre">Pick</span></code> →
+<code class="docutils literal notranslate"><span class="pre">MoveTo</span> <span class="pre">User</span></code> → <code class="docutils literal notranslate"><span class="pre">Place</span></code>).</p></li>
+<li><p>For each step: <strong>Map</strong> to a skill (<code class="docutils literal notranslate"><span class="pre">ActionMapper</span></code>) → <strong>Act</strong>
+(<code class="docutils literal notranslate"><span class="pre">SkillRegistry.execute</span></code>) → <strong>Verify</strong> (<code class="docutils literal notranslate"><span class="pre">StepVerifier</span></code>).</p></li>
+<li><p>On success the belief updates and the loop advances; the <strong>Announcer</strong> speaks
+a milestone and <strong>RunLogger</strong> appends a JSONL record. On failure, <strong>Replan</strong>
+splices a repaired suffix and execution continues.</p></li>
+</ol>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>🎥 <strong>Optional video slot</strong> — drop <code class="docutils literal notranslate"><span class="pre">_static/videos/demo_full_task.mp4</span></code> (also
+used at the top of this page) to show this walkthrough on the real robot.</p>
+</div>
+</section>
+<section id="where-to-go-next">
+<h2>Where to go next<a class="headerlink" href="#where-to-go-next" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p><a class="reference internal" href="get_started.html"><span class="doc">Get started</span></a> — install and run the stack.</p></li>
+<li><p><a class="reference internal" href="manual.html"><span class="doc">Manual</span></a> — the full skill reference.</p></li>
+<li><p><a class="reference internal" href="framework.html"><span class="doc">ROS2-based Framework</span></a> — the <code class="docutils literal notranslate"><span class="pre">pyconnect</span></code> ROS2 node framework.</p></li>
+<li><p><a class="reference internal" href="examples.html"><span class="doc">Examples</span></a> — minimal, copy-paste code samples.</p></li>
+</ul>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../index.html" class="btn btn-neutral float-left" title="Welcome to Care Robot’s Documentation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="cognition.html" class="btn btn-neutral float-right" title="Cognition: planning &amp; verification" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Trung Bui.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

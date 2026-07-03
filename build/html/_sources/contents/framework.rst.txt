@@ -1,13 +1,13 @@
-==========
+====================
 ROS2-based Framework
-==========
+====================
 
 
 Challenges
 -----------------------------------
 
 Single Node: One Specific Task with Tightly Coupled, Customized Interface
-++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 - Works well in isolation but is rigid and non-reusable.
 
@@ -173,7 +173,7 @@ Implement Node
 
 
 Multitask: Hard, Even Impossible 
-++++++++++++++++++++++++
+++++++++++++++++++++++++++++++++
 
 - Multiple tasks within one node
 
@@ -249,7 +249,7 @@ Instead of writing repetitive boilerplate for every subscriber, publisher, actio
 - Projects needing easy debugging & data recording  
 
 Overview of the Custom ROS2 Node Implementation
------------------------------------
+-----------------------------------------------
 
 This Python code provides a highly modular and extensible framework for building custom ROS2 nodes, centered on the base class NodeAgent and the managing class CustomNode. It abstracts ROS2 communication primitives — topics, actions, services, and timers — into reusable “agents” that are easily configured and combined to handle complex robotic or distributed systems.
 The key advantage of this design lies in its strict separation of concerns: **callbacks and send operations no longer contain fragmented, repetitive ROS2 message handling code**. Instead, all low-level details are cleanly split into three dedicated components:
@@ -306,7 +306,7 @@ Derived Agent Classes
 These inherit from NodeAgent and implement specific ROS2 behaviors:
 
 ActionServerAgent:
-*****************
+******************
 
 - Handles action goals via callback(), decoding requests, processing with response_func, and sending feedback/results.
 
@@ -326,16 +326,15 @@ TopicAgent:
 
 - **callback()** decodes incoming messages and applies response_func.
 
-- **send()** and **publish()** encode and publish data, with support for periodic publishing via timers.
-Tracks first-message receipt to confirm connections.
+- **send()** and **publish()** encode and publish data, with support for periodic publishing via timers. Tracks first-message receipt to confirm connections.
 
 ServiceServerAgent:
-^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^
 
 - **callback()** decodes requests, processes them, and encodes responses.
 
 ServiceClientAgent:
-^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^
 
 - **send()** encodes requests, calls the service asynchronously, and decodes results. Supports non-blocking mode and timing info for performance analysis.
 
@@ -347,7 +346,7 @@ TimerAgent:
 **AGENT_CLASS_DICT**: A mapping from connection types (strings like 'action_server') to classes, enabling dynamic agent creation.
 
 Factory Function: make_agent()
-*****************
+******************************
 
 Takes a CustomNode and config dict (e.g., conn_type, data_interface, encode/decode funcs).
 Instantiates the appropriate agent class, attaches it to the node (e.g., creating subscriptions, publishers, or timers).
@@ -356,7 +355,7 @@ Supports integration with non-ROS protocols (e.g., TCP/IP) via conditional branc
 Output: Prints confirmation messages for easy debugging.
 
 Managing Class: CustomNode (Inherits from rclpy.node.Node)
-*****************
+**********************************************************
 
 Purpose: Acts as a container for multiple agents, managing their lifecycle and execution.
 
@@ -381,7 +380,7 @@ Key Methods:
 Agent Storage: Agents are stored in a dict by name for easy access (e.g., node.agents['my_sub'].get()).
 
 Advantages in Flexibility and Handling Complex Workflows
-----------------------------------------
+--------------------------------------------------------
 
 This implementation shines in its flexibility, allowing developers to mix and match ROS2 primitives without rewriting core logic:
 
@@ -424,7 +423,7 @@ Add Agents
 +++++++++++
 
 Subscriber (receive data from a topic)
-*******************************
+**************************************
 
 .. code-block:: python
 
@@ -438,7 +437,7 @@ Subscriber (receive data from a topic)
        )
 
 Publisher (send data to a topic)
-*******************************
+********************************
 
 .. code-block:: python
 
@@ -452,7 +451,7 @@ Publisher (send data to a topic)
 
 
 Action Client (call a long-running action)
-*******************************
+******************************************
 
 .. code-block:: python
 
@@ -465,7 +464,7 @@ Action Client (call a long-running action)
        )
 
 Action Server (provide a service that can give feedback)
-*******************************
+********************************************************
 
 .. code-block:: python
 
@@ -490,7 +489,7 @@ Service Client
        )
 
 Timer (run something periodically)
-*******************************
+**********************************
 
 .. code-block:: python
 
@@ -546,7 +545,7 @@ Useful Extras
        node.stop_log_subs()
 
 Full Minimal Example (Publisher + Subscriber)
-----------------------
+---------------------------------------------
 
 .. code-block:: python
 

@@ -1,0 +1,289 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cognition: planning &amp; verification &mdash; Care Robot 1.0.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=8d563738"></script>
+      <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Embodiment: skills, vision &amp; hardware" href="embodiment.html" />
+    <link rel="prev" title="Architecture" href="architecture.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Care Robot
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="architecture.html">Architecture</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Cognition: planning &amp; verification</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#the-closed-loop">The closed loop</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#worldstate-the-robot-s-belief">WorldState — the robot’s belief</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#mapping-symbolic-actions-to-skills">Mapping symbolic actions to skills</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#layered-verification">Layered verification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#sage-planner-via-the-planner-protocol">SAGE planner via the Planner Protocol</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#the-llm-backend">The LLM backend</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#the-event-stream">The event stream</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="embodiment.html">Embodiment: skills, vision &amp; hardware</a></li>
+<li class="toctree-l1"><a class="reference internal" href="get_started.html">Get started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dashboard.html">Operator dashboard</a></li>
+<li class="toctree-l1"><a class="reference internal" href="manual.html">Manual</a></li>
+<li class="toctree-l1"><a class="reference internal" href="configuration.html">Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="framework.html">ROS2-based Framework</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="troubleshooting.html">Troubleshooting &amp; FAQ</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api.html">API &amp; code map</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Care Robot</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Cognition: planning &amp; verification</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/contents/cognition.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="cognition-planning-verification">
+<h1>Cognition: planning &amp; verification<a class="headerlink" href="#cognition-planning-verification" title="Link to this heading"></a></h1>
+<p>This page goes one level deeper than <a class="reference internal" href="architecture.html"><span class="doc">Architecture</span></a> into the
+<strong>robot-agnostic</strong> half of the stack: the closed-loop driver, the persistent
+world state, the layered verifier, and the <strong>SAGE</strong> planner reached through a
+decoupled planner protocol. All of this lives in <code class="docutils literal notranslate"><span class="pre">robot_agent</span></code> and
+<code class="docutils literal notranslate"><span class="pre">pyplanner</span></code> and knows nothing about a specific robot.</p>
+<figure class="align-center" id="id1">
+<a class="reference internal image-reference" href="../_images/diag_cognition.png"><img alt="Cognition stack" src="../_images/diag_cognition.png" style="width: 720px;" />
+</a>
+<figcaption>
+<p><span class="caption-text">The cognition stack (export <code class="docutils literal notranslate"><span class="pre">diagram_brain.drawio</span></code> → <code class="docutils literal notranslate"><span class="pre">images/diag_cognition.png</span></code>).</span><a class="headerlink" href="#id1" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<section id="the-closed-loop">
+<h2>The closed loop<a class="headerlink" href="#the-closed-loop" title="Link to this heading"></a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">ClosedLoop.run_blocking</span></code> (in <code class="docutils literal notranslate"><span class="pre">robot_agent</span></code>) executes a plan as a <em>bounded
+replanning loop</em> rather than firing a fixed script. Per step:</p>
+<ol class="arabic simple">
+<li><p><strong>Perceive</strong> — <code class="docutils literal notranslate"><span class="pre">observe(node)</span></code> returns a short observation string and the
+list of currently visible objects; the world belief is reconciled from
+localization first (see <em>WorldState</em> below).</p></li>
+<li><p><strong>Plan</strong> — the planner returns <code class="docutils literal notranslate"><span class="pre">(steps,</span> <span class="pre">metrics)</span></code> via <code class="docutils literal notranslate"><span class="pre">generate_plan</span></code>.</p></li>
+<li><p><strong>Map</strong> — <code class="docutils literal notranslate"><span class="pre">ActionMapper</span></code> turns the symbolic step into a concrete
+<code class="docutils literal notranslate"><span class="pre">(skill_name,</span> <span class="pre">params)</span></code> pair, or marks it a no-op, or raises <code class="docutils literal notranslate"><span class="pre">Unmappable</span></code>.</p></li>
+<li><p><strong>Act</strong> — <code class="docutils literal notranslate"><span class="pre">SkillRegistry.execute(name,</span> <span class="pre">params,</span> <span class="pre">node)</span></code> runs the skill and
+returns a result dict <code class="docutils literal notranslate"><span class="pre">{isdone,</span> <span class="pre">msg,</span> <span class="pre">...}</span></code>.</p></li>
+<li><p><strong>Verify</strong> — <code class="docutils literal notranslate"><span class="pre">StepVerifier</span></code> checks the result in up to three layers.</p></li>
+<li><p><strong>Update or replan</strong> — on success the belief is updated (<code class="docutils literal notranslate"><span class="pre">apply_effect</span></code>)
+and persisted; on failure the planner produces a <strong>suffix</strong> that is spliced
+after the completed prefix. Replans are <strong>bounded</strong> (default 3).</p></li>
+</ol>
+<p>Every milestone is streamed as an event over the agent WebSocket and appended
+to a per-run JSONL log, so a run is fully replayable.</p>
+</section>
+<section id="worldstate-the-robot-s-belief">
+<h2>WorldState — the robot’s belief<a class="headerlink" href="#worldstate-the-robot-s-belief" title="Link to this heading"></a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">WorldState</span></code> is a small symbolic dataclass the robot carries <strong>across runs</strong>,
+persisted to <code class="docutils literal notranslate"><span class="pre">world_state.json</span></code> and editable live from the dashboard:</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 22.0%" />
+<col style="width: 18.0%" />
+<col style="width: 60.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Field</p></th>
+<th class="head"><p>Kind</p></th>
+<th class="head"><p>Meaning</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">arrived</span></code></p></td>
+<td><p>sensor</p></td>
+<td><p>nearest configured location, reconciled from localization</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">found</span></code></p></td>
+<td><p>belief</p></td>
+<td><p>object most recently located (not yet grasped)</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">holding</span></code></p></td>
+<td><p>belief</p></td>
+<td><p>object currently believed to be grasped (no gripper sensor)</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">opened</span></code> / <code class="docutils literal notranslate"><span class="pre">on</span></code></p></td>
+<td><p>belief</p></td>
+<td><p>sets of open containers / switched-on appliances</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">holding_since</span></code></p></td>
+<td><p>belief</p></td>
+<td><p>epoch seconds the grasp belief was set</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">found_pose</span></code></p></td>
+<td><p>geometry</p></td>
+<td><p>3D memory of the found object in the base frame at detection time</p></td>
+</tr>
+</tbody>
+</table>
+<p><code class="docutils literal notranslate"><span class="pre">found_pose</span></code> is flagged <strong>stale</strong> once the base moves &gt; 0.25 m from the
+detection spot; it must not be trusted for grasping after that. The belief is
+read with <code class="docutils literal notranslate"><span class="pre">GET</span> <span class="pre">/agent/world</span></code> and partially updated with <code class="docutils literal notranslate"><span class="pre">PUT</span> <span class="pre">/agent/world</span></code>
+(only the fields sent), which is safe even mid-run.</p>
+</section>
+<section id="mapping-symbolic-actions-to-skills">
+<h2>Mapping symbolic actions to skills<a class="headerlink" href="#mapping-symbolic-actions-to-skills" title="Link to this heading"></a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">ActionMapper</span></code> is constructed with a robot-specific <em>name map</em>
+(<code class="docutils literal notranslate"><span class="pre">grace_namemap</span></code> for kcare). It never hard-codes locations, objects or skills:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">to_loc</span></code> / <code class="docutils literal notranslate"><span class="pre">to_obj</span></code> translate planner names to the robot’s vocabulary.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">SKILL_MAP</span></code> maps a planner action (e.g. <code class="docutils literal notranslate"><span class="pre">MoveTo</span></code>, <code class="docutils literal notranslate"><span class="pre">Pick</span></code>, <code class="docutils literal notranslate"><span class="pre">Open</span></code>) to a
+kcare skill (<code class="docutils literal notranslate"><span class="pre">move</span></code>, <code class="docutils literal notranslate"><span class="pre">pick</span></code>, <code class="docutils literal notranslate"><span class="pre">open_drawer</span></code> …).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">SUPPORTED_ACTIONS</span></code> / <code class="docutils literal notranslate"><span class="pre">NOOP_ACTIONS</span></code> / <code class="docutils literal notranslate"><span class="pre">VLM_ACTIONS</span></code> declare what this
+robot can execute, what to skip silently, and what gets a vision check.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">apply_effect</span></code> mirrors the symbolic effects onto <code class="docutils literal notranslate"><span class="pre">WorldState</span></code> after a
+verified step (e.g. <code class="docutils literal notranslate"><span class="pre">Pick</span></code> moves <code class="docutils literal notranslate"><span class="pre">found</span></code> → <code class="docutils literal notranslate"><span class="pre">holding</span></code>).</p></li>
+</ul>
+<p>An action with no executable skill on this robot raises <code class="docutils literal notranslate"><span class="pre">Unmappable</span></code> and is
+reported, rather than failing silently.</p>
+</section>
+<section id="layered-verification">
+<h2>Layered verification<a class="headerlink" href="#layered-verification" title="Link to this heading"></a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">StepVerifier</span></code> checks each executed step cheapest-first and stops at the first
+failure:</p>
+<ol class="arabic simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">isdone</span></code> — did the skill itself report success? (0 tokens)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">symbolic</span></code> — do the step’s preconditions/effects hold against a <em>copy</em> of
+the world? (0 tokens; never mutates the real belief)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">VLM</span></code> — optional vision-language check for actions in <code class="docutils literal notranslate"><span class="pre">VLM_ACTIONS</span></code>
+(Pick, Place, PutIn, Open, Close). Wrapped in a <strong>never-fail guard</strong> so a
+broken perception check is recorded but cannot stall the loop.</p></li>
+</ol>
+<p>The verdict is OK only if every layer that ran passed; the first failing layer’s
+reason drives the replan.</p>
+</section>
+<section id="sage-planner-via-the-planner-protocol">
+<h2>SAGE planner via the Planner Protocol<a class="headerlink" href="#sage-planner-via-the-planner-protocol" title="Link to this heading"></a></h2>
+<p>Planning is <strong>decoupled</strong> behind a small <code class="docutils literal notranslate"><span class="pre">Planner</span></code> protocol. <code class="docutils literal notranslate"><span class="pre">get_planner</span></code>
+selects a backend by name:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">grace</span></code> → <code class="docutils literal notranslate"><span class="pre">GraceBackend</span></code>, which wraps <code class="docutils literal notranslate"><span class="pre">pyplanner</span></code>’s <strong>SAGE</strong> planner.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">llm_direct</span></code> → a legacy single-call backend.</p></li>
+</ul>
+<p>SAGE (the system’s algorithmic contribution) combines four lightweight
+mechanisms over a <strong>single open-weight model</strong>:</p>
+<ul class="simple">
+<li><p><strong>Hierarchical decomposition</strong> — task → sub-goals → steps.</p></li>
+<li><p><strong>Hybrid memory</strong> — retrieves few-shot examples from a curated seed set plus
+successful live episodes (Chroma embeddings, Jaccard fallback).</p></li>
+<li><p><strong>Symbolic gate</strong> — a zero-token precondition verifier that rejects invalid
+steps and feeds <em>typed</em> feedback back to the model before execution.</p></li>
+<li><p><strong>Suffix-only repair</strong> — on failure it regenerates only the failed sub-goal’s
+remaining steps, recovering with roughly <strong>2.4–3.3× fewer LLM calls</strong> than
+whole-plan replanning (see the SAGE paper).</p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>📷 <strong>Screenshot slot</strong> — add <code class="docutils literal notranslate"><span class="pre">images/shot_plan_panel.png</span></code> (the dashboard’s
+<em>Robot State</em> + plan/timeline panel) to show planning live.</p>
+</div>
+<figure class="align-center" id="id2">
+<a class="reference internal image-reference" href="contents/images/shot_plan_panel.png"><img alt="Plan panel with world state" src="contents/images/shot_plan_panel.png" style="width: 600px;" />
+</a>
+<figcaption>
+<p><span class="caption-text">The dashboard renders the world belief, the generated plan, and a live
+step-by-step execution timeline driven by these events.</span><a class="headerlink" href="#id2" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+</section>
+<section id="the-llm-backend">
+<h2>The LLM backend<a class="headerlink" href="#the-llm-backend" title="Link to this heading"></a></h2>
+<p>The planner talks to a single, seeded <strong>open-weight</strong> model over HTTP — Ollama
+(local, e.g. <code class="docutils literal notranslate"><span class="pre">qwen2.5:7b</span></code>), OpenAI, or Gemini. Provider and model are set from
+<code class="docutils literal notranslate"><span class="pre">POST</span> <span class="pre">/agent/llm-config</span></code>; API keys via <code class="docutils literal notranslate"><span class="pre">POST</span> <span class="pre">/agent/api-key</span></code>. Running
+locally with Ollama keeps the whole stack on-premise.</p>
+</section>
+<section id="the-event-stream">
+<h2>The event stream<a class="headerlink" href="#the-event-stream" title="Link to this heading"></a></h2>
+<p>Both the closed-loop and the direct paths emit events over <code class="docutils literal notranslate"><span class="pre">/ws/agent</span></code>:
+<code class="docutils literal notranslate"><span class="pre">task_start</span></code>, <code class="docutils literal notranslate"><span class="pre">plan</span></code>, <code class="docutils literal notranslate"><span class="pre">step_start</span></code>, <code class="docutils literal notranslate"><span class="pre">step_done</span></code>, <code class="docutils literal notranslate"><span class="pre">step_log</span></code>,
+<code class="docutils literal notranslate"><span class="pre">replan</span></code>, <code class="docutils literal notranslate"><span class="pre">world</span></code> (a fresh <code class="docutils literal notranslate"><span class="pre">WorldState</span></code> snapshot), and <code class="docutils literal notranslate"><span class="pre">done</span></code> / <code class="docutils literal notranslate"><span class="pre">error</span></code>.
+The dashboard subscribes to this stream; the same events are persisted to
+<code class="docutils literal notranslate"><span class="pre">task_runs/&lt;run_id&gt;.jsonl</span></code>.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="architecture.html" class="btn btn-neutral float-left" title="Architecture" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="embodiment.html" class="btn btn-neutral float-right" title="Embodiment: skills, vision &amp; hardware" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Trung Bui.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

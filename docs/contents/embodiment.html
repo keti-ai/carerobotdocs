@@ -1,0 +1,285 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Embodiment: skills, vision &amp; hardware &mdash; Care Robot 1.0.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=8d563738"></script>
+      <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Get started" href="get_started.html" />
+    <link rel="prev" title="Cognition: planning &amp; verification" href="cognition.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            Care Robot
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="architecture.html">Architecture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cognition.html">Cognition: planning &amp; verification</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Embodiment: skills, vision &amp; hardware</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#the-skill-contract">The skill contract</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#skill-groups">Skill groups</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#perception-grasp-pipeline">Perception &amp; grasp pipeline</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#visionserve-gpu-inference-server">VisionServe — GPU inference server</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#robot-hardware-ros2">Robot hardware (ROS2)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="get_started.html">Get started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dashboard.html">Operator dashboard</a></li>
+<li class="toctree-l1"><a class="reference internal" href="manual.html">Manual</a></li>
+<li class="toctree-l1"><a class="reference internal" href="configuration.html">Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="framework.html">ROS2-based Framework</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="troubleshooting.html">Troubleshooting &amp; FAQ</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api.html">API &amp; code map</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Care Robot</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Embodiment: skills, vision &amp; hardware</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/contents/embodiment.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="embodiment-skills-vision-hardware">
+<h1>Embodiment: skills, vision &amp; hardware<a class="headerlink" href="#embodiment-skills-vision-hardware" title="Link to this heading"></a></h1>
+<p>This page covers the robot-specific half of the stack: the <code class="docutils literal notranslate"><span class="pre">kcare_robot</span></code>
+skill set, the perception-and-grasp pipeline, the <strong>VisionServe</strong> GPU server,
+and the ROS2 hardware — all reached through the <code class="docutils literal notranslate"><span class="pre">pyconnect</span></code> transport.</p>
+<figure class="align-center" id="id1">
+<a class="reference internal image-reference" href="../_images/diag_embodiment.png"><img alt="Embodiment stack" src="../_images/diag_embodiment.png" style="width: 760px;" />
+</a>
+<figcaption>
+<p><span class="caption-text">The embodiment stack (export <code class="docutils literal notranslate"><span class="pre">diagram_body.drawio</span></code> → <code class="docutils literal notranslate"><span class="pre">images/diag_embodiment.png</span></code>).</span><a class="headerlink" href="#id1" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<section id="the-skill-contract">
+<h2>The skill contract<a class="headerlink" href="#the-skill-contract" title="Link to this heading"></a></h2>
+<p>Every skill is a plain function <code class="docutils literal notranslate"><span class="pre">skill(node,</span> <span class="pre">**params)</span> <span class="pre">-&gt;</span> <span class="pre">dict</span></code> that returns a
+planner-readable result, at minimum <code class="docutils literal notranslate"><span class="pre">{isdone:</span> <span class="pre">bool,</span> <span class="pre">msg:</span> <span class="pre">str}</span></code>. Skills are
+stateless; all device access goes through <code class="docutils literal notranslate"><span class="pre">node.agents[...]</span></code> (never raw ROS).
+<code class="docutils literal notranslate"><span class="pre">SkillRegistry.execute</span></code> dispatches either an <strong>internal</strong> skill (a
+<code class="docutils literal notranslate"><span class="pre">module:function</span></code> pair) or an <strong>external</strong> one (an HTTP endpoint), returning
+the same result shape so the verifier treats them identically.</p>
+</section>
+<section id="skill-groups">
+<h2>Skill groups<a class="headerlink" href="#skill-groups" title="Link to this heading"></a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 22.0%" />
+<col style="width: 78.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Group</p></th>
+<th class="head"><p>Skills</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Navigation</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">move</span></code> · <code class="docutils literal notranslate"><span class="pre">moveb</span></code> (Nav2) · <code class="docutils literal notranslate"><span class="pre">forward</span></code> · <code class="docutils literal notranslate"><span class="pre">turn</span></code> · <code class="docutils literal notranslate"><span class="pre">rotate</span></code> · <code class="docutils literal notranslate"><span class="pre">mobile_pose</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>Perception</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">find</span></code> · <code class="docutils literal notranslate"><span class="pre">detect</span></code> · <code class="docutils literal notranslate"><span class="pre">find_arm</span></code> · <code class="docutils literal notranslate"><span class="pre">get3d</span></code> · <code class="docutils literal notranslate"><span class="pre">grasp_succeed</span></code> · <code class="docutils literal notranslate"><span class="pre">inform</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p>Manipulation</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">pick</span></code> · <code class="docutils literal notranslate"><span class="pre">place</span></code> · <code class="docutils literal notranslate"><span class="pre">placeat</span></code> · <code class="docutils literal notranslate"><span class="pre">open_drawer</span></code> · <code class="docutils literal notranslate"><span class="pre">close_drawer</span></code> · <code class="docutils literal notranslate"><span class="pre">wipe</span></code> · <code class="docutils literal notranslate"><span class="pre">stack</span></code> (<code class="docutils literal notranslate"><span class="pre">fine_move</span></code> self-correction)</p></td>
+</tr>
+<tr class="row-odd"><td><p>Low-level</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">arm</span></code> (<code class="docutils literal notranslate"><span class="pre">movej</span></code> / <code class="docutils literal notranslate"><span class="pre">movel</span></code> / <code class="docutils literal notranslate"><span class="pre">movet</span></code>) · <code class="docutils literal notranslate"><span class="pre">lift</span></code> · <code class="docutils literal notranslate"><span class="pre">head</span></code> (<code class="docutils literal notranslate"><span class="pre">moveh</span></code>) · <code class="docutils literal notranslate"><span class="pre">grip</span></code></p></td>
+</tr>
+</tbody>
+</table>
+<p>The full per-skill reference — prompt usage, dev usage and input syntax — is in
+<a class="reference internal" href="manual.html"><span class="doc">Manual</span></a>.</p>
+</section>
+<section id="perception-grasp-pipeline">
+<h2>Perception &amp; grasp pipeline<a class="headerlink" href="#perception-grasp-pipeline" title="Link to this heading"></a></h2>
+<p>The interesting work happens inside the Perception skills. A typical <code class="docutils literal notranslate"><span class="pre">find</span></code> /
+grasp resolves through these stages:</p>
+<ol class="arabic simple">
+<li><p><strong>Fetch RGB-D</strong> — <code class="docutils literal notranslate"><span class="pre">fetch_camera_data</span></code> reads the head (Femto Bolt) or wrist
+(RealSense D405) camera via <code class="docutils literal notranslate"><span class="pre">node.agents[...]</span></code>.</p></li>
+<li><p><strong>Detect</strong> — <code class="docutils literal notranslate"><span class="pre">VisionServe.predict(model,</span> <span class="pre">rgb,</span> <span class="pre">prompt=...)</span></code> runs an
+open-vocabulary model (<code class="docutils literal notranslate"><span class="pre">grounding-dino</span></code> for boxes, <code class="docutils literal notranslate"><span class="pre">grounded-sam</span></code> for
+masks, <code class="docutils literal notranslate"><span class="pre">grasp-gd</span></code> for grasp poses).</p></li>
+<li><p><strong>Select</strong> — <code class="docutils literal notranslate"><span class="pre">select_target_object</span></code> / <code class="docutils literal notranslate"><span class="pre">select_target_grasp</span></code> pick the best
+detection by quality / proximity.</p></li>
+<li><p><strong>Lift to 3D</strong> — <code class="docutils literal notranslate"><span class="pre">get3d</span></code> (the <code class="docutils literal notranslate"><span class="pre">/create_object_marker</span></code> ROS service) and the
+head-to-base calibration project the pixel target into the base frame.</p></li>
+<li><p><strong>Result</strong> — a dict <code class="docutils literal notranslate"><span class="pre">ins{</span> <span class="pre">loc_3d,</span> <span class="pre">pose_3d,</span> <span class="pre">grasppose:[x,y,z,rz,w],</span> <span class="pre">box,</span>
+<span class="pre">score,</span> <span class="pre">...</span> <span class="pre">}</span></code> that drives <code class="docutils literal notranslate"><span class="pre">pick</span></code> / <code class="docutils literal notranslate"><span class="pre">fine_move</span></code>.</p></li>
+</ol>
+<p>Two real runs, as seen by the robot’s own cameras (all overlays are produced
+live by the pipeline):</p>
+<figure class="align-center" id="id2">
+<a class="reference internal image-reference" href="../_images/fig_pick_phone_strip.png"><img alt="pick the phone — robot camera frames" src="../_images/fig_pick_phone_strip.png" style="width: 100%;" />
+</a>
+<figcaption>
+<p><span class="caption-text"><code class="docutils literal notranslate"><span class="pre">pick</span> <span class="pre">the</span> <span class="pre">phone</span></code>: <strong>(a)</strong> head camera detects the phone on the table
+(<code class="docutils literal notranslate"><span class="pre">ph</span> <span class="pre">0.88</span></code>, pose <code class="docutils literal notranslate"><span class="pre">LYING</span></code>); <strong>(b)</strong> wrist camera segments it and scores a
+grasp candidate (<code class="docutils literal notranslate"><span class="pre">q0.97</span></code>); <strong>(c)</strong> <code class="docutils literal notranslate"><span class="pre">fine_move</span></code> aligns the gripper
+(width 72 mm, +2°); <strong>(d)</strong> the grasp check passes
+(<code class="docutils literal notranslate"><span class="pre">grasp</span> <span class="pre">OK,</span> <span class="pre">near=100%</span></code>).</span><a class="headerlink" href="#id2" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<figure class="align-center" id="id3">
+<a class="reference internal image-reference" href="../_images/fig_pick_coffee_strip.png"><img alt="pick the coffee can — robot camera frames" src="../_images/fig_pick_coffee_strip.png" style="width: 100%;" />
+</a>
+<figcaption>
+<p><span class="caption-text"><code class="docutils literal notranslate"><span class="pre">pick</span> <span class="pre">the</span> <span class="pre">coffee</span> <span class="pre">can</span></code>: the same detect → segment → align → verify
+sequence on a standing can (<code class="docutils literal notranslate"><span class="pre">co</span> <span class="pre">0.80</span></code>, <code class="docutils literal notranslate"><span class="pre">q0.96</span></code>, width 68 mm,
+<code class="docutils literal notranslate"><span class="pre">grasp</span> <span class="pre">OK,</span> <span class="pre">near=98%</span></code>).</span><a class="headerlink" href="#id3" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<p>The corresponding external-webcam videos of both runs are embedded on
+<a class="reference internal" href="architecture.html"><span class="doc">Architecture</span></a>.</p>
+</section>
+<section id="visionserve-gpu-inference-server">
+<h2>VisionServe — GPU inference server<a class="headerlink" href="#visionserve-gpu-inference-server" title="Link to this heading"></a></h2>
+<p>VisionServe is a <strong>separate process</strong> (typically on a GPU machine) that the
+robot reaches over TCP/HTTP at <code class="docutils literal notranslate"><span class="pre">:11435</span></code>:</p>
+<ul class="simple">
+<li><p><strong>Models</strong>: GroundingDINO (boxes), GroundedSAM (masks), grasp-gd (grasp poses),
+plus a generic detector.</p></li>
+<li><p><strong>Request</strong>: an RGB image + a text prompt; <strong>response</strong>: detections / masks /
+grasps with scores, plus inference <code class="docutils literal notranslate"><span class="pre">device</span></code> and timing.</p></li>
+<li><p><strong>Client</strong>: <code class="docutils literal notranslate"><span class="pre">_vs_client().predict(model,</span> <span class="pre">rgb,</span> <span class="pre">prompt=...)</span></code> wraps the call;
+the connection is registered in <code class="docutils literal notranslate"><span class="pre">connections.json</span></code> (see <a class="reference internal" href="configuration.html"><span class="doc">Configuration</span></a>).</p></li>
+</ul>
+<p>Because vision runs out-of-process, the robot PC stays light and the GPU box can
+serve several robots.</p>
+</section>
+<section id="robot-hardware-ros2">
+<h2>Robot hardware (ROS2)<a class="headerlink" href="#robot-hardware-ros2" title="Link to this heading"></a></h2>
+<figure class="align-center" id="id4">
+<a class="reference internal image-reference" href="../_images/photo_robot_modes.png"><img alt="The robot in its three arm-mount modes" src="../_images/photo_robot_modes.png" style="width: 640px;" />
+</a>
+<figcaption>
+<p><span class="caption-text">The real robot in its three arm-mount configurations — <strong>left</strong>, <strong>front</strong>
+and <strong>right</strong> mode. The KAAIR arm rides the vertical lift rail; the head
+camera sits on the pan-tilt mast.</span><a class="headerlink" href="#id4" title="Link to this image"></a></p>
+</figcaption>
+</figure>
+<p><code class="docutils literal notranslate"><span class="pre">kcare_robot</span></code> targets a mobile manipulator wired through ROS2 actions,
+services and topics, each wrapped as a <code class="docutils literal notranslate"><span class="pre">pyconnect</span></code> agent:</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 30.0%" />
+<col style="width: 70.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Subsystem</p></th>
+<th class="head"><p>ROS2 interface (examples)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>KAAIR 6-DOF arm</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">/kaair_worker/arm_moveJ</span></code> · <code class="docutils literal notranslate"><span class="pre">arm_moveL</span></code> · <code class="docutils literal notranslate"><span class="pre">arm_moveT</span></code> (action)</p></td>
+</tr>
+<tr class="row-odd"><td><p>Lift / elevator</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">/kaair_worker/lift_move</span></code> (action)</p></td>
+</tr>
+<tr class="row-even"><td><p>Gripper (2-finger + suction)</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">/body/tool_controller/gripper_cmd</span></code> (action)</p></td>
+</tr>
+<tr class="row-odd"><td><p>Pan-tilt head</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">/kaair_worker/head_move</span></code> (action)</p></td>
+</tr>
+<tr class="row-even"><td><p>Mobile base</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">/navigate_to_pose</span></code> (Nav2 action) · <code class="docutils literal notranslate"><span class="pre">/mobile/shift_pose</span></code> · <code class="docutils literal notranslate"><span class="pre">/mobile/rotate</span></code> (services)</p></td>
+</tr>
+<tr class="row-odd"><td><p>Cameras</p></td>
+<td><p>D405 wrist + Femto Bolt head RGB-D (compressed image topics) · camera-info</p></td>
+</tr>
+<tr class="row-even"><td><p>3D / poses</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">/create_object_marker</span></code> (service) · <code class="docutils literal notranslate"><span class="pre">/robot_pose/*</span></code> (topics)</p></td>
+</tr>
+</tbody>
+</table>
+<p>A <strong>head-to-base calibration</strong> (intrinsics + a transform chain with per-mode
+error corrections) projects detections from the head camera into the base frame;
+the wrist camera provides the close-range frames for <code class="docutils literal notranslate"><span class="pre">fine_move</span></code> grasping.</p>
+<p>For how devices are declared and swapped per site, see <a class="reference internal" href="configuration.html"><span class="doc">Configuration</span></a>; for
+the <code class="docutils literal notranslate"><span class="pre">pyconnect</span></code> node/agent framework itself, see <a class="reference internal" href="framework.html"><span class="doc">ROS2-based Framework</span></a>.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="cognition.html" class="btn btn-neutral float-left" title="Cognition: planning &amp; verification" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="get_started.html" class="btn btn-neutral float-right" title="Get started" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Trung Bui.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
